@@ -1,7 +1,7 @@
 {
   "name": "example",
   "version": "1.0.0",
-  "author": "christopherbiscardi <chris@christopherbiscardi.com> (@chrisbiscardi)",
+  "author": "tenpaMk2 <wavyroom@gmail.com> (@tenpaMk2)",
   "license": "MIT",
   "scripts": {
     "develop": "gatsby develop",
@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "gatsby": "^5.3.3",
-    "gatsby-theme-minimal": "^1.0.0",
+    "gatsby-theme-figure-blog": "^1.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   }
