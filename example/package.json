@@ -4,6 +4,7 @@
   "author": "tenpaMk2 <wavyroom@gmail.com> (@tenpaMk2)",
   "license": "MIT",
   "scripts": {
+    "clean": "gatsby clean",
     "develop": "gatsby develop",
     "build": "gatsby build"
   },
