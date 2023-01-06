@@ -1,5 +1,5 @@
-import React from "react"
+import React from "react";
 
 export default function Home() {
-  return <div>Homepage in a user's site</div>
+  return <div className="bg-lime-500">Homepage in a user's site</div>;
 }
