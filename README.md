@@ -68,3 +68,39 @@ yarn workspace example develop
 Deploy this starter with one click on [Gatsby Cloud](https://www.gatsbyjs.com/cloud/):
 
 [<img src="https://www.gatsbyjs.com/deploynow.svg" alt="Deploy to Gatsby Cloud">](https://www.gatsbyjs.com/dashboard/deploynow?url=https://github.com/gatsbyjs/gatsby-starter-theme-workspace)
+
+## tailwind css
+
+公式 doc の手順に加えて、修正を加える必要がある。
+
+`postcss.config.js` にて、
+`tailwind.config.js` の場所を絶対パスで指定する必要がある ↓。
+
+```js
+module.exports = {
+  plugins: {
+    tailwindcss: { config: `${__dirname}/tailwind.config.js` },
+    autoprefixer: {},
+  },
+};
+```
+
+`tailwind.config.js` にて、
+同様に解析対象( `content` )を theme 内だけに留めるようにする。
+
+```js
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  content: [
+    `${__dirname}/src/pages/**/*.{js,jsx,ts,tsx}`,
+    `${__dirname}/src/components/**/*.{js,jsx,ts,tsx}`,
+  ],
+  theme: {
+    extend: {},
+  },
+  plugins: [],
+};
+```
+
+theme を使う側では、tailwind 公式の手順通りにセットアップすれば、
+正常に使えるようになる。
