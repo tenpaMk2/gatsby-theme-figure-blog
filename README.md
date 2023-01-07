@@ -104,3 +104,9 @@ module.exports = {
 
 theme を使う側では、tailwind 公式の手順通りにセットアップすれば、
 正常に使えるようになる。
+
+参考になるのは
+[このへん](https://github.com/tailwindlabs/tailwindcss.com/issues/1099)
+とか
+[このへん](https://github.com/gatsbyjs/gatsby/issues/19395)
+かな。
