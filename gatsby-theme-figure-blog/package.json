@@ -10,6 +10,7 @@
     "react-dom": "^18.0.0"
   },
   "dependencies": {
+    "@tailwindcss/typography": "^0.5.8",
     "autoprefixer": "^10.4.13",
     "gatsby-plugin-image": "^3.3.2",
     "gatsby-plugin-postcss": "^6.3.0",
