@@ -26,6 +26,13 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
           }
         }
       }
+      postTags: allMarkdownRemark(sort: { frontmatter: { tags: ASC } }) {
+        nodes {
+          frontmatter {
+            tags
+          }
+        }
+      }
     }
   `);
 
@@ -52,6 +59,34 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
           id: node.id,
           previousPostId: previous?.id,
           nextPostId: next?.id,
+        },
+      });
+    });
+  }
+
+  const nodesForTags = result.data.postTags.nodes;
+
+  if (0 < nodesForTags.length) {
+    const allTags = nodesForTags
+      .map(({ frontmatter: { tags } }) => tags)
+      .flat();
+
+    const counts = {};
+    allTags.forEach((tag) => {
+      counts[tag] = (counts[tag] || 0) + 1;
+    });
+
+    console.log(`tag and post-counts.`);
+    console.log(counts);
+
+    const uniqueTags = new Set(allTags);
+
+    uniqueTags.forEach((tag) => {
+      createPage({
+        path: `/tags/${tag}`.replace(/\/\/+/g, `/`),
+        component: require.resolve(`./src/templates/tag.js`),
+        context: {
+          tagName: tag,
         },
       });
     });
