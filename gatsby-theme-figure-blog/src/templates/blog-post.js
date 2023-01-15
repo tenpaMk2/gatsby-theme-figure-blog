@@ -2,7 +2,7 @@ import * as React from "react";
 import { graphql } from "gatsby";
 
 const BlogPostTemplate = ({
-  data: { previous, next, site, markdownRemark: post },
+  data: { previous, next, site, markdownPost: post },
 }) => {
   return (
     <article
@@ -11,8 +11,8 @@ const BlogPostTemplate = ({
       itemType="http://schema.org/Article"
     >
       <header>
-        <h1 itemProp="headline">{post.frontmatter.title}</h1>
-        <p>{post.frontmatter.date}</p>
+        <h1 itemProp="headline">{post.title}</h1>
+        <p>{post.date}</p>
       </header>
       <section
         dangerouslySetInnerHTML={{ __html: post.html }}
