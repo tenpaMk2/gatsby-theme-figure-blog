@@ -35,29 +35,19 @@ export const pageQuery = graphql`
         title
       }
     }
-    markdownRemark(id: { eq: $id }) {
+    markdownPost(id: { eq: $id }) {
       excerpt(pruneLength: 160)
       html
-      frontmatter {
-        title
-        date(formatString: "YYYY/MM/DD HH:mm:ss")
-      }
+      title
+      date(formatString: "YYYY/MM/DD HH:mm:ss")
     }
-    previous: markdownRemark(id: { eq: $previousPostId }) {
-      fields {
-        slug
-      }
-      frontmatter {
-        title
-      }
+    previous: markdownPost(id: { eq: $previousPostId }) {
+      slug
+      title
     }
-    next: markdownRemark(id: { eq: $nextPostId }) {
-      fields {
-        slug
-      }
-      frontmatter {
-        title
-      }
+    next: markdownPost(id: { eq: $nextPostId }) {
+      slug
+      title
     }
   }
 `;

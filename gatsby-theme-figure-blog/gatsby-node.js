@@ -1,5 +1,43 @@
-const path = require(`path`);
-const { createFilePath } = require(`gatsby-source-filesystem`);
+const { slugify } = require("./src/libs/slugify");
+
+const markdownResolverPassthrough =
+  (fieldName) => async (source, args, context, info) => {
+    const type = info.schema.getType(`MarkdownRemark`);
+    const markdownNode = context.nodeModel.getNodeById({
+      id: source.parent,
+    });
+    const resolver = type.getFields()[fieldName].resolve;
+    const result = await resolver(markdownNode, args, context, info);
+    return result;
+  };
+
+exports.createSchemaCustomization = ({ actions }) => {
+  const { createFieldExtension, createTypes } = actions;
+
+  const typeDefs = `
+    type MarkdownPost implements Node {
+      canonicalUrl: String
+      date: Date! @dateformat
+      excerpt(pruneLength: Int = 140): String! @markdownpassthrough(fieldName: "excerpt")
+      html: String! @markdownpassthrough(fieldName: "html")
+      slug: String!
+      title: String!
+    }
+  `;
+  createTypes(typeDefs);
+
+  createFieldExtension({
+    name: `markdownpassthrough`,
+    args: {
+      fieldName: `String!`,
+    },
+    extend({ fieldName }) {
+      return {
+        resolve: markdownResolverPassthrough(fieldName),
+      };
+    },
+  });
+};
 
 /**
  * @type {import('gatsby').GatsbyNode['createPages']}
@@ -10,13 +48,11 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   // Get all markdown blog posts sorted by date
   const result = await graphql(`
     {
-      allMarkdownRemark(sort: { frontmatter: { date: ASC } }, limit: 1000) {
+      allMarkdownPost(sort: { date: ASC }) {
         edges {
           node {
             id
-            fields {
-              slug
-            }
+            slug
           }
           next {
             id
@@ -44,7 +80,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
     return;
   }
 
-  const edges = result.data.allMarkdownRemark.edges;
+  const edges = result.data.allMarkdownPost.edges;
 
   // Create blog posts pages
   // But only if there's at least one markdown file found at "content/blog" (defined in gatsby-config.js)
@@ -53,7 +89,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   if (edges.length > 0) {
     edges.forEach(({ node, next, previous }) => {
       createPage({
-        path: node.fields.slug,
+        path: node.slug,
         component: require.resolve(`./src/templates/blog-post.js`),
         context: {
           id: node.id,
@@ -96,16 +132,47 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
 /**
  * @type {import('gatsby').GatsbyNode['onCreateNode']}
  */
-exports.onCreateNode = ({ node, actions, getNode }) => {
-  const { createNodeField } = actions;
+exports.onCreateNode = ({
+  actions,
+  createContentDigest,
+  createNodeId,
+  getNode,
+  node,
+}) => {
+  const { createNode, createParentChildLink } = actions;
 
   if (node.internal.type === `MarkdownRemark`) {
-    const value = createFilePath({ node, getNode });
+    const relativeFilePath = getNode(node.parent).relativePath;
+    const subdirs = relativeFilePath.replace(/\.md$/g, ``).split(`/`);
+    const slug = slugify(...subdirs);
 
-    createNodeField({
-      name: `slug`,
-      node,
-      value,
+    const fieldData = {
+      canonicalUrl: node.frontmatter?.canonicalUrl
+        ? node.frontmatter?.canonicalUrl
+        : slug,
+      date: node.frontmatter?.date ? node.frontmatter.date : "2099-01-01 00:00",
+      slug,
+      title: node.frontmatter.title
+        ? node.frontmatter.title
+        : subdirs.slice(-1),
+    };
+
+    const id = createNodeId(`${node.id} >>> MarkdownPost`);
+
+    createNode({
+      ...fieldData,
+      // Required fields
+      id: id,
+      parent: node.id,
+      children: [],
+      internal: {
+        type: `MarkdownPost`,
+        contentDigest: createContentDigest(fieldData),
+        content: JSON.stringify(fieldData),
+        description: `MarkdownPost`,
+      },
     });
+
+    createParentChildLink({ parent: node, child: getNode(id) });
   }
 };
