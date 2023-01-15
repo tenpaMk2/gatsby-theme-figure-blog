@@ -2,7 +2,7 @@ import * as React from "react";
 import { graphql } from "gatsby";
 
 const Home = ({ data }) => {
-  const posts = data.allMarkdownRemark.nodes;
+  const posts = data.allMarkdownPost.nodes;
 
   if (posts.length === 0) {
     return (
@@ -17,7 +17,7 @@ const Home = ({ data }) => {
   return (
     <ol>
       {posts.map((post) => {
-        const title = post.frontmatter.title || `no title`;
+        const title = post.title || `no title`;
 
         return (
           <li key={title}>
@@ -30,7 +30,7 @@ const Home = ({ data }) => {
                 <h2>
                   <span itemProp="headline">{title}</span>
                 </h2>
-                <small>{post.frontmatter.date}</small>
+                <small>{post.date}</small>
               </header>
               <section>
                 <p itemProp="description">{post.excerpt}</p>
@@ -59,13 +59,11 @@ export const pageQuery = graphql`
         title
       }
     }
-    allMarkdownRemark(sort: { frontmatter: { date: DESC } }) {
+    allMarkdownPost(sort: { date: DESC }) {
       nodes {
+        date(formatString: "YYYY-MM-DD HH:mm")
         excerpt
-        frontmatter {
-          date(formatString: "YYYY-MM-DD HH:mm")
-          title
-        }
+        title
       }
     }
   }
