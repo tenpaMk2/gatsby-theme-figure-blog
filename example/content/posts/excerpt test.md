@@ -62,3 +62,7 @@ query MyQuery {
   "extensions": {}
 }
 ```
+
+2023/01/15 追記:
+[公式 Doc](https://www.gatsbyjs.com/plugins/gatsby-transformer-remark/#excerpts-for-non-latin-languages)
+によると、 `excerpt(truncate = true)` にすれば良いらしい。
