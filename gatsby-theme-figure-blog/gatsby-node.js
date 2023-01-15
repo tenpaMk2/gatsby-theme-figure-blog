@@ -18,7 +18,7 @@ exports.createSchemaCustomization = ({ actions }) => {
     type MarkdownPost implements Node {
       canonicalUrl: String
       date: Date! @dateformat
-      excerpt(pruneLength: Int = 140): String! @markdownpassthrough(fieldName: "excerpt")
+      excerpt(pruneLength: Int = 140, truncate: Boolean = true): String! @markdownpassthrough(fieldName: "excerpt")
       html: String! @markdownpassthrough(fieldName: "html")
       slug: String!
       title: String!
