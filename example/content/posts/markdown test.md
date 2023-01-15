@@ -1,6 +1,10 @@
 ---
 title: markdown test
 date: "2023-01-08 12:11"
+tags:
+  - プログラミング
+  - markdown
+  - ajo'ajo
 ---
 
 ## heading\#\#
@@ -24,11 +28,37 @@ date: "2023-01-08 12:11"
 - _em_
 - **strong**
 
+1. nested list
+   - hoge
+   - fuga
+2. nested list
+   1. foo
+   2. bar
+3. 3 is best
+   - a
+     - b
+       - c
+4. 4 is Guido Mista
+   - very long long long long long long long long long long long long long long long long long long long long long long long long long long long long text.
+   - not very short short short short short short short short short short short short short short short short short short short short short short short short text.
+   - multi
+     line
+     list.
+
 [google link](https://www.google.com/)
 
 | left align | center align | right align |
 | :--------- | :----------: | ----------: |
 | left       |    center    |       right |
+
+monospace font check.
+
+```markdown
+| left align |  中央  | right align |
+| :--------- | :----: | ----------: |
+| 012345     | center |       right |
+| 一二三     | center |          右 |
+```
 
 `inline code` , `日本語インラインコード` .
 
@@ -86,6 +116,12 @@ quote block.
 > ## Required: Pick a PrismJS theme or create your own
 >
 > PrismJS ships with a number of themes (previewable on the PrismJS website) that you can easily include in your Gatsby site, or you can build your own by copying and modifying an example (which is what we’ve done for gatsbyjs.com).
+>
+> paragraph2.
+>
+> ## second heading ninja
+>
+> AIEEEE!!
 
 引用ブロック.
 
@@ -96,3 +132,11 @@ quote block.
 > - 引用箇条書き
 > - 引用箇条書き
 > - 引用箇条書き
+>
+> 引用本文 2。
+>
+> ## 引用ヘッダー 2 ニンジャ
+>
+> アイエエエエ! ニンジャ!? ニンジャナンデ!?
+
+end.
