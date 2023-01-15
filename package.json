@@ -7,7 +7,7 @@
     "build": "yarn workspace example build"
   },
   "workspaces": [
-    "gatsby-theme-figure-blog",
+    "theme",
     "example"
   ]
 }

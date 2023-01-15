@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "gatsby": "^5.3.3",
-    "gatsby-theme-figure-blog": "^1.0.0",
+    "@tenpamk2/gatsby-theme-figure-blog": "^1.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   }

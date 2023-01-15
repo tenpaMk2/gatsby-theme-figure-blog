@@ -1,6 +1,6 @@
 module.exports = {
   plugins: [
     "gatsby-plugin-postcss",
-    { resolve: `gatsby-theme-figure-blog`, options: {} },
+    { resolve: `@tenpamk2/gatsby-theme-figure-blog`, options: {} },
   ],
 };
