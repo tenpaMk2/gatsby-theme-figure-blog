@@ -147,9 +147,7 @@ exports.onCreateNode = ({
     const slug = slugify(...subdirs);
 
     const fieldData = {
-      canonicalUrl: node.frontmatter?.canonicalUrl
-        ? node.frontmatter?.canonicalUrl
-        : slug,
+      canonicalUrl: node.frontmatter?.canonicalUrl || ``,
       date: node.frontmatter?.date ? node.frontmatter.date : "2099-01-01 00:00",
       slug,
       title: node.frontmatter.title

@@ -1,5 +1,6 @@
 import * as React from "react";
 import { graphql } from "gatsby";
+import { Seo } from "../components/seo";
 
 const BlogPostTemplate = ({
   data: { previous, next, site, markdownPost: post },
@@ -24,8 +25,14 @@ const BlogPostTemplate = ({
 
 export default BlogPostTemplate;
 
+export const Head = ({
+  data: {
+    markdownPost: { canonicalUrl, slug, title },
+  },
+}) => <Seo canonicalUrl={canonicalUrl} pathname={slug} title={title} />;
+
 export const pageQuery = graphql`
-  query BlogPostBySlug(
+  query BlogPostById(
     $id: String!
     $previousPostId: String
     $nextPostId: String
@@ -36,10 +43,12 @@ export const pageQuery = graphql`
       }
     }
     markdownPost(id: { eq: $id }) {
+      canonicalUrl
+      date(formatString: "YYYY/MM/DD HH:mm:ss")
       excerpt(pruneLength: 160)
       html
       title
-      date(formatString: "YYYY/MM/DD HH:mm:ss")
+      slug
     }
     previous: markdownPost(id: { eq: $previousPostId }) {
       slug
