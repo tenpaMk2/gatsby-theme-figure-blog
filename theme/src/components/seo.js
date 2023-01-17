@@ -84,12 +84,12 @@ const Seo = ({
       <meta property="og:url" content={seo.url} />
       <meta property="og:title" content={seo.title} />
       <meta property="og:description" content={seo.description} />
-      <meta property="og:image" content={seo.image} />
+      <meta property="og:image" content={seo.imageUrl} />
       <meta property="og:image:alt" content={seo.description} />
       {/* <meta property="og:image:width" content={seo.description} />
       <meta property="og:image:height" content={seo.description} /> */}
       <meta property="og:type" content={seo.ogType} />
-      <meta property="og:locale" content="ja_JP" />
+      <meta property="og:locale" content={seo.ogLocale} />
 
       {/* twitter doc: <https://developer.twitter.com/en/docs/twitter-for-websites/cards/overview/markup> */}
       <meta name="twitter:card" content="summary_large_image" />
