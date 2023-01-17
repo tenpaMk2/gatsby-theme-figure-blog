@@ -8,7 +8,6 @@ const Seo = ({
   description,
   imagePath,
   isTopPage = false,
-  keywords,
   pathname,
   title,
   children,
@@ -48,7 +47,6 @@ const Seo = ({
     applicationName: applicationName || ``,
     author: siteMetadata.author?.name || ``,
     description: description || siteMetadata.description,
-    keywords: keywords || ``,
     url: addTrailingSlash(`${url.origin}${url.pathname}`),
     imageUrl: imagePath
       ? addTrailingSlash(`${imageUrl.origin}${imageUrl.pathname}`)
@@ -78,7 +76,8 @@ const Seo = ({
       <meta name="author" content={seo.author} />
       <meta name="description" content={seo.description} />
       <meta name="generator" content="gatsby" />
-      <meta name="keywords" content={seo.keywords} />
+
+      {/* `keywords` are not necessary. See [Google's blog](https://developers.google.com/search/blog/2009/09/google-does-not-use-keywords-meta-tag) . */}
 
       {/* Facebook doc: <https://developers.facebook.com/docs/sharing/webmasters/> */}
       <meta property="og:url" content={seo.url} />
