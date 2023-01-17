@@ -2,7 +2,7 @@ module.exports = {
   siteMetadata: {
     title: `tenpaMk2's blog`,
     description: `フィギュア、ドール、プログラミング、バイク、音楽についてしゃべる`,
-    siteUrl: `https://tenpamk2-blog.netlify.app/`, // Must append trailing `/` . TODO: After querying, trailing `/` is dissapeard. Does it affect?
+    siteUrl: `https://tenpamk2-blog.netlify.app`, // must not end with a `/` . See [Gatsby doc](https://www.gatsbyjs.com/docs/location-data-from-props/#getting-the-absolute-url-of-a-page)
     author: {
       name: `tenpaMk2`,
       summary: `インドアクソオタク。`,
