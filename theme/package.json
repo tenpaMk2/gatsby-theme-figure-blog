@@ -41,5 +41,9 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/tenpaMk2/gatsby-theme-figure-blog.git"
+  },
+  "devDependencies": {
+    "prettier": "^2.8.3",
+    "prettier-plugin-tailwindcss": "^0.2.1"
   }
 }
