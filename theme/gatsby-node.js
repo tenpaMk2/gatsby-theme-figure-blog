@@ -1,3 +1,4 @@
+const { kebabCase } = require("./src/libs/kebab-case");
 const { slugify } = require("./src/libs/slugify");
 
 const markdownResolverPassthrough =
@@ -21,7 +22,13 @@ exports.createSchemaCustomization = ({ actions }) => {
       excerpt(pruneLength: Int = 140, truncate: Boolean = true): String! @markdownpassthrough(fieldName: "excerpt")
       html: String! @markdownpassthrough(fieldName: "html")
       slug: String!
+      tags: [PostTag]
       title: String!
+    }
+
+    type PostTag {
+      name: String
+      slug: String
     }
   `;
   createTypes(typeDefs);
@@ -146,10 +153,16 @@ exports.onCreateNode = ({
     const subdirs = relativeFilePath.replace(/\.md$/g, ``).split(`/`);
     const slug = slugify(...subdirs);
 
+    const modifiedTags = node.frontmatter.tags?.map((tag) => ({
+      name: tag,
+      slug: kebabCase(tag),
+    }));
+
     const fieldData = {
       canonicalUrl: node.frontmatter?.canonicalUrl || ``,
       date: node.frontmatter?.date ? node.frontmatter.date : "2099-01-01 00:00",
       slug,
+      tags: modifiedTags,
       title: node.frontmatter.title
         ? node.frontmatter.title
         : subdirs.slice(-1),
