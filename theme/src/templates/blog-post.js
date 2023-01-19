@@ -1,25 +1,28 @@
 import * as React from "react";
 import { graphql } from "gatsby";
 import { Seo } from "../components/seo";
+import Layout from "../components/layout";
 
 const BlogPostTemplate = ({
   data: { previous, next, site, markdownPost: post },
 }) => {
   return (
-    <article
-      className="blog-post prose bg-slate-50 dark:prose-invert dark:bg-slate-700"
-      itemScope
-      itemType="http://schema.org/Article"
-    >
-      <header>
-        <h1 itemProp="headline">{post.title}</h1>
-        <p>{post.date}</p>
-      </header>
-      <section
-        dangerouslySetInnerHTML={{ __html: post.html }}
-        itemProp="articleBody"
-      />
-    </article>
+    <Layout>
+      <article
+        className="blog-post prose bg-slate-50 dark:prose-invert dark:bg-slate-700"
+        itemScope
+        itemType="http://schema.org/Article"
+      >
+        <header>
+          <h1 itemProp="headline">{post.title}</h1>
+          <p>{post.date}</p>
+        </header>
+        <section
+          dangerouslySetInnerHTML={{ __html: post.html }}
+          itemProp="articleBody"
+        />
+      </article>
+    </Layout>
   );
 };
 
@@ -47,8 +50,8 @@ export const pageQuery = graphql`
       date(formatString: "YYYY/MM/DD HH:mm:ss")
       excerpt(pruneLength: 160)
       html
-      title
       slug
+      title
     }
     previous: markdownPost(id: { eq: $previousPostId }) {
       slug
