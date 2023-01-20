@@ -9,13 +9,14 @@ const BlogPostTemplate = ({
   return (
     <Layout>
       <article
-        className="blog-post prose bg-slate-50 dark:prose-invert dark:bg-slate-700"
+        className="blog-post prose prose-invert m-8 w-full max-w-screen-lg rounded-xl bg-slate-700 p-8"
         itemScope
         itemType="http://schema.org/Article"
       >
         <header>
-          <h1 itemProp="headline">{post.title}</h1>
+          <h1 itemProp="headline mb-0">{post.title}</h1>
           <p>{post.date}</p>
+          <hr className="border border-slate-500" />
         </header>
         <section
           dangerouslySetInnerHTML={{ __html: post.html }}

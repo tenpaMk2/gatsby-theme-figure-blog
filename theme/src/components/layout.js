@@ -20,8 +20,8 @@ const Layout = ({ children }) => {
   );
 
   return (
-    <div>
-      <header className="relative">
+    <div className="flex flex-wrap justify-center bg-slate-800">
+      <header className="relative w-full flex-auto">
         {/* See [gatsby-plugin-image doc](https://www.gatsbyjs.com/docs/reference/built-in-components/gatsby-plugin-image/#shared-props) */}
         <StaticImage
           src="../images/header.jpg"
@@ -48,8 +48,8 @@ const Layout = ({ children }) => {
           <Link to="/">{title}</Link>
         </h1>
       </header>
-      <main>{children}</main>
-      <footer>
+      <main className="flex w-full flex-auto justify-center">{children}</main>
+      <footer className="m-4 text-gray-300">
         © {new Date().getFullYear()}, Built with
         {` `}
         <a href="https://www.gatsbyjs.com">Gatsby</a>
