@@ -41,7 +41,7 @@ exports.onCreateNode = ({ node }) => {
 
 VSCode でデバッグして `node` のプロパティを見ると ↓ のようになってる。
 
-![undefined_property_when_on-create-node](./images/undefined_property_when_on-create-node.png);
+![undefined_property_when_on-create-node](./images/undefined_property_when_on-create-node.png)
 
 確かに `excerpt` や `html` がいない。
 
