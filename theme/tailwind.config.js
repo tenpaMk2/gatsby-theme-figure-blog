@@ -27,6 +27,9 @@ module.exports = {
             "code::after": {
               content: null,
             },
+            ".gatsby-resp-image-wrapper": {
+              "box-shadow": "0 0 1rem rgba(0, 0, 0, 0.5)",
+            },
           },
         },
       },
