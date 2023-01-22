@@ -4,9 +4,12 @@ import { Seo } from "@tenpaMk2/gatsby-theme-figure-blog/src/components/seo";
 import Layout from "@tenpaMk2/gatsby-theme-figure-blog/src/components/layout";
 
 // `location` : See [Gatsby doc](https://www.gatsbyjs.com/docs/location-data-from-props/#getting-the-absolute-url-of-a-page)
-const Home = ({ data, location }) => {
-  const posts = data.allMarkdownPost.nodes;
-
+const Home = ({
+  data: {
+    allMarkdownPost: { nodes: posts },
+  },
+  location,
+}) => {
   if (posts.length === 0) {
     return (
       <p>
@@ -17,33 +20,31 @@ const Home = ({ data, location }) => {
     );
   }
 
+  const lis = posts.map((post) => {
+    const title = post.title || `no title`;
+
+    return (
+      <li key={title}>
+        <article
+          className="prose prose-invert"
+          itemScope
+          itemType="http://schema.org/Article"
+        >
+          <header>
+            <h2 itemProp="headline">{title}</h2>
+            <time datetime={post.date}>{post.date}</time>
+          </header>
+          <section>
+            <p itemProp="description">{post.excerpt}</p>
+          </section>
+        </article>
+      </li>
+    );
+  });
+
   return (
     <Layout>
-      <ol>
-        {posts.map((post) => {
-          const title = post.title || `no title`;
-
-          return (
-            <li key={title}>
-              <article
-                className="post-list-item"
-                itemScope
-                itemType="http://schema.org/Article"
-              >
-                <header>
-                  <h2>
-                    <span itemProp="headline">{title}</span>
-                  </h2>
-                  <small>{post.date}</small>
-                </header>
-                <section>
-                  <p itemProp="description">{post.excerpt}</p>
-                </section>
-              </article>
-            </li>
-          );
-        })}
-      </ol>
+      <ol>{lis}</ol>
     </Layout>
   );
 };
