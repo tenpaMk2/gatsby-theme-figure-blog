@@ -3,19 +3,16 @@ import { graphql } from "gatsby";
 
 const TagTemplate = ({
   data: {
-    allMarkdownRemark: { nodes: posts },
+    allMarkdownPost: { nodes: posts },
   },
 }) => {
-  const postCards = posts.map((post) => {
+  const postCards = posts.map(({ title, date }) => {
     return (
       <article itemScope itemType="http://schema.org/Article">
         <header>
-          <h1 itemProp="headline">{post.frontmatter.title}</h1>
-          <time
-            itemProp="dateCreated datePublished"
-            dateTime={post.frontmatter.date}
-          >
-            {post.frontmatter.date}
+          <h1 itemProp="headline">{title}</h1>
+          <time itemProp="dateCreated datePublished" dateTime={date}>
+            {date}
           </time>
         </header>
         <section itemProp="articleBody">{post.excerpt}</section>
@@ -29,13 +26,16 @@ const TagTemplate = ({
 export default TagTemplate;
 
 export const pageQuery = graphql`
-  query TagQuery($tagName: String!) {
-    allMarkdownRemark(filter: { frontmatter: { tags: { in: [$tagName] } } }) {
+  query TagQuery($slug: String!) {
+    allMarkdownPost(filter: { tags: { elemMatch: { slug: { eq: $slug } } } }) {
       nodes {
-        frontmatter {
-          title
-          date
+        tags {
+          name
+          slug
         }
+        slug
+        title
+        date
         excerpt
       }
     }

@@ -1,5 +1,6 @@
 const { kebabCase } = require("./src/libs/kebab-case");
 const { slugify } = require("./src/libs/slugify");
+const { getOptions } = require("./utils/default-options");
 
 const markdownResolverPassthrough =
   (fieldName) => async (source, args, context, info) => {
@@ -46,11 +47,31 @@ exports.createSchemaCustomization = ({ actions }) => {
   });
 };
 
+exports.sourceNodes = ({ actions, createContentDigest }, themeOptions) => {
+  const { createNode } = actions;
+  const options = getOptions(themeOptions);
+
+  createNode({
+    ...options,
+    id: `@tenpamk2/gatsby-theme-figure-blog`,
+    parent: null,
+    children: [],
+    internal: {
+      type: `FigureBlogConfig`,
+      contentDigest: createContentDigest(options),
+      content: JSON.stringify(options),
+      description: `Options for @tenpamk2/gatsby-theme-figure-blog`,
+    },
+  });
+};
+
 /**
  * @type {import('gatsby').GatsbyNode['createPages']}
  */
-exports.createPages = async ({ graphql, actions, reporter }) => {
+exports.createPages = async ({ graphql, actions, reporter }, themeOptions) => {
   const { createPage } = actions;
+
+  const { basePath, tagsPath } = getOptions(themeOptions);
 
   // Get all markdown blog posts sorted by date
   const result = await graphql(`
@@ -59,6 +80,10 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
         edges {
           node {
             id
+            tags {
+              name
+              slug
+            }
             slug
           }
           next {
@@ -66,13 +91,6 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
           }
           previous {
             id
-          }
-        }
-      }
-      postTags: allMarkdownRemark(sort: { frontmatter: { tags: ASC } }) {
-        nodes {
-          frontmatter {
-            tags
           }
         }
       }
@@ -105,32 +123,55 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
         },
       });
     });
-  }
 
-  const nodesForTags = result.data.postTags.nodes;
-
-  if (0 < nodesForTags.length) {
-    const allTags = nodesForTags
-      .map(({ frontmatter: { tags } }) => tags)
-      .flat();
+    const allTags = edges
+      .map(({ node: { tags } }) => tags)
+      .flat()
+      .filter((tag) => tag); // remove `null` that is no tag in the post.
 
     const counts = {};
-    allTags.forEach((tag) => {
-      counts[tag] = (counts[tag] || 0) + 1;
+    allTags.forEach(({ name }) => {
+      counts[name] = (counts[name] || 0) + 1;
     });
 
-    console.log(`tag and post-counts.`);
+    console.log(`tag-name and post-counts.`);
     console.log(counts);
 
-    const uniqueTags = new Set(allTags);
+    uniqueTagNames = Array.from(
+      new Set(allTags.map(({ name }) => name))
+    ).filter((x) => x);
+    uniqueTagSlugs = Array.from(
+      new Set(allTags.map(({ slug }) => slug))
+    ).filter((x) => x);
 
-    uniqueTags.forEach((tag) => {
+    if (uniqueTagNames.length !== uniqueTagSlugs.length) {
+      reporter.panicOnBuild(
+        `There was an error creating tag pages. Maybe there is a distortion in the tag.`,
+        new Error(
+          `Unique tag-names length and unique tag-slugs length are not match.`
+        )
+      );
+      console.log(`uniqueTagNames:${uniqueTagNames}`);
+      console.log(`uniqueTagSlugs:${uniqueTagSlugs}`);
+      return;
+    }
+
+    // make unique tag info.
+    const tagInfos = [];
+    for (let i = 0; i < uniqueTagNames.length; i++) {
+      const name = uniqueTagNames[i];
+      const slug = uniqueTagSlugs[i];
+      const count = counts[name];
+      tagInfos.push({ name, slug, count });
+    }
+    console.log(tagInfos);
+
+    tagInfos.forEach(({ name, slug, count }) => {
+      console.log(`basePath:${basePath}, tagsPath:${tagsPath}, slug:${slug}`);
       createPage({
-        path: `/tags/${tag}`.replace(/\/\/+/g, `/`),
+        path: slugify(basePath, tagsPath, slug),
         component: require.resolve(`./src/templates/tag.js`),
-        context: {
-          tagName: tag,
-        },
+        context: { slug },
       });
     });
   }
@@ -139,19 +180,22 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
 /**
  * @type {import('gatsby').GatsbyNode['onCreateNode']}
  */
-exports.onCreateNode = ({
-  actions,
-  createContentDigest,
-  createNodeId,
-  getNode,
-  node,
-}) => {
+exports.onCreateNode = (
+  { actions, createContentDigest, createNodeId, getNode, node },
+  themeOptions
+) => {
   const { createNode, createParentChildLink } = actions;
+
+  const { basePath, postPath } = getOptions(themeOptions);
 
   if (node.internal.type === `MarkdownRemark`) {
     const relativeFilePath = getNode(node.parent).relativePath;
     const subdirs = relativeFilePath.replace(/\.md$/g, ``).split(`/`);
-    const slug = slugify(...subdirs);
+
+    console.log(
+      `basePath:${basePath}, postsPath:${postPath}, subdirs:${subdirs}`
+    );
+    const slug = slugify(basePath, postPath, ...subdirs);
 
     const modifiedTags = node.frontmatter.tags?.map((tag) => ({
       name: tag,
@@ -160,7 +204,7 @@ exports.onCreateNode = ({
 
     const fieldData = {
       canonicalUrl: node.frontmatter?.canonicalUrl || ``,
-      date: node.frontmatter?.date ? node.frontmatter.date : "2099-01-01 00:00",
+      date: node.frontmatter?.date ? node.frontmatter.date : "2999-01-01 00:00",
       slug,
       tags: modifiedTags,
       title: node.frontmatter.title
