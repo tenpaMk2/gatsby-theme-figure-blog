@@ -3,7 +3,7 @@ title: gatsbyの引数とかのAPI仕様
 date: "2023-01-14 22:32"
 tags:
   - プログラミング
-  - gatsby
+  - Gatsby
 ---
 
 `onCreateNode()` や `createPages()` なんかの引数の API 仕様がよく分からんかった。

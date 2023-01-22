@@ -3,7 +3,7 @@ title: gatsbyでonCreateNode時にはまだ生成されてないプロパティ�
 date: "2023-01-15 12:47"
 tags:
   - プログラミング
-  - gatsby
+  - Gatsby
 ---
 
 例えば、 `gatsby-transformer-remark` を使っていると、

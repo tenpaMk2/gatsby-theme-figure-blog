@@ -2,7 +2,7 @@
 title: gatsbyのStaticImageとTailwind CSSを同時に使う
 date: "2023-01-19 22:31"
 tags:
-  - gatsby
+  - Gatsby
   - Tailwind CSS
   - プログラミング
 ---

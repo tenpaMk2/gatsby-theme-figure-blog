@@ -3,7 +3,7 @@ title: gatsby-remark-classesは使えないかも
 date: "2023-01-08 19:16"
 tags:
   - プログラミング
-  - gatsby
+  - Gatsby
 ---
 
 [gatsby-remark-classes](https://www.gatsbyjs.com/plugins/gatsby-remark-classes/)

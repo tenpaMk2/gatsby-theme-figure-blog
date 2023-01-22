@@ -3,7 +3,7 @@ title: Tailwind CSSをgatsby-themeで使う
 date: "2023-01-15 18:19"
 tags:
   - プログラミング
-  - gatsby
+  - Gatsby
 ---
 
 公式 doc の手順に加えて、修正を加える必要がある。

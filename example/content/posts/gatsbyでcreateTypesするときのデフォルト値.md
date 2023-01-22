@@ -3,7 +3,7 @@ title: gatsbyでcreateTypesするときのデフォルト値
 date: "2023-01-15 0:59"
 tags:
   - プログラミング
-  - gatsby
+  - Gatsby
 ---
 
 GraphQL の型定義をするときは、

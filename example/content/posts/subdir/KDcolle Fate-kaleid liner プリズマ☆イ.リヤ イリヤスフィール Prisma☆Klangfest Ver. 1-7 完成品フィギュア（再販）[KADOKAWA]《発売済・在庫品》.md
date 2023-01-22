@@ -3,7 +3,7 @@ title: KDcolle Fate/kaleid liner プリズマ☆イリヤ イリヤスフィー�
 date: "2023-01-14 23:04"
 tags:
   - フィギュア
-  - gatsby
+  - Gatsby
 ---
 
 URL テストぅ ❗

@@ -2,7 +2,7 @@
 title: a !== b
 date: "2023-01-14 23:53"
 tags:
-  - gatsby
+  - Gatsby
 ---
 
 GraphQL エディタ( `http://localhost:8000/___graphql` )は
