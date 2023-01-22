@@ -1,6 +1,6 @@
 import * as React from "react";
 import { graphql, Link, useStaticQuery } from "gatsby";
-import { StaticImage } from "gatsby-plugin-image";
+import HeaderImage from "./header-image";
 
 const Layout = ({ children }) => {
   const {
@@ -22,14 +22,7 @@ const Layout = ({ children }) => {
   return (
     <div className="flex flex-wrap justify-center bg-slate-800 text-gray-300">
       <header className="relative w-full flex-auto">
-        {/* See [gatsby-plugin-image doc](https://www.gatsbyjs.com/docs/reference/built-in-components/gatsby-plugin-image/#shared-props) */}
-        <StaticImage
-          src="../images/header.jpg"
-          alt="header image"
-          // See [gatsby-plugin-image doc](https://www.gatsbyjs.com/docs/reference/built-in-components/gatsby-plugin-image/#layout)
-          layout="fullWidth"
-          className="h-72"
-        />
+        <HeaderImage />
         <div className="absolute top-0 left-0 text-white">
           <nav>
             <Link to="/">Home</Link>
