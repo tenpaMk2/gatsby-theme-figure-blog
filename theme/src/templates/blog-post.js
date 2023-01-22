@@ -2,27 +2,23 @@ import * as React from "react";
 import { graphql } from "gatsby";
 import { Seo } from "../components/seo";
 import Layout from "../components/layout";
+import Post from "../components/post";
 
 const BlogPostTemplate = ({
   data: { previous, next, site, markdownPost: post },
 }) => {
   return (
     <Layout>
-      <article
-        className="blog-post prose prose-invert m-8 w-full max-w-screen-lg rounded-xl bg-slate-700 p-8"
-        itemScope
-        itemType="http://schema.org/Article"
-      >
-        <header>
-          <h1 itemProp="headline mb-0">{post.title}</h1>
-          <p>{post.date}</p>
-          <hr className="border border-slate-500" />
-        </header>
-        <section
-          dangerouslySetInnerHTML={{ __html: post.html }}
-          itemProp="articleBody"
-        />
-      </article>
+      <Post
+        title={post.title}
+        date={post.date}
+        html={post.html}
+        tags={post.tags}
+      />
+      <div className="m-8 flex w-full justify-between text-xl">
+        <p>🚧previous🚧</p>
+        <p>🚧next🚧</p>
+      </div>
     </Layout>
   );
 };
@@ -52,6 +48,10 @@ export const pageQuery = graphql`
       excerpt(pruneLength: 160)
       html
       slug
+      tags {
+        name
+        slug
+      }
       title
     }
     previous: markdownPost(id: { eq: $previousPostId }) {
