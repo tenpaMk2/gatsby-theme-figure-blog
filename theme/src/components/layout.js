@@ -41,7 +41,7 @@ const Layout = ({ children }) => {
           <Link to="/">{title}</Link>
         </h1>
       </header>
-      <main className="flex w-full max-w-screen-lg flex-auto flex-wrap justify-center">
+      <main className="flex w-full max-w-screen-lg flex-auto flex-wrap justify-center p-2">
         {children}
       </main>
       <footer className="m-4 w-full flex-auto text-center">
