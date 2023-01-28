@@ -16,11 +16,13 @@ const markdownResolverPassthrough =
 exports.createSchemaCustomization = ({ actions }) => {
   const { createFieldExtension, createTypes } = actions;
 
+  // About `@fileByRelativePath` , see [Gatsby issue](https://github.com/gatsbyjs/gatsby/issues/18271) .
   const typeDefs = `
     type MarkdownPost implements Node {
       canonicalUrl: String
       date: Date! @dateformat
       excerpt(pruneLength: Int = 140, truncate: Boolean = true): String! @markdownpassthrough(fieldName: "excerpt")
+      heroImage: File @fileByRelativePath
       html: String! @markdownpassthrough(fieldName: "html")
       slug: String!
       tags: [PostTag]
@@ -205,6 +207,7 @@ exports.onCreateNode = (
     const fieldData = {
       canonicalUrl: node.frontmatter?.canonicalUrl || ``,
       date: node.frontmatter?.date ? node.frontmatter.date : "2999-01-01 00:00",
+      heroImage: node.frontmatter?.heroImage,
       slug,
       tags: modifiedTags,
       title: node.frontmatter.title
