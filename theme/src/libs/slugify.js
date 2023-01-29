@@ -31,14 +31,8 @@ const { kebabCase } = require("./kebab-case");
  * @returns {string} URL that begins and ends with `/` .
  */
 const slugify = (...dirs) => {
-  dirs.forEach((dir) => {
-    if (typeof dir !== `string`) {
-      throw new TypeError(`All inputs mast be string.`);
-    }
-  });
-
-  const url = dirs.map((dir) => kebabCase(dir)).join(`/`);
-
+  const validDirs = dirs.filter((dir) => dir?.toString);
+  const url = validDirs.map((dir) => kebabCase(dir.toString())).join(`/`);
   return `/${url}/`.replace(/\/\/+/g, `/`);
 };
 

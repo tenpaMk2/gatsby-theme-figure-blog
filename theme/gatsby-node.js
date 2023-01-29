@@ -21,7 +21,7 @@ exports.createSchemaCustomization = ({ actions }) => {
     type MarkdownPost implements Node {
       canonicalUrl: String
       date: Date! @dateformat
-      excerpt(pruneLength: Int = 140, truncate: Boolean = true): String! @markdownpassthrough(fieldName: "excerpt")
+      excerpt(pruneLength: Int = 140, truncate: Boolean = true, format: MarkdownExcerptFormats = HTML): String! @markdownpassthrough(fieldName: "excerpt")
       heroImage: File @fileByRelativePath
       html: String! @markdownpassthrough(fieldName: "html")
       slug: String!
@@ -73,7 +73,7 @@ exports.sourceNodes = ({ actions, createContentDigest }, themeOptions) => {
 exports.createPages = async ({ graphql, actions, reporter }, themeOptions) => {
   const { createPage } = actions;
 
-  const { basePath, tagsPath } = getOptions(themeOptions);
+  const { basePath, pagesPath, tagsPath } = getOptions(themeOptions);
 
   // Get all markdown blog posts sorted by date
   const result = await graphql(`
@@ -122,6 +122,25 @@ exports.createPages = async ({ graphql, actions, reporter }, themeOptions) => {
           id: node.id,
           previousPostId: previous?.id,
           nextPostId: next?.id,
+        },
+      });
+    });
+
+    // Create `/page/{num}/`
+    const postsPerPage = 6; // TODO: theme-options
+    const numPages = Math.ceil(edges.length / postsPerPage);
+
+    [...new Array(numPages)].forEach((_, i) => {
+      console.log(slugify(basePath, pagesPath, i + 1));
+      createPage({
+        // path: i === 0 ? `/blog` : `/blog/${i + 1}`,
+        path: slugify(basePath, pagesPath, i + 1),
+        component: require.resolve("./src/templates/page.js"),
+        context: {
+          limit: postsPerPage,
+          skip: i * postsPerPage,
+          numPages,
+          currentPage: i + 1,
         },
       });
     });

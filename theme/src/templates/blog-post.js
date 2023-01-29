@@ -3,18 +3,22 @@ import { graphql } from "gatsby";
 import { Seo } from "../components/seo";
 import Layout from "../components/layout";
 import Post from "../components/post";
+import PostsWrapper from "../components/posts-wrapper";
 
 const BlogPostTemplate = ({
   data: { previous, next, site, markdownPost: post },
 }) => {
   return (
     <Layout>
-      <Post
-        title={post.title}
-        date={post.date}
-        html={post.html}
-        tags={post.tags}
-      />
+      <PostsWrapper>
+        <Post
+          title={post.title}
+          date={post.date}
+          html={post.html}
+          slug={post.slug}
+          tags={post.tags}
+        />
+      </PostsWrapper>
       <div className="m-8 flex w-full justify-between text-xl">
         <p>🚧previous🚧</p>
         <p>🚧next🚧</p>
@@ -31,12 +35,8 @@ export const Head = ({
   },
 }) => <Seo canonicalUrl={canonicalUrl} pathname={slug} title={title} />;
 
-export const pageQuery = graphql`
-  query BlogPostById(
-    $id: String!
-    $previousPostId: String
-    $nextPostId: String
-  ) {
+export const postQuery = graphql`
+  query ($id: String!, $previousPostId: String, $nextPostId: String) {
     site {
       siteMetadata {
         title

@@ -37,7 +37,9 @@
  * @returns {string} converted result.
  */
 const kebabCase = (str) => {
-  if (typeof str !== `string`) throw new TypeError(`str must be string.`);
+  if (!str?.replace) throw new Error(`Must have a \`replace\` method.`);
+  if (!str?.toLowerCase) throw new Error(`Must have a \`toLowerCase\` method.`);
+
   return str
     .replace(/[ !"#$%&'()*+,/:;<=>?@\[\\\]^`{|}]/g, `-`)
     .replace(/[\u0000-\u001F\u007F]/g, ``)
