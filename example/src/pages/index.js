@@ -24,7 +24,14 @@ const Home = ({
 
   const posts = nodes.map(({ date, excerpt, slug, tags, title }) => {
     return (
-      <Post title={title} date={date} html={excerpt} slug={slug} tags={tags} />
+      <Post
+        title={title}
+        date={date}
+        html={excerpt}
+        slug={slug}
+        tags={tags}
+        needReadMore={true}
+      />
     );
   });
 
