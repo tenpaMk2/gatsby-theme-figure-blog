@@ -15,8 +15,11 @@ const Post = ({ title, date, html, slug, tags, needReadMore = false }) => {
   ) : null;
 
   const readMore = needReadMore ? (
-    <p className="text-xl">
-      <Link to={slug} className="underline">
+    <p className="my-4 text-xl">
+      <Link
+        to={slug}
+        className="flex w-max items-center rounded bg-sky-500 p-3 font-semibold leading-none text-white hover:bg-sky-400"
+      >
         →Read More
       </Link>
     </p>
