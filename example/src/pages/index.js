@@ -2,15 +2,17 @@ import * as React from "react";
 import { graphql } from "gatsby";
 import { Seo } from "@tenpaMk2/gatsby-theme-figure-blog/src/components/seo";
 import Layout from "@tenpaMk2/gatsby-theme-figure-blog/src/components/layout";
+import Post from "@tenpaMk2/gatsby-theme-figure-blog/src/components/post";
+import PostsWrapper from "@tenpaMk2/gatsby-theme-figure-blog/src/components/posts-wrapper";
 
 // `location` : See [Gatsby doc](https://www.gatsbyjs.com/docs/location-data-from-props/#getting-the-absolute-url-of-a-page)
 const Home = ({
   data: {
-    allMarkdownPost: { nodes: posts },
+    allMarkdownPost: { nodes },
   },
   location,
 }) => {
-  if (posts.length === 0) {
+  if (nodes.length === 0) {
     return (
       <p>
         No blog posts found. Add markdown posts to "content/blog" (or the
@@ -20,31 +22,15 @@ const Home = ({
     );
   }
 
-  const lis = posts.map((post) => {
-    const title = post.title || `no title`;
-
+  const posts = nodes.map(({ date, excerpt, slug, tags, title }) => {
     return (
-      <li key={title}>
-        <article
-          className="prose prose-invert"
-          itemScope
-          itemType="http://schema.org/Article"
-        >
-          <header>
-            <h2 itemProp="headline">{title}</h2>
-            <time datetime={post.date}>{post.date}</time>
-          </header>
-          <section>
-            <p itemProp="description">{post.excerpt}</p>
-          </section>
-        </article>
-      </li>
+      <Post title={title} date={date} html={excerpt} slug={slug} tags={tags} />
     );
   });
 
   return (
     <Layout>
-      <ol>{lis}</ol>
+      <PostsWrapper>{posts}</PostsWrapper>
     </Layout>
   );
 };
@@ -54,16 +40,21 @@ export default Home;
 export const Head = () => <Seo isTopPage={true} />;
 
 export const pageQuery = graphql`
-  {
-    site {
-      siteMetadata {
-        title
-      }
-    }
-    allMarkdownPost(sort: { date: DESC }) {
+  query {
+    allMarkdownPost(sort: { date: DESC }, limit: 6) {
       nodes {
-        date(formatString: "YYYY-MM-DD HH:mm")
+        date
         excerpt
+        heroImage {
+          childImageSharp {
+            gatsbyImageData
+          }
+        }
+        slug
+        tags {
+          name
+          slug
+        }
         title
       }
     }
