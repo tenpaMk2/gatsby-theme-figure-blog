@@ -1,7 +1,7 @@
 import { Link } from "gatsby";
 import * as React from "react";
 
-const Post = ({ title, date, html, slug, tags }) => {
+const Post = ({ title, date, html, slug, tags, needReadMore = false }) => {
   const tagLis = tags.map(({ name, slug }) => (
     <li key={slug}>
       <Link to={slug} className="underline">
@@ -12,6 +12,14 @@ const Post = ({ title, date, html, slug, tags }) => {
 
   const tagOl = tagLis?.length ? (
     <ol className="flex flex-wrap gap-4">{tagLis}</ol>
+  ) : null;
+
+  const readMore = needReadMore ? (
+    <p className="text-xl">
+      <Link to={slug} className="underline">
+        →Read More
+      </Link>
+    </p>
   ) : null;
 
   return (
@@ -35,6 +43,7 @@ const Post = ({ title, date, html, slug, tags }) => {
           itemProp="articleBody"
         />
       </section>
+      {readMore}
       <footer>
         <hr className="my-2 border border-slate-500" />
         {tagOl}
