@@ -23,6 +23,11 @@ const Layout = ({ children }) => {
     <div className="flex flex-wrap justify-center bg-slate-800 text-gray-300">
       <header className="relative w-full flex-auto">
         <HeaderImage />
+
+        {/* add shade */}
+        <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-slate-800 opacity-70" />
+        <div className="absolute inset-x-0 bottom-0 h-8 bg-gradient-to-t from-slate-800" />
+
         <div className="absolute top-0 left-0 text-white">
           <nav>
             <Link to="/">Home</Link>
