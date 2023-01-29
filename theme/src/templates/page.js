@@ -6,10 +6,10 @@ import PostsWrapper from "../components/posts-wrapper";
 
 const Page = ({
   data: {
-    allMarkdownPost: { nodes: posts },
+    allMarkdownPost: { nodes },
   },
 }) => {
-  const postLis = posts.map(({ date, excerpt, slug, tags, title }) => {
+  const posts = nodes.map(({ date, excerpt, slug, tags, title }) => {
     return (
       <Post title={title} date={date} html={excerpt} slug={slug} tags={tags} />
     );
@@ -17,7 +17,7 @@ const Page = ({
 
   return (
     <Layout>
-      <PostsWrapper>{postLis}</PostsWrapper>
+      <PostsWrapper>{posts}</PostsWrapper>
     </Layout>
   );
 };
