@@ -1,9 +1,9 @@
 import * as React from "react";
 import { graphql } from "gatsby";
-import { Seo } from "@tenpaMk2/gatsby-theme-figure-blog/src/components/seo";
-import Layout from "@tenpaMk2/gatsby-theme-figure-blog/src/components/layout";
-import Post from "@tenpaMk2/gatsby-theme-figure-blog/src/components/post";
-import PostsWrapper from "@tenpaMk2/gatsby-theme-figure-blog/src/components/posts-wrapper";
+import { Seo } from "../components/seo";
+import Layout from "../components/layout";
+import Post from "../components/post";
+import PostsWrapper from "../components/posts-wrapper";
 
 // `location` : See [Gatsby doc](https://www.gatsbyjs.com/docs/location-data-from-props/#getting-the-absolute-url-of-a-page)
 const Home = ({
