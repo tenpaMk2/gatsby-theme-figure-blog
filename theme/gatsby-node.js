@@ -109,93 +109,101 @@ exports.createPages = async ({ graphql, actions, reporter }, themeOptions) => {
 
   const edges = result.data.allMarkdownPost.edges;
 
-  // Create blog posts pages
-  // But only if there's at least one markdown file found at "content/blog" (defined in gatsby-config.js)
-  // `context` is available in the template as a prop and as a variable in GraphQL
-
-  if (edges.length > 0) {
-    edges.forEach(({ node, next, previous }) => {
-      createPage({
-        path: node.slug,
-        component: require.resolve(`./src/templates/blog-post.js`),
-        context: {
-          id: node.id,
-          previousPostId: previous?.id,
-          nextPostId: next?.id,
-        },
-      });
+  if (!edges?.length) {
+    createPage({
+      path: slugify(basePath),
+      component: require.resolve("./src/templates/page.js"),
+      context: {
+        limit: 6,
+        skip: 0,
+        pagesTotal: 1,
+        currentPageNumber: 1,
+      },
     });
 
-    // Create `/page/{num}/`
-    const postsPerPage = 6; // TODO: theme-options
-    const numPages = Math.ceil(edges.length / postsPerPage);
-
-    [...new Array(numPages)].forEach((_, i) => {
-      console.log(slugify(basePath, pagesPath, i + 1));
-      createPage({
-        // path: i === 0 ? `/blog` : `/blog/${i + 1}`,
-        path: slugify(basePath, pagesPath, i + 1),
-        component: require.resolve("./src/templates/page.js"),
-        context: {
-          limit: postsPerPage,
-          skip: i * postsPerPage,
-          numPages,
-          currentPage: i + 1,
-        },
-      });
-    });
-
-    const allTags = edges
-      .map(({ node: { tags } }) => tags)
-      .flat()
-      .filter((tag) => tag); // remove `null` that is no tag in the post.
-
-    const counts = {};
-    allTags.forEach(({ name }) => {
-      counts[name] = (counts[name] || 0) + 1;
-    });
-
-    console.log(`tag-name and post-counts.`);
-    console.log(counts);
-
-    uniqueTagNames = Array.from(
-      new Set(allTags.map(({ name }) => name))
-    ).filter((x) => x);
-    uniqueTagSlugs = Array.from(
-      new Set(allTags.map(({ slug }) => slug))
-    ).filter((x) => x);
-
-    if (uniqueTagNames.length !== uniqueTagSlugs.length) {
-      reporter.panicOnBuild(
-        `There was an error creating tag pages. Maybe there is a distortion in the tag.`,
-        new Error(
-          `Unique tag-names length and unique tag-slugs length are not match.`
-        )
-      );
-      console.log(`uniqueTagNames:${uniqueTagNames}`);
-      console.log(`uniqueTagSlugs:${uniqueTagSlugs}`);
-      return;
-    }
-
-    // make unique tag info.
-    const tagInfos = [];
-    for (let i = 0; i < uniqueTagNames.length; i++) {
-      const name = uniqueTagNames[i];
-      const slug = uniqueTagSlugs[i];
-      const count = counts[name];
-      tagInfos.push({ name, slug, count });
-    }
-    console.log(tagInfos);
-
-    tagInfos.forEach(({ name, slug, count }) => {
-      console.log(`basePath:${basePath}, tagsPath:${tagsPath}, slug:${slug}`);
-      createPage({
-        path: slugify(basePath, tagsPath, slug),
-        component: require.resolve(`./src/templates/tag.js`),
-        context: { slug },
-      });
-    });
+    return;
   }
+
+  edges.forEach(({ node, next, previous }) => {
+    createPage({
+      path: node.slug,
+      component: require.resolve(`./src/templates/blog-post.js`),
+      context: {
+        id: node.id,
+        previousPostId: previous?.id,
+        nextPostId: next?.id,
+      },
+    });
+  });
+
+  // Create `/page/{num}/`
+  const postsPerPage = 6; // TODO: theme-options
+  const pagesTotal = Math.ceil(edges.length / postsPerPage);
+
+  [...new Array(pagesTotal)].forEach((_, i) => {
+    console.log(slugify(basePath, pagesPath, i + 1));
+    createPage({
+      path: i === 0 ? slugify(basePath) : slugify(basePath, pagesPath, i + 1),
+      component: require.resolve("./src/templates/page.js"),
+      context: {
+        limit: postsPerPage,
+        skip: i * postsPerPage,
+        pagesTotal,
+        currentPageNumber: i + 1,
+      },
+    });
+  });
+
+  const allTags = edges
+    .map(({ node: { tags } }) => tags)
+    .flat()
+    .filter((tag) => tag); // remove `null` that is no tag in the post.
+
+  const counts = {};
+  allTags.forEach(({ name }) => {
+    counts[name] = (counts[name] || 0) + 1;
+  });
+
+  console.log(`tag-name and post-counts.`);
+  console.log(counts);
+
+  uniqueTagNames = Array.from(new Set(allTags.map(({ name }) => name))).filter(
+    (x) => x
+  );
+  uniqueTagSlugs = Array.from(new Set(allTags.map(({ slug }) => slug))).filter(
+    (x) => x
+  );
+
+  if (uniqueTagNames.length !== uniqueTagSlugs.length) {
+    reporter.panicOnBuild(
+      `There was an error creating tag pages. Maybe there is a distortion in the tag.`,
+      new Error(
+        `Unique tag-names length and unique tag-slugs length are not match.`
+      )
+    );
+    console.log(`uniqueTagNames:${uniqueTagNames}`);
+    console.log(`uniqueTagSlugs:${uniqueTagSlugs}`);
+    return;
+  }
+
+  // make unique tag info.
+  const tagInfos = [];
+  for (let i = 0; i < uniqueTagNames.length; i++) {
+    const name = uniqueTagNames[i];
+    const slug = uniqueTagSlugs[i];
+    const count = counts[name];
+    tagInfos.push({ name, slug, count });
+  }
+  console.log(tagInfos);
+
+  tagInfos.forEach(({ name, slug, count }) => {
+    console.log(`basePath:${basePath}, tagsPath:${tagsPath}, slug:${slug}`);
+    createPage({
+      path: slugify(basePath, tagsPath, slug),
+      component: require.resolve(`./src/templates/tag.js`),
+      context: { slug },
+    });
+  });
 };
 
 /**
