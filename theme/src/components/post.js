@@ -2,7 +2,7 @@ import { Link } from "gatsby";
 import * as React from "react";
 
 const Post = ({ title, date, html, slug, tags, needReadMore = false }) => {
-  const tagLis = tags.map(({ name, slug }) => (
+  const tagLis = tags?.map(({ name, slug }) => (
     <li key={slug}>
       <Link to={slug} className="underline">
         {name}
