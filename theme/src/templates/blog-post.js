@@ -3,7 +3,6 @@ import { graphql } from "gatsby";
 import { Seo } from "../components/seo";
 import Layout from "../components/layout";
 import Post from "../components/post";
-import PostsWrapper from "../components/posts-wrapper";
 import { PostNav } from "../components/post-nav";
 
 const BlogPostTemplate = ({ data: { current, next, previous } }) => {
@@ -15,16 +14,14 @@ const BlogPostTemplate = ({ data: { current, next, previous } }) => {
 
   return (
     <Layout>
-      <PostsWrapper>
-        <Post
-          title={title}
-          date={date}
-          html={html}
-          slug={slug}
-          tags={tags}
-          isPostPage={true}
-        />
-      </PostsWrapper>
+      <Post
+        title={title}
+        date={date}
+        html={html}
+        slug={slug}
+        tags={tags}
+        isPostPage={true}
+      />
       <PostNav
         previousSlug={previous?.slug}
         previousTitle={previous?.title}

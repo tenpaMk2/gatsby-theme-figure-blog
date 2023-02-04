@@ -3,7 +3,6 @@ import { graphql } from "gatsby";
 import { Seo } from "../components/seo";
 import Layout from "../components/layout";
 import Post from "../components/post";
-import PostsWrapper from "../components/posts-wrapper";
 import PagesNav from "../components/pages-nav";
 
 // `location` : See [Gatsby doc](https://www.gatsbyjs.com/docs/location-data-from-props/#getting-the-absolute-url-of-a-page)
@@ -52,7 +51,7 @@ const Page = ({
 
   return (
     <Layout>
-      <PostsWrapper>{posts}</PostsWrapper>
+      {posts}
       <PagesNav
         currentPageNumber={currentPageNumber}
         pagesTotal={pagesTotal}

@@ -20,7 +20,7 @@ const Layout = ({ children }) => {
   );
 
   return (
-    <div className="flex min-h-screen flex-col items-center bg-slate-800 text-gray-300">
+    <div className="flex min-h-screen flex-col items-center gap-6 bg-slate-800 text-gray-300">
       <header className="relative w-full grow-0">
         <HeaderImage />
 
@@ -47,9 +47,9 @@ const Layout = ({ children }) => {
         </h1>
       </header>
 
-      <div className="flex w-full max-w-screen-2xl grow flex-wrap justify-center gap-2">
+      <div className="flex w-full max-w-screen-2xl grow flex-wrap justify-center gap-4">
         {/* [Great idea for shrink priority.](https://stackoverflow.com/questions/67858284/how-to-have-one-item-shrink-fully-before-another-starts-to-shrink) */}
-        <main className="flex shrink grow-0 basis-[1024px] flex-wrap justify-center p-2">
+        <main className="flex shrink grow-0 basis-[1024px] flex-col flex-wrap justify-center gap-4">
           {children}
         </main>
         <div className="shrink-0 grow basis-[20rem] border">🚧 sidebar 🚧</div>
