@@ -1,10 +1,14 @@
 import { Link } from "gatsby";
 import * as React from "react";
+import { queryBlogConfig } from "../libs/query-blog-config";
+import { slugify } from "../libs/slugify";
 
 const Post = ({ title, date, html, slug, tags, isPostPage }) => {
+  const { basePath, tagsPath } = queryBlogConfig();
+
   const tagLis = tags?.map(({ name, slug }) => (
     <li key={slug}>
-      <Link to={slug} className="underline">
+      <Link to={slugify(basePath, tagsPath, slug)} className="underline">
         {name}
       </Link>
     </li>
