@@ -16,7 +16,14 @@ const BlogPostTemplate = ({ data: { current, next, previous } }) => {
   return (
     <Layout>
       <PostsWrapper>
-        <Post title={title} date={date} html={html} slug={slug} tags={tags} />
+        <Post
+          title={title}
+          date={date}
+          html={html}
+          slug={slug}
+          tags={tags}
+          isPostPage={true}
+        />
       </PostsWrapper>
       <PostNav
         previousSlug={previous?.slug}

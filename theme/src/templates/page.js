@@ -45,7 +45,7 @@ const Page = ({
         html={excerpt}
         slug={slug}
         tags={tags}
-        needReadMore={true}
+        isPostPage={false}
       />
     );
   });

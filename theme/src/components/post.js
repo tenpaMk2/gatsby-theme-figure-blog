@@ -1,7 +1,7 @@
 import { Link } from "gatsby";
 import * as React from "react";
 
-const Post = ({ title, date, html, slug, tags, needReadMore = false }) => {
+const Post = ({ title, date, html, slug, tags, isPostPage }) => {
   const tagLis = tags?.map(({ name, slug }) => (
     <li key={slug}>
       <Link to={slug} className="underline">
@@ -14,7 +14,7 @@ const Post = ({ title, date, html, slug, tags, needReadMore = false }) => {
     <ol className="flex flex-wrap gap-4">{tagLis}</ol>
   ) : null;
 
-  const readMore = needReadMore ? (
+  const readMore = isPostPage ? null : (
     <p className="my-4 text-xl">
       <Link
         to={slug}
@@ -23,7 +23,19 @@ const Post = ({ title, date, html, slug, tags, needReadMore = false }) => {
         →Read More
       </Link>
     </p>
-  ) : null;
+  );
+
+  const h1 = isPostPage ? (
+    <h1 itemProp="headline" className="mb-2">
+      {title}
+    </h1>
+  ) : (
+    <h1 itemProp="headline" className="mb-2">
+      <Link to={slug} className="no-underline">
+        {title}
+      </Link>
+    </h1>
+  );
 
   return (
     <article
@@ -33,11 +45,7 @@ const Post = ({ title, date, html, slug, tags, needReadMore = false }) => {
     >
       <section className="prose prose-invert max-w-none">
         <header>
-          <h1 itemProp="headline" className="mb-2">
-            <Link to={slug} className="no-underline">
-              {title}
-            </Link>
-          </h1>
+          {h1}
           <time datetime={date}>{date}</time>
           <hr className="my-2 border border-slate-500" />
         </header>
