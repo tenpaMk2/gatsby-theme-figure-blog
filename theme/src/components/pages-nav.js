@@ -1,32 +1,29 @@
-import { Link } from "gatsby";
+import { graphql, useStaticQuery } from "gatsby";
 import * as React from "react";
 import { slugify } from "../libs/slugify";
+import { LinkButton } from "./link-button";
+import { ButtonBase } from "./button-base";
 
-const basePath = `b`; // TODO
-const pagesPath = `pages`; // TODO
-
-const commonClassName = `flex flex-none items-center justify-center rounded-lg text-center`;
-
-const NumberLink = ({ basePath, pagesPath, linkNumber, str, className }) => (
-  <Link
-    to={
-      linkNumber === 1
-        ? slugify(basePath)
-        : slugify(basePath, pagesPath, linkNumber)
-    }
-    className={`${commonClassName} ${className} hover:bg-sky-600`}
-  >
-    {str}
-  </Link>
-);
-
-const PagesNav = ({ currentPageNumber, pagesTotal, needNumberLinks }) => {
+const PagesNav = ({ currentPageNumber, pagesTotal }) => {
   if (currentPageNumber <= 0) {
     throw new Error("`currentPageNumber` must be greater than equal 1.");
   }
   if (pagesTotal <= 0) {
     throw new Error("`pagesTotal` must be greater than equal 1.");
   }
+
+  const { figureBlogConfig } = useStaticQuery(
+    graphql`
+      query {
+        figureBlogConfig {
+          basePath
+          pagesPath
+        }
+      }
+    `
+  );
+  const basePath = figureBlogConfig?.basePath || ``;
+  const pagesPath = figureBlogConfig?.pagesPath || ``;
 
   // Generate numbers (including `…` ).
   // ex: if `currentPageNumber === 4` , `pagesTotal === 7`
@@ -35,82 +32,76 @@ const PagesNav = ({ currentPageNumber, pagesTotal, needNumberLinks }) => {
   const numbers = sequence.filter(
     (i) =>
       i === 1 ||
+      i === currentPageNumber - 2 ||
       i === currentPageNumber - 1 ||
       i === currentPageNumber ||
       i === currentPageNumber + 1 ||
+      i === currentPageNumber + 2 ||
       i === pagesTotal
   );
 
-  if (4 <= currentPageNumber) {
+  if (5 <= currentPageNumber) {
     numbers.splice(1, 0, "…");
   }
-  if (currentPageNumber <= pagesTotal - 3) {
+  if (currentPageNumber <= pagesTotal - 4) {
     numbers.splice(numbers.length - 1, 0, "…");
   }
 
   const numberLinks = numbers.map((number, idx) => {
     if (number === "…") {
-      return (
-        <span
-          key={idx === 1 ? "first…" : "last…"}
-          className={`${commonClassName} w-12`}
-        >
-          …
-        </span>
-      );
+      return <ButtonBase key={idx === 1 ? "first…" : "last…"}>…</ButtonBase>;
     }
 
     if (number === currentPageNumber) {
       return (
-        <span
-          key={number}
-          className={`${commonClassName} w-12 bg-sky-600/50 font-bold`}
-        >
-          {number}
-        </span>
+        <div key={number} className="rounded-lg bg-sky-600/50 font-bold">
+          <ButtonBase>{number}</ButtonBase>
+        </div>
       );
     }
 
     return (
-      <NumberLink
+      <LinkButton
         key={number}
-        basePath={basePath}
-        pagesPath={pagesPath}
-        linkNumber={number}
-        str={number}
-        className="w-12"
-      />
+        to={
+          number === 1
+            ? slugify(basePath)
+            : slugify(basePath, pagesPath, number)
+        }
+      >
+        {number}
+      </LinkButton>
     );
   });
 
   const previous =
-    currentPageNumber !== 1 ? (
-      <NumberLink
+    currentPageNumber === 1 ? null : (
+      <LinkButton
         key="previous"
-        basePath={basePath}
-        pagesPath={pagesPath}
-        linkNumber={currentPageNumber - 1}
-        str="« Previous"
-        className="p-2"
-      />
-    ) : null;
+        to={
+          currentPageNumber === 2
+            ? slugify(basePath)
+            : slugify(basePath, pagesPath, currentPageNumber - 1)
+        }
+      >
+        « Previous
+      </LinkButton>
+    );
 
   const next =
-    currentPageNumber !== pagesTotal ? (
-      <NumberLink
-        key="previous"
-        basePath={basePath}
-        pagesPath={pagesPath}
-        linkNumber={currentPageNumber + 1}
-        str="Next »"
-        className="p-2"
-      />
-    ) : null;
+    currentPageNumber === pagesTotal ? null : (
+      <LinkButton
+        key="next"
+        to={slugify(basePath, pagesPath, currentPageNumber + 1)}
+      >
+        Next »
+      </LinkButton>
+    );
 
   return (
-    <nav className="flex h-12 w-full">
+    <nav className="flex w-full gap-2">
       {previous}
-      <div className="flex w-full justify-center gap-x-2">{numberLinks}</div>
+      <div className="flex w-full justify-center gap-2">{numberLinks}</div>
       {next}
     </nav>
   );
