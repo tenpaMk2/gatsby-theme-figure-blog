@@ -49,7 +49,7 @@ const Layout = ({ children }) => {
       <main className="flex w-full max-w-screen-lg flex-auto flex-wrap justify-center p-2">
         {children}
       </main>
-      <footer className="m-4 w-full flex-auto text-center">
+      <footer className="m-4 w-full flex-auto text-center text-slate-400">
         © {new Date().getFullYear()}, Built with
         {` `}
         <a href="https://www.gatsbyjs.com" className="underline">
