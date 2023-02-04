@@ -20,8 +20,8 @@ const Layout = ({ children }) => {
   );
 
   return (
-    <div className="flex flex-wrap justify-center bg-slate-800 text-gray-300">
-      <header className="relative w-full flex-auto">
+    <div className="flex min-h-screen flex-col items-center bg-slate-800 text-gray-300">
+      <header className="relative w-full grow-0">
         <HeaderImage />
 
         {/* add shade */}
@@ -46,10 +46,15 @@ const Layout = ({ children }) => {
           <Link to="/">{title}</Link>
         </h1>
       </header>
-      <main className="flex w-full max-w-screen-lg flex-auto flex-wrap justify-center p-2">
-        {children}
-      </main>
-      <footer className="m-4 w-full flex-auto text-center text-slate-400">
+
+      <div className="flex w-full max-w-screen-2xl grow flex-wrap justify-center gap-2">
+        {/* [Great idea for shrink priority.](https://stackoverflow.com/questions/67858284/how-to-have-one-item-shrink-fully-before-another-starts-to-shrink) */}
+        <main className="flex shrink grow-0 basis-[1024px] flex-wrap justify-center p-2">
+          {children}
+        </main>
+        <div className="shrink-0 grow basis-[20rem] border">🚧 sidebar 🚧</div>
+      </div>
+      <footer className="w-full p-2 text-center text-slate-400">
         © {new Date().getFullYear()}, Built with
         {` `}
         <a href="https://www.gatsbyjs.com" className="underline">
