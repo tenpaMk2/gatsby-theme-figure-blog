@@ -201,7 +201,7 @@ exports.createPages = async ({ graphql, actions, reporter }, themeOptions) => {
     createPage({
       path: slugify(basePath, tagsPath, slug),
       component: require.resolve(`./src/templates/tag.js`),
-      context: { slug },
+      context: { name, slug },
     });
   });
 };

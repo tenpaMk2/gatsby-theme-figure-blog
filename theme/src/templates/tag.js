@@ -7,6 +7,7 @@ const TagTemplate = ({
   data: {
     allMarkdownPost: { nodes: posts },
   },
+  pageContext: { name: tagName },
 }) => {
   const postCards = posts.map(({ title, date, slug, heroImage }) => (
     <PostCard
@@ -20,7 +21,7 @@ const TagTemplate = ({
 
   return (
     <Layout>
-      <h1 className="my-4 basis-full text-center text-4xl">🚧 tag name 🚧</h1>
+      <h1 className="my-4 text-center text-4xl">{`🏷️ ${tagName} 🏷️`}</h1>
       <div className="flex flex-wrap justify-center gap-2">{postCards}</div>
     </Layout>
   );
@@ -29,7 +30,7 @@ const TagTemplate = ({
 export default TagTemplate;
 
 export const pageQuery = graphql`
-  query TagQuery($slug: String!) {
+  query ($slug: String!) {
     allMarkdownPost(
       filter: { tags: { elemMatch: { slug: { eq: $slug } } } }
       sort: { date: DESC }
