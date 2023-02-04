@@ -26,13 +26,13 @@ export const PostNav = ({
   const next = nextSlug ? (
     <PostNavLink slug={nextSlug} isNext={true} title={nextTitle} />
   ) : (
-    <div /> // dummy
+    <div className="grow basis-0" /> // dummy
   );
 
   const previous = previousSlug ? (
     <PostNavLink slug={previousSlug} isNext={false} title={previousTitle} />
   ) : (
-    <div /> // dummy
+    <div className="grow basis-0" /> // dummy
   );
 
   return (
