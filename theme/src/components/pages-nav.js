@@ -3,6 +3,7 @@ import * as React from "react";
 import { slugify } from "../libs/slugify";
 import { LinkButton } from "./link-button";
 import { ButtonBase } from "./button-base";
+import { queryBlogConfig } from "../libs/query-blog-config";
 
 const PagesNav = ({ currentPageNumber, pagesTotal }) => {
   if (currentPageNumber <= 0) {
@@ -12,18 +13,7 @@ const PagesNav = ({ currentPageNumber, pagesTotal }) => {
     throw new Error("`pagesTotal` must be greater than equal 1.");
   }
 
-  const { figureBlogConfig } = useStaticQuery(
-    graphql`
-      query {
-        figureBlogConfig {
-          basePath
-          pagesPath
-        }
-      }
-    `
-  );
-  const basePath = figureBlogConfig?.basePath || ``;
-  const pagesPath = figureBlogConfig?.pagesPath || ``;
+  const { basePath, pagesPath } = queryBlogConfig();
 
   // Generate numbers (including `…` ).
   // ex: if `currentPageNumber === 4` , `pagesTotal === 7`
