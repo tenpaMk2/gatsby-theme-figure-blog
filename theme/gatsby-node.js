@@ -1,6 +1,7 @@
 const { kebabCase } = require("./src/libs/kebab-case");
 const { slugify } = require("./src/libs/slugify");
 const { getOptions } = require("./utils/default-options");
+const { parse, sep } = require("path");
 
 const markdownResolverPassthrough =
   (fieldName) => async (source, args, context, info) => {
@@ -141,7 +142,6 @@ exports.createPages = async ({ graphql, actions, reporter }, themeOptions) => {
   const pagesTotal = Math.ceil(edges.length / postsPerPage);
 
   [...new Array(pagesTotal)].forEach((_, i) => {
-    console.log(slugify(basePath, pagesPath, i + 1));
     createPage({
       path: i === 0 ? slugify(basePath) : slugify(basePath, pagesPath, i + 1),
       component: require.resolve("./src/templates/page.js"),
@@ -165,7 +165,7 @@ exports.createPages = async ({ graphql, actions, reporter }, themeOptions) => {
   });
 
   console.log(`tag-name and post-counts.`);
-  console.log(counts);
+  console.table(counts);
 
   uniqueTagNames = Array.from(new Set(allTags.map(({ name }) => name))).filter(
     (x) => x
@@ -181,8 +181,8 @@ exports.createPages = async ({ graphql, actions, reporter }, themeOptions) => {
         `Unique tag-names length and unique tag-slugs length are not match.`
       )
     );
-    console.log(`uniqueTagNames:${uniqueTagNames}`);
-    console.log(`uniqueTagSlugs:${uniqueTagSlugs}`);
+    console.table({ uniqueTagNames });
+    console.table({ uniqueTagSlugs });
     return;
   }
 
@@ -194,10 +194,10 @@ exports.createPages = async ({ graphql, actions, reporter }, themeOptions) => {
     const count = counts[name];
     tagInfos.push({ name, slug, count });
   }
-  console.log(tagInfos);
+  console.log(`tag info.`);
+  console.table(tagInfos);
 
   tagInfos.forEach(({ name, slug, count }) => {
-    console.log(`basePath:${basePath}, tagsPath:${tagsPath}, slug:${slug}`);
     createPage({
       path: slugify(basePath, tagsPath, slug),
       component: require.resolve(`./src/templates/tag.js`),
@@ -218,13 +218,9 @@ exports.onCreateNode = (
   const { basePath, postPath } = getOptions(themeOptions);
 
   if (node.internal.type === `MarkdownRemark`) {
-    const relativeFilePath = getNode(node.parent).relativePath;
-    const subdirs = relativeFilePath.replace(/\.md$/g, ``).split(`/`);
-
-    console.log(
-      `basePath:${basePath}, postsPath:${postPath}, subdirs:${subdirs}`
-    );
-    const slug = slugify(basePath, postPath, ...subdirs);
+    const { relativePath } = getNode(node.parent);
+    const { dir, name } = parse(relativePath);
+    const slug = slugify(basePath, postPath, ...dir.split(sep), name);
 
     const modifiedTags = node.frontmatter.tags?.map((tag) => ({
       name: tag,
