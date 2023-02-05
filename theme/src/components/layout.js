@@ -1,6 +1,7 @@
 import * as React from "react";
 import { graphql, Link, useStaticQuery } from "gatsby";
 import HeaderImage from "./header-image";
+import TagCloud from "./tag-cloud";
 
 const Layout = ({ children }) => {
   const {
@@ -53,7 +54,11 @@ const Layout = ({ children }) => {
         <main className="flex max-w-[1024px] shrink grow-0 basis-[1024px] flex-col flex-wrap justify-center gap-4">
           {children}
         </main>
-        <div className="shrink-0 grow basis-[20rem] border">🚧 sidebar 🚧</div>
+        <div className="flex shrink-0 grow basis-[20rem] flex-col gap-4 p-2">
+          <TagCloud />
+          <hr className="border-slate-500" />
+          <div>🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉</div>
+        </div>
       </div>
       <footer className="w-full p-2 text-center text-slate-400">
         © {new Date().getFullYear()}, Built with
