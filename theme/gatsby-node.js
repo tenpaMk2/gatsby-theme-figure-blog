@@ -2,6 +2,9 @@ const { kebabCase } = require("./src/libs/kebab-case");
 const { slugify } = require("./src/libs/slugify");
 const { getOptions } = require("./utils/default-options");
 const { parse, sep } = require("path");
+const {
+  extractTagInfosFromPosts,
+} = require("./src/libs/extract-tag-infos-from-markdown-posts");
 
 const markdownResolverPassthrough =
   (fieldName) => async (source, args, context, info) => {
@@ -154,50 +157,8 @@ exports.createPages = async ({ graphql, actions, reporter }, themeOptions) => {
     });
   });
 
-  const allTags = edges
-    .map(({ node: { tags } }) => tags)
-    .flat()
-    .filter((tag) => tag); // remove `null` that is no tag in the post.
-
-  const counts = {};
-  allTags.forEach(({ name }) => {
-    counts[name] = (counts[name] || 0) + 1;
-  });
-
-  console.log(`tag-name and post-counts.`);
-  console.table(counts);
-
-  const uniqueTagNames = Array.from(
-    new Set(allTags.map(({ name }) => name))
-  ).filter((x) => x);
-  const uniqueTagSlugs = Array.from(
-    new Set(allTags.map(({ slug }) => slug))
-  ).filter((x) => x);
-
-  if (uniqueTagNames.length !== uniqueTagSlugs.length) {
-    reporter.panicOnBuild(
-      `There was an error creating tag pages. Maybe there is a distortion in the tag.`,
-      new Error(
-        `Unique tag-names length and unique tag-slugs length are not match.`
-      )
-    );
-    console.table({ uniqueTagNames });
-    console.table({ uniqueTagSlugs });
-    return;
-  }
-
-  // make unique tag info.
-  const tagInfos = [];
-  for (let i = 0; i < uniqueTagNames.length; i++) {
-    const name = uniqueTagNames[i];
-    const slug = uniqueTagSlugs[i];
-    const count = counts[name];
-    tagInfos.push({ name, slug, count });
-  }
-  console.log(`tag info.`);
-  console.table(tagInfos);
-
-  tagInfos.forEach(({ name, slug, count }) => {
+  const tagInfos = extractTagInfosFromPosts(edges.map(({ node }) => node));
+  tagInfos.forEach(({ name, slug }) => {
     createPage({
       path: slugify(basePath, tagsPath, slug),
       component: require.resolve(`./src/templates/tag.js`),

@@ -2,6 +2,7 @@ import * as React from "react";
 import { graphql, Link, useStaticQuery } from "gatsby";
 import { queryBlogConfig } from "../libs/query-blog-config";
 import { slugify } from "../libs/slugify";
+import { extractTagInfosFromPosts } from "../libs/extract-tag-infos-from-markdown-posts";
 
 const TagCloud = () => {
   const {
@@ -21,52 +22,15 @@ const TagCloud = () => {
     `
   );
 
-  const allTags = nodes
-    ?.map(({ tags }) => tags)
-    .flat()
-    .filter((tag) => tag); // remove `null` that is no tag in the post.
+  const tagInfos = extractTagInfosFromPosts(nodes);
 
-  if (!allTags) {
+  if (!tagInfos) {
     return (
       <div>
         <p>No tags❗</p>
       </div>
     );
   }
-
-  const postCounts = {};
-  allTags.forEach(({ name }) => {
-    postCounts[name] = (postCounts[name] || 0) + 1;
-  });
-
-  console.log(`tag-name and post-counts.`);
-  console.table(postCounts);
-
-  const uniqueTagNames = Array.from(
-    new Set(allTags.map(({ name }) => name))
-  ).filter((x) => x);
-  const uniqueTagSlugs = Array.from(
-    new Set(allTags.map(({ slug }) => slug))
-  ).filter((x) => x);
-
-  if (uniqueTagNames.length !== uniqueTagSlugs.length) {
-    console.table({ uniqueTagNames });
-    console.table({ uniqueTagSlugs });
-    return new Error(
-      `Unique tag-names length and unique tag-slugs length are not match. Maybe there are orthographic variants?`
-    );
-  }
-
-  // make unique tag info.
-  const tagInfos = [];
-  for (let i = 0; i < uniqueTagNames.length; i++) {
-    const name = uniqueTagNames[i];
-    const slug = uniqueTagSlugs[i];
-    const count = postCounts[name];
-    tagInfos.push({ name, slug, count });
-  }
-  console.log(`tag info.`);
-  console.table(tagInfos);
 
   const counts = tagInfos.map(({ count }) => count);
   const min = Math.min(...counts);
