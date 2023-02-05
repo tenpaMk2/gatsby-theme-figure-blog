@@ -167,12 +167,12 @@ exports.createPages = async ({ graphql, actions, reporter }, themeOptions) => {
   console.log(`tag-name and post-counts.`);
   console.table(counts);
 
-  uniqueTagNames = Array.from(new Set(allTags.map(({ name }) => name))).filter(
-    (x) => x
-  );
-  uniqueTagSlugs = Array.from(new Set(allTags.map(({ slug }) => slug))).filter(
-    (x) => x
-  );
+  const uniqueTagNames = Array.from(
+    new Set(allTags.map(({ name }) => name))
+  ).filter((x) => x);
+  const uniqueTagSlugs = Array.from(
+    new Set(allTags.map(({ slug }) => slug))
+  ).filter((x) => x);
 
   if (uniqueTagNames.length !== uniqueTagSlugs.length) {
     reporter.panicOnBuild(
