@@ -46,16 +46,15 @@ const TagCloud = () => {
       ];
 
     return (
-      <li
-        key={slug}
-        className={`rounded bg-slate-700 hover:bg-sky-600 ${textSize}`}
-      >
+      <li key={slug} className={`group ${textSize}`}>
         <Link
           to={slugify(basePath, tagsPath, slug)}
-          className="baseline flex justify-center"
+          className="flex items-stretch justify-center"
         >
-          <p className="h-full flex-auto p-1 text-right">{name}</p>
-          <p className="h-full flex-auto border-l border-slate-800 py-1 px-2 text-left">
+          <p className="flex items-center rounded-l bg-slate-700 p-1 group-hover:bg-sky-600">
+            {name}
+          </p>
+          <p className="flex items-center rounded-r border-l border-slate-800 bg-gray-600 py-1 px-2 group-hover:bg-sky-500">
             {count}
           </p>
         </Link>
