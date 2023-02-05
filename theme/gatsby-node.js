@@ -222,10 +222,11 @@ exports.onCreateNode = (
     const { dir, name } = parse(relativePath);
     const slug = slugify(basePath, postPath, ...dir.split(sep), name);
 
-    const modifiedTags = node.frontmatter.tags?.map((tag) => ({
-      name: tag,
-      slug: kebabCase(tag),
-    }));
+    const modifiedTags =
+      node.frontmatter.tags?.map((tag) => ({
+        name: tag,
+        slug: kebabCase(tag),
+      })) || [];
 
     const fieldData = {
       canonicalUrl: node.frontmatter?.canonicalUrl || ``,
