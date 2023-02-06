@@ -9,6 +9,7 @@ module.exports = {
     },
     social: {
       twitter: `@tenpaMk2`,
+      instagram: `tenpamk2_figure`,
     },
     locale: `ja-JP`, // see [facebook localization doc](https://developers.facebook.com/docs/javascript/internationalization#locales).
   },
