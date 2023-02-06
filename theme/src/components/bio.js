@@ -32,18 +32,16 @@ const Bio = () => {
   return (
     <div className="flex flex-wrap gap-4">
       <h1 className="text-4xl">Bio</h1>
-      <div className="flex w-full flex-col gap-4 rounded-lg bg-slate-900 p-4 shadow-inner">
-        <div className="flex justify-center">
+      <div className="flex w-full flex-col items-center gap-4 rounded-lg bg-slate-900 p-4 shadow-inner">
+        <div className="flex flex-col gap-2">
           <StaticImage
             src="../images/bio.jpg"
             alt="Bio image"
             className="w-32 rounded-full"
           />
+          <h2 className="text-center text-2xl font-bold">{name}</h2>
         </div>
-        <div className="flex grow basis-0 flex-col gap-2">
-          <h2 className="text-2xl font-bold">{name}</h2>
-          <p>{summary}</p>
-        </div>
+        <p>{summary}</p>
         <div class="flex flex-wrap gap-2">
           <a
             class="inline-flex items-center rounded-full bg-blue-600 p-3 text-white transition duration-200 hover:bg-blue-700"
