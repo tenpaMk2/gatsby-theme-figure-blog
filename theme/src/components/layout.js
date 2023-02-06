@@ -55,11 +55,9 @@ const Layout = ({ children }) => {
         <main className="flex max-w-[1024px] shrink grow-0 basis-[1024px] flex-col flex-wrap gap-4">
           {children}
         </main>
-        <div className="flex max-w-[1024px] shrink-0 grow basis-[20rem] flex-col gap-4 p-2">
+        <div className="flex max-w-[1024px] shrink-0 grow basis-[20rem] flex-col gap-6">
           <Bio />
-          <hr className="border-slate-500" />
           <TagCloud />
-          <hr className="border-slate-500" />
           <div>🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉</div>
         </div>
       </div>
