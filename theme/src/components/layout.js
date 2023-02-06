@@ -2,6 +2,7 @@ import * as React from "react";
 import { graphql, Link, useStaticQuery } from "gatsby";
 import HeaderImage from "./header-image";
 import TagCloud from "./tag-cloud";
+import Bio from "./bio";
 
 const Layout = ({ children }) => {
   const {
@@ -21,7 +22,7 @@ const Layout = ({ children }) => {
   );
 
   return (
-    <div className="flex min-h-screen flex-col items-center gap-6 bg-slate-800 text-gray-300">
+    <div className="flex min-h-screen flex-col items-center gap-6 bg-slate-800 text-gray-200">
       <header className="relative w-full grow-0">
         <HeaderImage />
 
@@ -55,6 +56,8 @@ const Layout = ({ children }) => {
           {children}
         </main>
         <div className="flex max-w-[1024px] shrink-0 grow basis-[20rem] flex-col gap-4 p-2">
+          <Bio />
+          <hr className="border-slate-500" />
           <TagCloud />
           <hr className="border-slate-500" />
           <div>🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉</div>
