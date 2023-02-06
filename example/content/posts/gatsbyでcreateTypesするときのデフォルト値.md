@@ -1,6 +1,6 @@
 ---
 title: gatsbyでcreateTypesするときのデフォルト値
-date: "2023-01-15 0:59"
+date: "2023-01-15 00:59"
 tags:
   - プログラミング
   - Gatsby
