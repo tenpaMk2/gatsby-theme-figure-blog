@@ -2,27 +2,23 @@ import * as React from "react";
 import { graphql, Link, useStaticQuery } from "gatsby";
 import { queryBlogConfig } from "../libs/query-blog-config";
 import { slugify } from "../libs/slugify";
-import { extractTagInfosFromPosts } from "../libs/extract-tag-infos-from-markdown-posts";
 
 const TagCloud = () => {
   const {
-    allMarkdownPost: { nodes },
+    postsInfo: { tagInfos },
   } = useStaticQuery(
     graphql`
       query {
-        allMarkdownPost {
-          nodes {
-            tags {
-              name
-              slug
-            }
+        postsInfo {
+          tagInfos {
+            count
+            name
+            slug
           }
         }
       }
     `
   );
-
-  const tagInfos = extractTagInfosFromPosts(nodes);
 
   if (!tagInfos) {
     return (

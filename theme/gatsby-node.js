@@ -2,9 +2,6 @@ const { kebabCase } = require("./src/libs/kebab-case");
 const { slugify } = require("./src/libs/slugify");
 const { getOptions } = require("./utils/default-options");
 const { parse, sep } = require("path");
-const {
-  extractTagInfosFromPosts,
-} = require("./src/libs/extract-tag-infos-from-markdown-posts");
 
 const markdownResolverPassthrough =
   (fieldName) => async (source, args, context, info) => {
@@ -53,8 +50,16 @@ exports.createSchemaCustomization = ({ actions }) => {
   });
 };
 
-exports.sourceNodes = ({ actions, createContentDigest }, themeOptions) => {
+exports.sourceNodes = (
+  { actions, createContentDigest, getNodesByType },
+  themeOptions
+) => {
   const { createNode } = actions;
+
+  /**
+   * Create a theme options node.
+   */
+
   const options = getOptions(themeOptions);
 
   createNode({
@@ -67,6 +72,60 @@ exports.sourceNodes = ({ actions, createContentDigest }, themeOptions) => {
       contentDigest: createContentDigest(options),
       content: JSON.stringify(options),
       description: `Options for @tenpamk2/gatsby-theme-figure-blog`,
+    },
+  });
+
+  /**
+   * Create a posts info node.
+   */
+
+  const posts = getNodesByType(`MarkdownPost`);
+  const allTags = posts
+    ?.map(({ tags }) => tags)
+    .flat()
+    .filter((tag) => tag); // remove `null` when the post has no tags.
+
+  const postCounts = {};
+  allTags.forEach(({ name }) => {
+    postCounts[name] = (postCounts[name] || 0) + 1;
+  });
+
+  const uniqueTagNames = Array.from(
+    new Set(allTags.map(({ name }) => name))
+  ).filter((x) => x);
+  const uniqueTagSlugs = Array.from(
+    new Set(allTags.map(({ slug }) => slug))
+  ).filter((x) => x);
+
+  if (uniqueTagNames.length !== uniqueTagSlugs.length) {
+    console.table({ uniqueTagNames });
+    console.table({ uniqueTagSlugs });
+    return new Error(
+      `Unique tag-names length and unique tag-slugs length are not match. Maybe there are orthographic variants?`
+    );
+  }
+
+  // make unique tag info.
+  const tagInfos = [];
+  for (let i = 0; i < uniqueTagNames.length; i++) {
+    const name = uniqueTagNames[i];
+    const slug = uniqueTagSlugs[i];
+    const count = postCounts[name];
+    tagInfos.push({ name, slug, count });
+  }
+
+  const postsInfo = { tagInfos };
+
+  createNode({
+    ...postsInfo,
+    id: `@tenpamk2/gatsby-theme-figure-blog-posts-info`,
+    parent: null,
+    children: [],
+    internal: {
+      type: `PostsInfo`,
+      contentDigest: createContentDigest(postsInfo),
+      content: JSON.stringify(postsInfo),
+      description: `Posts info for @tenpamk2/gatsby-theme-figure-blog`,
     },
   });
 };
@@ -98,6 +157,13 @@ exports.createPages = async ({ graphql, actions, reporter }, themeOptions) => {
           previous {
             id
           }
+        }
+      }
+      postsInfo {
+        tagInfos {
+          count
+          name
+          slug
         }
       }
     }
@@ -157,7 +223,7 @@ exports.createPages = async ({ graphql, actions, reporter }, themeOptions) => {
     });
   });
 
-  const tagInfos = extractTagInfosFromPosts(edges.map(({ node }) => node));
+  const tagInfos = result?.data?.postsInfo?.tagInfos || [];
   tagInfos.forEach(({ name, slug }) => {
     createPage({
       path: slugify(basePath, tagsPath, slug),
