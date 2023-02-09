@@ -3,6 +3,7 @@ import { graphql, Link, useStaticQuery } from "gatsby";
 import HeaderImage from "./header-image";
 import TagCloud from "./tag-cloud";
 import Bio from "./bio";
+import ArchiveList from "./archive-list";
 
 const Layout = ({ children }) => {
   const {
@@ -58,7 +59,7 @@ const Layout = ({ children }) => {
         <div className="flex max-w-[1024px] shrink-0 grow basis-[20rem] flex-col gap-6">
           <Bio />
           <TagCloud />
-          <div>🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉</div>
+          <ArchiveList />
         </div>
       </div>
       <footer className="w-full p-2 text-center text-slate-400">
