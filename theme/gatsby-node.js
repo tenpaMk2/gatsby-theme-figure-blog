@@ -80,49 +80,29 @@ exports.sourceNodes = (
    */
 
   const posts = getNodesByType(`MarkdownPost`);
+
   const allTags = posts
     ?.map(({ tags }) => tags)
     .flat()
-    .filter((tag) => tag); // remove `null` when the post has no tags.
+    .filter((tag) => tag);
+  const allTagNames = allTags.map(({ name }) => name);
+  const tagInfos = Array.from(new Set(allTagNames)).map((name) => {
+    const filtered = allTags.filter(({ name: n }) => n === name);
+    const count = filtered.length;
+    const slug = filtered[0].slug;
 
-  const tagCounts = {};
-  allTags.forEach(({ name }) => {
-    tagCounts[name] = (tagCounts[name] || 0) + 1;
+    return { name, count, slug };
   });
 
-  const uniqueTagNames = Array.from(
-    new Set(allTags.map(({ name }) => name))
-  ).filter((x) => x);
-  const uniqueTagSlugs = Array.from(
-    new Set(allTags.map(({ slug }) => slug))
-  ).filter((x) => x);
-
-  if (uniqueTagNames.length !== uniqueTagSlugs.length) {
-    console.table({ uniqueTagNames });
-    console.table({ uniqueTagSlugs });
-    return new Error(
-      `Unique tag-names length and unique tag-slugs length are not match. Maybe there are orthographic variants?`
-    );
-  }
-
-  // make unique tag info.
-  const tagInfos = [];
-  for (let i = 0; i < uniqueTagNames.length; i++) {
-    const name = uniqueTagNames[i];
-    const slug = uniqueTagSlugs[i];
-    const count = tagCounts[name];
-    tagInfos.push({ name, slug, count });
-  }
-
-  const yearMonths = posts.map(
+  const allYearMonths = posts.map(
     ({ date }) =>
       new Date(date).toLocaleString(`en-US`, {
         year: `numeric`,
         month: `short`,
       }) // TODO: locale from config.
   );
-  const yearMonthInfos = Array.from(new Set(yearMonths)).map((yearMonth) => {
-    const count = yearMonths.filter((ym) => ym === yearMonth).length;
+  const yearMonthInfos = Array.from(new Set(allYearMonths)).map((yearMonth) => {
+    const count = allYearMonths.filter((ym) => ym === yearMonth).length;
     const d = new Date(yearMonth);
     const year = d.toLocaleString(`en-US`, { year: `numeric` });
     const month = d.toLocaleString(`en-US`, { month: `short` });
@@ -130,8 +110,8 @@ exports.sourceNodes = (
     return { yearMonth, count, year, month };
   });
 
-  const years = yearMonthInfos.map(({ year }) => year);
-  const yearInfos = Array.from(new Set(years)).map((year) => {
+  const allYears = yearMonthInfos.map(({ year }) => year);
+  const yearInfos = Array.from(new Set(allYears)).map((year) => {
     const infos = yearMonthInfos.filter(({ year: y }) => y === year);
     const count = infos.reduce((total, { count }) => total + count, 0);
 
