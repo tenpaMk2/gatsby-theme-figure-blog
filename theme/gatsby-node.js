@@ -85,9 +85,9 @@ exports.sourceNodes = (
     .flat()
     .filter((tag) => tag); // remove `null` when the post has no tags.
 
-  const postCounts = {};
+  const tagCounts = {};
   allTags.forEach(({ name }) => {
-    postCounts[name] = (postCounts[name] || 0) + 1;
+    tagCounts[name] = (tagCounts[name] || 0) + 1;
   });
 
   const uniqueTagNames = Array.from(
@@ -110,11 +110,35 @@ exports.sourceNodes = (
   for (let i = 0; i < uniqueTagNames.length; i++) {
     const name = uniqueTagNames[i];
     const slug = uniqueTagSlugs[i];
-    const count = postCounts[name];
+    const count = tagCounts[name];
     tagInfos.push({ name, slug, count });
   }
 
-  const postsInfo = { tagInfos };
+  const yearMonths = posts.map(
+    ({ date }) =>
+      new Date(date).toLocaleString(`en-US`, {
+        year: `numeric`,
+        month: `short`,
+      }) // TODO: locale from config.
+  );
+  const yearMonthInfos = Array.from(new Set(yearMonths)).map((yearMonth) => {
+    const count = yearMonths.filter((ym) => ym === yearMonth).length;
+    const d = new Date(yearMonth);
+    const year = d.toLocaleString(`en-US`, { year: `numeric` });
+    const month = d.toLocaleString(`en-US`, { month: `short` });
+
+    return { yearMonth, count, year, month };
+  });
+
+  const years = yearMonthInfos.map(({ year }) => year);
+  const yearInfos = Array.from(new Set(years)).map((year) => {
+    const infos = yearMonthInfos.filter(({ year: y }) => y === year);
+    const count = infos.reduce((total, { count }) => total + count, 0);
+
+    return { year, count };
+  });
+
+  const postsInfo = { tagInfos, yearInfos, yearMonthInfos };
 
   createNode({
     ...postsInfo,
