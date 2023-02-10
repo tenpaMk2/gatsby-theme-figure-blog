@@ -51,7 +51,7 @@ exports.createSchemaCustomization = ({ actions }) => {
 };
 
 exports.sourceNodes = (
-  { actions, createContentDigest, getNodesByType },
+  { actions, createContentDigest, getNodesByType, reporter },
   themeOptions
 ) => {
   const { createNode } = actions;
@@ -132,6 +132,20 @@ exports.sourceNodes = (
       description: `Posts info for @tenpamk2/gatsby-theme-figure-blog`,
     },
   });
+
+  /**
+   * Check for duplicate slugs.
+   */
+  const uniqueSlugs = Array.from(tagInfos.map(({ slug }) => slug));
+  if (tagInfos.length !== uniqueSlugs.size) {
+    console.table(tagInfos);
+    reporter.warn(
+      [
+        `Duplicate slugs. Maybe, is there misspelling or capitalization error in the tag name?`,
+        `Check the above table.`,
+      ].join(` `)
+    );
+  }
 };
 
 /**
