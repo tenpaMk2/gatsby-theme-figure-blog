@@ -2,72 +2,50 @@ import * as React from "react";
 import { graphql, Link, useStaticQuery } from "gatsby";
 import { queryBlogConfig } from "../libs/query-blog-config";
 import { slugify } from "../libs/slugify";
-import { getMonthName } from "../libs/get-month-name";
 
 const ArchiveList = () => {
   const {
-    allMarkdownPost: { nodes },
+    postsInfo: { yearInfos, yearMonthInfos },
   } = useStaticQuery(
     graphql`
       query {
-        allMarkdownPost(sort: { date: DESC }) {
-          nodes {
-            date(formatString: "YYYY-MM")
+        postsInfo {
+          yearInfos {
+            count
+            year
+          }
+          yearMonthInfos {
+            count
+            month
+            yearMonth
+            year
           }
         }
       }
     `
   );
 
-  if (!nodes?.length) {
-    return null;
-  }
-
-  const postCounts = {};
-  nodes.forEach(({ date }) => {
-    postCounts[date] = (postCounts[date] || 0) + 1;
-  });
-
-  const uniqueDates = Array.from(new Set(nodes.map(({ date }) => date)));
-
-  const dateInfos = [];
-  for (let i = 0; i < uniqueDates.length; i++) {
-    const date = uniqueDates[i];
-    const [year, month] = date.split(`-`);
-    const count = postCounts[date];
-    dateInfos.push({ date, year, month, count });
-  }
-
-  const uniqueYears = Array.from(new Set(dateInfos.map(({ year }) => year)))
-    .sort()
-    .reverse();
-
   const { basePath, archivesPath } = queryBlogConfig();
 
-  const dateLis = uniqueYears.map((year) => {
-    const slug = slugify(basePath, archivesPath, year);
-
-    const infos = dateInfos.filter(({ year: x }) => x === year);
-
-    const monthLis = infos.map(({ month, count }) => {
-      const monthStr = getMonthName(month);
+  const dateLis = yearInfos.map(({ year, count: yearCount }) => {
+    const monthInfos = yearMonthInfos.filter(({ year: y }) => y === year);
+    const monthLis = monthInfos.map(({ month, count: monthCount }) => {
       const slug = slugify(basePath, archivesPath, year, month);
       return (
         <li key={slug}>
           <Link to={slug} className="group flex items-stretch justify-center">
             <p className="flex items-center rounded-l bg-slate-700 p-1 group-hover:bg-sky-600">
-              {monthStr}
+              {month}
             </p>
             <p className="flex items-center rounded-r border-l border-slate-800 bg-gray-600 py-1 px-2 group-hover:bg-sky-500">
-              {count}
+              {monthCount}
             </p>
           </Link>
         </li>
       );
     });
 
-    const total = infos.reduce((acc, current) => acc + current.count, 0);
-
+    const slug = slugify(basePath, archivesPath, year);
     return (
       <li
         key={slug}
@@ -81,7 +59,7 @@ const ArchiveList = () => {
             {year}
           </p>
           <p className="flex items-center rounded-r border-l border-slate-800 bg-gray-600 py-1 px-2 group-hover:bg-sky-500">
-            {total}
+            {yearCount}
           </p>
         </Link>
         <ol className="flex flex-wrap gap-2">{monthLis}</ol>
