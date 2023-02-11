@@ -275,7 +275,7 @@ exports.onCreateNode = (
 
     const fieldData = {
       canonicalUrl: node.frontmatter?.canonicalUrl || ``,
-      date: node.frontmatter?.date ? node.frontmatter.date : "2999-01-01 00:00",
+      date: node.frontmatter?.date || "2999-01-01 00:00",
       heroImage: node.frontmatter?.heroImage,
       slug,
       tags: modifiedTags,
