@@ -13,6 +13,7 @@ const getOptions = (themeOptions) => {
   const archivesPath = themeOptions.archivesPath || `archives`;
   const formatString = themeOptions.formatString || `YYYY/MM/DD HH:mm:ss`;
 
+  // WARNING: If you change these properties, you must also change GraphQL type definitions.
   return {
     basePath,
     postPath,
