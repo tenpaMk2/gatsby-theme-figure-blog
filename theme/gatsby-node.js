@@ -34,6 +34,39 @@ exports.createSchemaCustomization = ({ actions }) => {
       name: String
       slug: String
     }
+
+    type FigureBlogConfig implements Node {
+      archivesPath: String
+      basePath: String
+      formatString: String
+      postPath: String
+      pagesPath: String
+      tagsPath: String
+    }
+
+    type PostsInfo implements Node {
+      tagInfos: [TagInfo]
+      yearInfos: [YearInfo]
+      yearMonthInfos: [YearMonthInfo]
+    }
+
+    type TagInfo {
+      count: Int!
+      name: String!
+      slug: String!
+    }
+    
+    type YearInfo {
+      count: Int!
+      year: String!
+    }
+
+    type YearMonthInfo {
+      count: Int!
+      month: String!
+      year: String!
+      yearMonth: String!
+    }
   `;
   createTypes(typeDefs);
 
