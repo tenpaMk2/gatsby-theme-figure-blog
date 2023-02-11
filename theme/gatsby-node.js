@@ -169,7 +169,7 @@ exports.sourceNodes = (
   /**
    * Check for duplicate slugs.
    */
-  const uniqueSlugs = Array.from(tagInfos.map(({ slug }) => slug));
+  const uniqueSlugs = new Set(tagInfos.map(({ slug }) => slug));
   if (tagInfos.length !== uniqueSlugs.size) {
     console.table(tagInfos);
     reporter.warn(
