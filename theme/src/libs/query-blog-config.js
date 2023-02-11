@@ -13,6 +13,7 @@ export const queryBlogConfig = () => {
           archivesPath
           basePath
           formatString
+          locale
           pagesPath
           postPath
           tagsPath
