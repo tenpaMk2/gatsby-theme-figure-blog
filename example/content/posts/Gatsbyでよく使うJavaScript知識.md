@@ -1,6 +1,6 @@
 ---
 title: Gatsbyでよく使うJavaScript知識
-date: "2023-02-11 9:23"
+date: "2023-02-11 09:23"
 tags:
   - プログラミング
   - JavaScript
