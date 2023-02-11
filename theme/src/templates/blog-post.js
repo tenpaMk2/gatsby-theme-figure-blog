@@ -51,10 +51,15 @@ export const Head = ({
 }) => <Seo canonicalUrl={canonicalUrl} pathname={slug} title={title} />;
 
 export const postQuery = graphql`
-  query ($id: String!, $previousPostId: String, $nextPostId: String) {
+  query (
+    $id: String!
+    $previousPostId: String
+    $nextPostId: String
+    $formatString: String
+  ) {
     current: markdownPost(id: { eq: $id }) {
       canonicalUrl
-      date(formatString: "YYYY/MM/DD HH:mm:ss")
+      date(formatString: $formatString)
       html
       slug
       tags {

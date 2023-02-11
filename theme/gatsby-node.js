@@ -188,7 +188,8 @@ exports.sourceNodes = (
 exports.createPages = async ({ graphql, actions, reporter }, themeOptions) => {
   const { createPage } = actions;
 
-  const { basePath, pagesPath, tagsPath } = getOptions(themeOptions);
+  const { basePath, formatString, pagesPath, tagsPath } =
+    getOptions(themeOptions);
 
   // Get all markdown blog posts sorted by date
   const result = await graphql(`
@@ -254,6 +255,7 @@ exports.createPages = async ({ graphql, actions, reporter }, themeOptions) => {
         id: node.id,
         previousPostId: previous?.id,
         nextPostId: next?.id,
+        formatString,
       },
     });
   });
