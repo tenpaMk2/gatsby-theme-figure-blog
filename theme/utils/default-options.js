@@ -8,7 +8,7 @@
 const getOptions = (themeOptions) => {
   const archivesPath = themeOptions.archivesPath || `archives`;
   const basePath = themeOptions.basePath || `base`;
-  const formatString = themeOptions.formatString || `YYYY/MM/DD HH:mm:ss`; // TODO: use it
+  const formatString = themeOptions.formatString || `YYYY/MM/DD HH:mm:ss`;
   const locale = themeOptions.locale || `en-US`;
   const postPath = themeOptions.postPath || `post`;
   const pagesPath = themeOptions.pagesPath || `pages`;
