@@ -241,6 +241,7 @@ exports.createPages = async ({ graphql, actions, reporter }, themeOptions) => {
         skip: 0,
         pagesTotal: 1,
         currentPageNumber: 1,
+        formatString,
       },
     });
 
@@ -273,6 +274,7 @@ exports.createPages = async ({ graphql, actions, reporter }, themeOptions) => {
         skip: i * postsPerPage,
         pagesTotal,
         currentPageNumber: i + 1,
+        formatString,
       },
     });
   });
@@ -282,7 +284,7 @@ exports.createPages = async ({ graphql, actions, reporter }, themeOptions) => {
     createPage({
       path: slugify(basePath, tagsPath, slug),
       component: require.resolve(`./src/templates/tag.js`),
-      context: { name, slug },
+      context: { name, slug, formatString },
     });
   });
 };

@@ -67,10 +67,10 @@ export default Page;
 export const Head = () => <Seo isTopPage={true} />;
 
 export const pageQuery = graphql`
-  query ($skip: Int!, $limit: Int!) {
+  query ($skip: Int!, $limit: Int!, $formatString: String) {
     allMarkdownPost(sort: { date: DESC }, limit: $limit, skip: $skip) {
       nodes {
-        date
+        date(formatString: $formatString)
         excerpt
         heroImage {
           childImageSharp {

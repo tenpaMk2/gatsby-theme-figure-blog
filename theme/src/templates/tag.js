@@ -30,13 +30,13 @@ const TagTemplate = ({
 export default TagTemplate;
 
 export const pageQuery = graphql`
-  query ($slug: String!) {
+  query ($slug: String!, $formatString: String) {
     allMarkdownPost(
       filter: { tags: { elemMatch: { slug: { eq: $slug } } } }
       sort: { date: DESC }
     ) {
       nodes {
-        date
+        date(formatString: $formatString)
         heroImage {
           childImageSharp {
             gatsbyImageData
