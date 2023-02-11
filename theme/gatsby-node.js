@@ -279,9 +279,7 @@ exports.onCreateNode = (
       heroImage: node.frontmatter?.heroImage,
       slug,
       tags: modifiedTags,
-      title: node.frontmatter.title
-        ? node.frontmatter.title
-        : subdirs.slice(-1),
+      title: node.frontmatter.title || name,
     };
 
     const id = createNodeId(`${node.id} >>> MarkdownPost`);
