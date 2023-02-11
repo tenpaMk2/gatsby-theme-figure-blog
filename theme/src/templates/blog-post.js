@@ -12,6 +12,16 @@ const BlogPostTemplate = ({ data: { current, next, previous } }) => {
   const slug = current?.slug || ``;
   const tags = current?.tags || [];
 
+  if (date === `Invalid date`) {
+    throw new Error(
+      [
+        `Invalid date!!`,
+        `Maybe, the hour is not in 2 digits,`,
+        `e.g., ❌: \`2023/02/11 9:12\` => ⭕: \`2023/02/11 09:12\` .`,
+      ].join(` `)
+    );
+  }
+
   return (
     <Layout>
       <Post
