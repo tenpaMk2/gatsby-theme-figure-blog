@@ -44,9 +44,9 @@ const Bio = () => {
           <h2 className="text-center text-2xl font-bold">{name}</h2>
         </div>
         <p>{summary}</p>
-        <div class="flex flex-wrap gap-2">
+        <div className="flex flex-wrap gap-2">
           <a
-            class="inline-flex items-center rounded-full bg-blue-600 p-3 text-white transition duration-200 hover:bg-blue-700"
+            className="inline-flex items-center rounded-full bg-blue-600 p-3 text-white transition duration-200 hover:bg-blue-700"
             target="_blank"
             rel="noopener"
             href={`https://twitter.com/${twitter}/`}
@@ -58,14 +58,14 @@ const Bio = () => {
               fill="currentColor"
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 512 512"
-              class="h-6 w-6"
+              className="h-6 w-6"
             >
               <title>Twitter</title>
               <path d="m459 152 1 13c0 139-106 299-299 299-59 0-115-17-161-47a217 217 0 0 0 156-44c-47-1-85-31-98-72l19 1c10 0 19-1 28-3-48-10-84-52-84-103v-2c14 8 30 13 47 14A105 105 0 0 1 36 67c51 64 129 106 216 110-2-8-2-16-2-24a105 105 0 0 1 181-72c24-4 47-13 67-25-8 24-25 45-46 58 21-3 41-8 60-17-14 21-32 40-53 55z"></path>
             </svg>
           </a>
           <a
-            class="inline-flex items-center rounded-full bg-blue-600 p-3 text-white transition duration-200 hover:bg-blue-700"
+            className="inline-flex items-center rounded-full bg-blue-600 p-3 text-white transition duration-200 hover:bg-blue-700"
             target="_blank"
             rel="noopener"
             href={`https://www.instagram.com/${instagram}/`}
@@ -79,7 +79,7 @@ const Bio = () => {
               stroke="currentColor"
               fill-opacity="0"
               viewBox="0 0 24 24"
-              class="h-6 w-6"
+              className="h-6 w-6"
             >
               <title>Instagram</title>
               <path
@@ -103,7 +103,7 @@ const Bio = () => {
             </svg>
           </a>
           <a
-            class="inline-flex items-center rounded-full bg-blue-600 p-3 text-white transition duration-200 hover:bg-blue-700"
+            className="inline-flex items-center rounded-full bg-blue-600 p-3 text-white transition duration-200 hover:bg-blue-700"
             target="_blank"
             rel="noopener"
             href={`https://github.com/${github}/`}
@@ -117,7 +117,7 @@ const Bio = () => {
               stroke="currentColor"
               fill="currentColor"
               viewBox="-267 288.9 264.5 225.1"
-              class="h-6 w-6"
+              className="h-6 w-6"
               version="1.1"
             >
               <title>GitHub</title>
