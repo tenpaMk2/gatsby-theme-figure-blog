@@ -39,6 +39,7 @@ const Page = ({
   const posts = nodes.map(({ date, excerpt, slug, tags, title }) => {
     return (
       <Post
+        key={slug}
         title={title}
         date={date}
         html={excerpt}
