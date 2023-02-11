@@ -6,21 +6,23 @@
  * @returns {Object} Options that is determined by user options and default options.
  */
 const getOptions = (themeOptions) => {
+  const archivesPath = themeOptions.archivesPath || `archives`;
   const basePath = themeOptions.basePath || `base`;
+  const formatString = themeOptions.formatString || `YYYY/MM/DD HH:mm:ss`; // TODO: use it
+  const locale = themeOptions.locale || `en-US`;
   const postPath = themeOptions.postPath || `post`;
   const pagesPath = themeOptions.pagesPath || `pages`;
   const tagsPath = themeOptions.tagsPath || `tags`;
-  const archivesPath = themeOptions.archivesPath || `archives`;
-  const formatString = themeOptions.formatString || `YYYY/MM/DD HH:mm:ss`;
 
   // WARNING: If you change these properties, you must also change GraphQL type definitions.
   return {
+    archivesPath,
     basePath,
+    formatString,
+    locale,
     postPath,
     pagesPath,
     tagsPath,
-    archivesPath,
-    formatString,
   };
 };
 

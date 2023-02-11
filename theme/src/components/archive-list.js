@@ -16,8 +16,8 @@ const ArchiveList = () => {
           }
           yearMonthInfos {
             count
+            dateKey
             month
-            yearMonth
             year
           }
         }

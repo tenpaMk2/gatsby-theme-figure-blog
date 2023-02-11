@@ -63,9 +63,9 @@ exports.createSchemaCustomization = ({ actions }) => {
 
     type YearMonthInfo {
       count: Int!
+      dateKey: String!
       month: String!
       year: String!
-      yearMonth: String!
     }
   `;
   createTypes(typeDefs);
@@ -113,6 +113,7 @@ exports.sourceNodes = (
    */
 
   const posts = getNodesByType(`MarkdownPost`);
+  const locale = options.locale;
 
   const allTags = posts
     ?.map(({ tags }) => tags)
@@ -127,20 +128,20 @@ exports.sourceNodes = (
     return { name, count, slug };
   });
 
-  const allYearMonths = posts.map(
-    ({ date }) =>
-      new Date(date).toLocaleString(`en-US`, {
-        year: `numeric`,
-        month: `short`,
-      }) // TODO: locale from config.
-  );
-  const yearMonthInfos = Array.from(new Set(allYearMonths)).map((yearMonth) => {
-    const count = allYearMonths.filter((ym) => ym === yearMonth).length;
-    const d = new Date(yearMonth);
-    const year = d.toLocaleString(`en-US`, { year: `numeric` });
-    const month = d.toLocaleString(`en-US`, { month: `short` });
+  const allDateKeys = posts.map(({ date }) => {
+    const d = new Date(date);
 
-    return { yearMonth, count, year, month };
+    // Return a valid string as argument of `Date()` for later reassignment to `Date()`.
+    // `allDateKeys` must be an array of primitives in order to use `Set()` to remove duplicates easily,
+    return `${d.getFullYear()}/${d.getMonth() + 1}`;
+  });
+  const yearMonthInfos = Array.from(new Set(allDateKeys)).map((dateKey) => {
+    const count = allDateKeys.filter((dk) => dk === dateKey).length;
+    const d = new Date(dateKey);
+    const year = d.toLocaleString(locale, { year: `numeric` });
+    const month = d.toLocaleString(locale, { month: `short` });
+
+    return { dateKey, count, year, month };
   });
 
   const allYears = yearMonthInfos.map(({ year }) => year);
