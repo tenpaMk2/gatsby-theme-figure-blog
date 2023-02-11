@@ -14,7 +14,7 @@ const getOptions = (themeOptions) => {
   const pagesPath = themeOptions.pagesPath || `pages`;
   const tagsPath = themeOptions.tagsPath || `tags`;
 
-  // WARNING: If you change these properties, you must also change GraphQL type definitions.
+  // WARNING: If you change these properties, you must also change GraphQL type definitions and `src/libs/query-blog-config.js`.
   return {
     archivesPath,
     basePath,
