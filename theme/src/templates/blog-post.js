@@ -16,8 +16,10 @@ const BlogPostTemplate = ({ data: { current, next, previous } }) => {
     throw new Error(
       [
         `Invalid date!!`,
-        `Maybe, the hour is not in 2 digits,`,
-        `e.g., ❌: \`2023/02/11 9:12\` => ⭕: \`2023/02/11 09:12\` .`,
+        `Don't use the \`/\`  as separator.`,
+        `e.g., ❌: \`2023/02/11 09:12\` => ⭕: \`2023-02-11 09:12\` .`,
+        `Set the hour to 2 digits,`,
+        `e.g., ❌: \`2023-02-11 9:12\` => ⭕: \`2023-02-11 09:12\` .`,
       ].join(` `)
     );
   }
