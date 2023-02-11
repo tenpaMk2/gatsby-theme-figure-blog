@@ -50,7 +50,7 @@ const Post = ({ title, date, html, slug, tags, isPostPage }) => {
       <section className="prose prose-invert max-w-none">
         <header>
           {h1}
-          <time datetime={date}>{date}</time>
+          <time dateTime={date}>{date}</time>
           <hr className="my-2 border border-slate-500" />
         </header>
         <section

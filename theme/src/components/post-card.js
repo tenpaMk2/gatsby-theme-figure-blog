@@ -34,7 +34,7 @@ const PostCard = ({ title, date, slug, imagePath }) => {
           <h1 className="mb-0 text-xl" itemProp="headline">
             {title}
           </h1>
-          <time className="text-gray-400" datetime={date}>
+          <time className="text-gray-400" dateTime={date}>
             {date}
           </time>
         </header>
