@@ -322,6 +322,13 @@ exports.createPages = async ({ graphql, actions, reporter }, themeOptions) => {
       context: { name, slug, formatString },
     });
   });
+
+  if (process.env.NODE_ENV !== `production`) {
+    createPage({
+      path: slugify(basePath, `debug`), // TODO: use options.
+      component: require.resolve(`./src/templates/debug.js`),
+    });
+  }
 };
 
 /**
