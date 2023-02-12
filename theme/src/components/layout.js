@@ -50,7 +50,7 @@ const Layout = ({ children }) => {
         </h1>
       </header>
 
-      <div className="flex w-full max-w-screen-2xl grow flex-wrap justify-center gap-4 px-6">
+      <div className="flex w-full max-w-screen-2xl grow flex-wrap justify-center gap-4 px-4">
         {/* [Great idea for shrink priority.](https://stackoverflow.com/questions/67858284/how-to-have-one-item-shrink-fully-before-another-starts-to-shrink) */}
         {/* Must set not only `basis-[***]` but also `max-w-[***]` due to the very long code in the code block. */}
         <main className="flex max-w-[1024px] shrink grow-0 basis-[1024px] flex-col flex-wrap gap-4">
