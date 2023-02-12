@@ -10,8 +10,9 @@ const getOptions = (themeOptions) => {
   const basePath = themeOptions.basePath || `base`;
   const formatString = themeOptions.formatString || `YYYY/MM/DD HH:mm:ss`;
   const locale = themeOptions.locale || `en-US`;
-  const postPath = themeOptions.postPath || `post`;
   const pagesPath = themeOptions.pagesPath || `pages`;
+  const postPath = themeOptions.postPath || `post`;
+  const postsPerPage = themeOptions.postsPerPage || 6;
   const tagsPath = themeOptions.tagsPath || `tags`;
 
   // WARNING: If you change these properties, you must also change GraphQL type definitions and `src/libs/query-blog-config.js`.
@@ -20,8 +21,9 @@ const getOptions = (themeOptions) => {
     basePath,
     formatString,
     locale,
-    postPath,
     pagesPath,
+    postPath,
+    postsPerPage,
     tagsPath,
   };
 };

@@ -188,7 +188,7 @@ exports.sourceNodes = (
 exports.createPages = async ({ graphql, actions, reporter }, themeOptions) => {
   const { createPage } = actions;
 
-  const { basePath, formatString, pagesPath, tagsPath } =
+  const { basePath, formatString, pagesPath, postsPerPage, tagsPath } =
     getOptions(themeOptions);
 
   // Get all markdown blog posts sorted by date
@@ -262,7 +262,6 @@ exports.createPages = async ({ graphql, actions, reporter }, themeOptions) => {
   });
 
   // Create `/page/{num}/`
-  const postsPerPage = 6; // TODO: theme-options
   const pagesTotal = Math.ceil(edges.length / postsPerPage);
 
   [...new Array(pagesTotal)].forEach((_, i) => {
