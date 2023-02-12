@@ -9,5 +9,8 @@
   "workspaces": [
     "theme",
     "example"
-  ]
+  ],
+  "devDependencies": {
+    "prettier-plugin-md-nocjsp": "^1.5.1"
+  }
 }
