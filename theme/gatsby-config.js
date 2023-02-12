@@ -24,6 +24,7 @@ module.exports = {
               quality: 90,
               wrapperStyle: (image) =>
                 `max-width:${(image.aspectRatio * 100).toFixed(2)}vh`, // See [issue: Can't specify max-width](https://github.com/gatsbyjs/gatsby/issues/15578) .
+              backgroundColor: "transparent",
             },
           },
           `gatsby-remark-prismjs`,

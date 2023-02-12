@@ -29,6 +29,8 @@ module.exports = {
             },
             ".gatsby-resp-image-wrapper": {
               "box-shadow": "0 0 1rem rgba(0, 0, 0, 0.5)",
+              "border-radius": "0.5rem",
+              overflow: "hidden",
             },
           },
         },
