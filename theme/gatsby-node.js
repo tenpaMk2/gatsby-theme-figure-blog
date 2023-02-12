@@ -360,7 +360,7 @@ exports.onCreateNode = (
     createNode({
       ...fieldData,
       // Required fields
-      id: id,
+      id,
       parent: node.id,
       children: [],
       internal: {
