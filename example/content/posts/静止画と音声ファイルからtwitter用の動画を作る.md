@@ -2,7 +2,7 @@
 date: "2023-01-09 15:28"
 tags:
   - プログラミング
-  - twitter
+  - Twitter
 ---
 
 ffmpegで↓のコマンドを叩けば良い。
