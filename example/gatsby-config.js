@@ -24,5 +24,11 @@ module.exports = {
         postPath: `p`,
       },
     },
+    {
+      resolve: `gatsby-transformer-remark`,
+      options: {
+        excerpt_separator: `<!-- more -->`,
+      },
+    },
   ],
 };
