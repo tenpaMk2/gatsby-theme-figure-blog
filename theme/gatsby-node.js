@@ -3,17 +3,6 @@ const { slugify } = require("./src/libs/slugify");
 const { getOptions } = require("./utils/default-options");
 const { parse, sep } = require("path");
 
-const markdownResolverPassthrough =
-  (fieldName) => async (source, args, context, info) => {
-    const type = info.schema.getType(`MarkdownRemark`);
-    const markdownNode = context.nodeModel.getNodeById({
-      id: source.parent,
-    });
-    const resolver = type.getFields()[fieldName].resolve;
-    const result = await resolver(markdownNode, args, context, info);
-    return result;
-  };
-
 /**
  * @type {import('gatsby').GatsbyNode['createSchemaCustomization']}
  */
@@ -26,11 +15,11 @@ exports.createSchemaCustomization = ({ actions }, themeOptions) => {
     type MarkdownPost implements Node {
       canonicalUrl: String
       date: Date! @dateformat
-      # \`2147483647\` is max value of 32bit signed integer.
-      excerpt(pruneLength: Int = 2147483647, truncate: Boolean = true, format: MarkdownExcerptFormats = HTML): String! @markdownpassthrough(fieldName: "excerpt")
+      excerpt: String! @excerpt
       # About \`@fileByRelativePath\` , see [Gatsby issue](https://github.com/gatsbyjs/gatsby/issues/18271) .
       heroImage: File @fileByRelativePath
-      html: String! @markdownpassthrough(fieldName: "html")
+      html: String! @html
+      needReadMore: Boolean! @needReadMore
       slug: String!
       tags: [PostTag]
       title: String!
@@ -77,13 +66,75 @@ exports.createSchemaCustomization = ({ actions }, themeOptions) => {
   createTypes(typeDefs);
 
   createFieldExtension({
-    name: `markdownpassthrough`,
-    args: {
-      fieldName: `String!`,
-    },
-    extend({ fieldName }) {
+    name: `excerpt`,
+    extend() {
       return {
-        resolve: markdownResolverPassthrough(fieldName),
+        async resolve(source, args, context, info) {
+          if (Object.keys(args).length !== 0) {
+            throw new Error(`Don't use args!!`);
+          }
+
+          const markdownRemarkNode = context.nodeModel.getNodeById({
+            id: source.parent,
+          });
+
+          const type = info.schema.getType(`MarkdownRemark`);
+          const resolver = type.getFields()[`excerpt`].resolve;
+
+          const result = await resolver(
+            markdownRemarkNode,
+            // The following args must be fixed becase excerpt is used later to determine if it represents the entire HTML.
+            {
+              pruneLength: 2147483647, // Max value of 32bit signed integer.
+              truncate: true, // Truncate the text even in the middle of a world. It is needed for CJK texts.
+              format: "HTML",
+            },
+            context,
+            info
+          );
+          return result;
+        },
+      };
+    },
+  });
+
+  createFieldExtension({
+    name: `html`,
+    extend() {
+      return {
+        async resolve(source, args, context, info) {
+          if (Object.keys(args).length !== 0) {
+            throw new Error(`Don't use args!!`);
+          }
+
+          const markdownRemarkNode = context.nodeModel.getNodeById({
+            id: source.parent,
+          });
+
+          const type = info.schema.getType(`MarkdownRemark`);
+          const resolver = type.getFields()[`html`].resolve;
+
+          // The args must be fixed becase excerpt is used later to determine if it represents the entire HTML.
+          const result = await resolver(markdownRemarkNode, {}, context, info);
+          return result;
+        },
+      };
+    },
+  });
+
+  createFieldExtension({
+    name: `needReadMore`,
+    extend() {
+      return {
+        async resolve(source, args, context, info) {
+          const type = info.schema.getType(`MarkdownPost`);
+          const htmlResolver = type.getFields()[`html`].resolve;
+          const excerptResolver = type.getFields()[`excerpt`].resolve;
+
+          const html = await htmlResolver(source, {}, context, info);
+          const excerpt = await excerptResolver(source, {}, context, info);
+          return html !== excerpt;
+        },
       };
     },
   });

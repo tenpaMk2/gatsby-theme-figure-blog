@@ -36,19 +36,22 @@ const Page = ({
     );
   }
 
-  const posts = nodes.map(({ date, excerpt, slug, tags, title }) => {
-    return (
-      <Post
-        key={slug}
-        title={title}
-        date={date}
-        html={excerpt}
-        slug={slug}
-        tags={tags}
-        isPostPage={false}
-      />
-    );
-  });
+  const posts = nodes.map(
+    ({ date, excerpt, slug, tags, title, needReadMore }) => {
+      return (
+        <Post
+          key={slug}
+          title={title}
+          date={date}
+          html={excerpt}
+          slug={slug}
+          tags={tags}
+          needReadMore={needReadMore}
+          isPostPage={false}
+        />
+      );
+    }
+  );
 
   return (
     <Layout>
@@ -77,6 +80,7 @@ export const pageQuery = graphql`
             gatsbyImageData
           }
         }
+        needReadMore
         slug
         tags {
           name

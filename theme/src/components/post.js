@@ -3,7 +3,7 @@ import * as React from "react";
 import { queryBlogConfig } from "../libs/query-blog-config";
 import { slugify } from "../libs/slugify";
 
-const Post = ({ title, date, html, slug, tags, isPostPage }) => {
+const Post = ({ title, date, html, slug, tags, isPostPage, needReadMore }) => {
   const { basePath, tagsPath } = queryBlogConfig();
 
   const tagLis = tags?.map(({ name, slug }) => (
@@ -18,7 +18,7 @@ const Post = ({ title, date, html, slug, tags, isPostPage }) => {
     <ol className="flex flex-wrap gap-4">{tagLis}</ol>
   ) : null;
 
-  const readMore = isPostPage ? null : (
+  const readMore = needReadMore ? (
     <p className="my-4 text-xl">
       <Link
         to={slug}
@@ -27,7 +27,7 @@ const Post = ({ title, date, html, slug, tags, isPostPage }) => {
         →Read More
       </Link>
     </p>
-  );
+  ) : null;
 
   const h1 = isPostPage ? (
     <h1 itemProp="headline" className="mb-2">
