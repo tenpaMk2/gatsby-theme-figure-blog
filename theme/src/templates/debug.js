@@ -90,9 +90,11 @@ const Debug = ({ data: { postsInfo } }) => {
     </div>
   );
 
-  const tagRows = tagInfos.map(({ count, name, slug }) => (
-    <Row key={slug} items={[name, slug, count]} />
-  ));
+  const tagRows = tagInfos
+    .sort((a, b) => (a.name < b.name ? -1 : 1))
+    .map(({ count, name, slug }) => (
+      <Row key={slug} items={[name, slug, count]} />
+    ));
   const tagInfosTable = (
     <div>
       <h2 className="text- text-2xl">Tag infos</h2>
@@ -109,9 +111,9 @@ const Debug = ({ data: { postsInfo } }) => {
     </div>
   );
 
-  const yearRows = yearInfos.map(({ count, year }) => (
-    <Row key={year} items={[year, count]} />
-  ));
+  const yearRows = yearInfos
+    .sort((a, b) => (a.year < b.year ? -1 : 1))
+    .map(({ count, year }) => <Row key={year} items={[year, count]} />);
   const yearInfosTable = (
     <div>
       <h2 className="text- text-2xl">Year infos</h2>
@@ -127,11 +129,11 @@ const Debug = ({ data: { postsInfo } }) => {
     </div>
   );
 
-  const yearMonthRows = yearMonthInfos.map(
-    ({ count, dateKey, month, year }) => (
+  const yearMonthRows = yearMonthInfos
+    .sort((a, b) => (a.dateKey < b.dateKey ? -1 : 1))
+    .map(({ count, dateKey, month, year }) => (
       <Row key={dateKey} items={[dateKey, year, month, count]} />
-    )
-  );
+    ));
   const yearMonthInfosTable = (
     <div>
       <h2 className="text- text-2xl">Year month infos</h2>
