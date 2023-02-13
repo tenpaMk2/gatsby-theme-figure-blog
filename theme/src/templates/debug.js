@@ -77,7 +77,7 @@ const Debug = ({ data: { postsInfo } }) => {
     <div>
       <h2 className="text- text-2xl">Tests</h2>
       <table className="table-auto overflow-hidden rounded-lg text-left">
-        <thead class="bg-gray-50 text-gray-700 dark:bg-gray-700 dark:text-gray-400">
+        <thead className="bg-gray-50 text-gray-700 dark:bg-gray-700 dark:text-gray-400">
           <tr>
             <th className="px-4 py-2">category</th>
             <th className="px-4 py-2">description</th>
@@ -97,7 +97,7 @@ const Debug = ({ data: { postsInfo } }) => {
     <div>
       <h2 className="text- text-2xl">Tag infos</h2>
       <table className="table-auto overflow-hidden rounded-lg text-left">
-        <thead class="bg-gray-50 text-gray-700 dark:bg-gray-700 dark:text-gray-400">
+        <thead className="bg-gray-50 text-gray-700 dark:bg-gray-700 dark:text-gray-400">
           <tr>
             <th className="px-4 py-2">name</th>
             <th className="px-4 py-2">slug</th>
@@ -116,7 +116,7 @@ const Debug = ({ data: { postsInfo } }) => {
     <div>
       <h2 className="text- text-2xl">Year infos</h2>
       <table className="table-auto overflow-hidden rounded-lg text-left">
-        <thead class="bg-gray-50 text-gray-700 dark:bg-gray-700 dark:text-gray-400">
+        <thead className="bg-gray-50 text-gray-700 dark:bg-gray-700 dark:text-gray-400">
           <tr>
             <th className="px-4 py-2">year</th>
             <th className="px-4 py-2">count</th>
@@ -136,7 +136,7 @@ const Debug = ({ data: { postsInfo } }) => {
     <div>
       <h2 className="text- text-2xl">Year month infos</h2>
       <table className="table-auto overflow-hidden rounded-lg text-left">
-        <thead class="bg-gray-50 text-gray-700 dark:bg-gray-700 dark:text-gray-400">
+        <thead className="bg-gray-50 text-gray-700 dark:bg-gray-700 dark:text-gray-400">
           <tr>
             <th className="px-4 py-2">dateKey</th>
             <th className="px-4 py-2">year</th>
