@@ -149,9 +149,9 @@ exports.createSchemaCustomization = ({ actions }, themeOptions) => {
     args: {
       locale: `String!`,
     },
-    extend() {
+    extend({ locale }) {
       return {
-        async resolve(source, { locale }, context, info) {
+        async resolve(source, args, context, info) {
           const { entries: postsIterator } = await context.nodeModel.findAll({
             type: `MarkdownPost`,
           });
@@ -161,7 +161,7 @@ exports.createSchemaCustomization = ({ actions }, themeOptions) => {
 
             // The return value must be a valid `Date()` string because of later reassignment to `Date()`.
             // `allDateKeys` must be an array of primitives to use `Set()` to remove duplicates easily,
-            return `${d.getFullYear()}/${d.getMonth() + 1}`;
+            return `${d.getFullYear()}/${("0" + (d.getMonth() + 1)).slice(-2)}`;
           });
           const yearMonthInfos = [...new Set(allDateKeys)].map((dateKey) => {
             const count = allDateKeys.filter((dk) => dk === dateKey).length;
