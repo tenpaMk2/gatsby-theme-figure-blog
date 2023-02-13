@@ -217,6 +217,23 @@ exports.sourceNodes = (
       description: `PostsInfo for @tenpamk2/gatsby-theme-figure-blog`,
     },
   });
+
+  /**
+   * Check for duplicate `excerpt_separator` .
+   */
+  const sitePlugins = getNodesByType(`SitePlugin`);
+  const {
+    pluginOptions: { excerpt_separator },
+  } = sitePlugins.filter(({ name }) => name === `gatsby-transformer-remark`)[0];
+
+  const markdownRemarks = getNodesByType(`MarkdownRemark`);
+  markdownRemarks.forEach(({ fileAbsolutePath, rawMarkdownBody }) => {
+    if (3 <= rawMarkdownBody.split(excerpt_separator).length) {
+      reporter.warn(
+        `"${fileAbsolutePath}" has duplicate "${excerpt_separator}"`
+      );
+    }
+  });
 };
 
 /**
