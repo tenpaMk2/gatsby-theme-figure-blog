@@ -60,7 +60,11 @@ const Debug = ({ data: { postsInfo } }) => {
     {
       category: varToString({ postsInfo }),
       description: `Any no date posts?`,
-      isOK: toOKOrNG(!yearInfos.some(({ year }) => 2099 <= year)),
+      isOK: toOKOrNG(
+        !yearMonthInfos.some(
+          ({ dateKey }) => 2999 <= new Date(dateKey).getFullYear()
+        )
+      ),
       message: `Maybe, is there posts that has no date in the frontmatter?`,
     },
   ];
