@@ -6,7 +6,9 @@ tags:
   - Gatsby
 ---
 
-date の形式は実は結構ややこしいのでメモ。
+dateの形式は実は結構ややこしいのでメモ。
+
+<!-- more -->
 
 gatsby-transformer-remark の readme には残念ながら記載なし。
 

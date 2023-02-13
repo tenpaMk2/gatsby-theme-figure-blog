@@ -6,7 +6,7 @@ tags:
   - Tailwind CSS
 ---
 
-公式 doc の手順に加えて、修正を加える必要がある。
+公式docの手順に加えて、修正を加える必要がある。
 
 `postcss.config.js` にて、
 `tailwind.config.js` の場所を絶対パスで指定する必要がある ↓。
@@ -21,7 +21,7 @@ module.exports = {
 ```
 
 `tailwind.config.js` にて、
-同様に解析対象( `content` )を theme 内だけに留めるようにする。
+同様に解析対象( `content` )をtheme内だけに留めるようにする。
 
 ```js
 /** @type {import('tailwindcss').Config} */
@@ -37,7 +37,7 @@ module.exports = {
 };
 ```
 
-theme を使う側では、tailwind 公式の手順通りにセットアップすれば、
+themeを使う側では、tailwind公式の手順通りにセットアップすれば、
 正常に使えるようになる。
 
 参考になるのは

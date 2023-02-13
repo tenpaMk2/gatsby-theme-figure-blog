@@ -8,6 +8,8 @@ tags:
 [gatsby-remark-classes](https://www.gatsbyjs.com/plugins/gatsby-remark-classes/)
 は使えないかもという話。
 
+<!-- more -->
+
 ↓ のように、 `gatsby-transformer-remark` の plugin として使う。
 
 ```js

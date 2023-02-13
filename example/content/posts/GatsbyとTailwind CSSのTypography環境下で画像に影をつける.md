@@ -7,10 +7,12 @@ tags:
 ---
 
 [@tailwindcss/typography](https://tailwindcss.com/docs/typography-plugin)
-は markdown 記事をｻｸｯとスタイリングするのに素晴らしいツール。
+はMarkdown記事をｻｸｯとスタイリングするのに素晴らしいツール。
 
 ただ、そのままだと画像に影がついてないのが気に入らない。
 ので、影をつける方法をメモる。
+
+<!-- more -->
 
 先に結果を見せる。
 影がついてないのが ↓。

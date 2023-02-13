@@ -13,6 +13,8 @@ description: URLに使っちゃいけない文字を調べた。それらがgats
 - [URIに使ってよい文字の話 - RFC2396 と RFC3986 - 本当は怖いHPC](https://freak-da.hatenablog.com/entry/20080321/p1)
 - [URLで使用可能な文字、使用できない文字 | iPentec](https://www.ipentec.com/document/web-url-invalid-char)
 
+<!-- more -->
+
 まず、仕様が新旧の2種類あるらしい。
 古いのがRFC2396、新しいのがRFC3986。
 

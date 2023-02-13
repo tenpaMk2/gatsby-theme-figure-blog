@@ -7,13 +7,13 @@ tags:
 
 って公式が言ってた。
 
-[公式 doc](https://tailwindcss.com/docs/customizing-colors#naming-your-colors)
+[公式doc](https://tailwindcss.com/docs/customizing-colors#naming-your-colors)
 
 > Tailwind uses literal color names (like red, green, etc.) and a numeric scale (where 50 is light and 900 is dark) by default. We think this is the best choice for most projects, and have found it easier to maintain than using abstract names like `primary` or `danger`.
 
 つまり、『メイン色』とか『サブカラー』って意味合いの名前はつけないほうが良いとのこと。
 
-もちろん、さらに抽象化した『背景色』とか『ボタン色』とかも NG。
+もちろん、さらに抽象化した『背景色』とか『ボタン色』とかもNG。
 
 [Utility-First Fundamentals](https://tailwindcss.com/docs/utility-first)
 も読むと理解が深まるかも。

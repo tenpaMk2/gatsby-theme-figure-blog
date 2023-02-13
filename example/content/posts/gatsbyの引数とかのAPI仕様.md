@@ -5,7 +5,7 @@ tags:
   - Gatsby
 ---
 
-`onCreateNode()` や `createPages()` なんかの引数の API 仕様がよく分からんかった。
+`onCreateNode()` や `createPages()` なんかの引数のAPI仕様がよく分からんかった。
 
 なかなか適切なキーワードが見つからなくて苦労した。
 

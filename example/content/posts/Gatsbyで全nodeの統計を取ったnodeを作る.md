@@ -6,9 +6,12 @@ tags:
   - JavaScript
 ---
 
-markdown で書いた全記事の統計情報みたいのを扱う node を GraphQL で作りたい。
-記事 1 つに対して処理したいなら、 `onCreateNode()` であれこれすれば良いが、
+Markdownで書いた全記事の統計情報を扱うnodeをGraphQLで作りたい。
+
+記事1つに対して処理したいなら、 `onCreateNode()` であれこれすれば良いが、
 全記事(複数 node)となると話が別。
+
+<!-- more -->
 
 ググったら Gatsby の issues↓ がヒット。
 

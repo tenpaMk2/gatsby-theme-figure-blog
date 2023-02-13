@@ -5,7 +5,7 @@ tags:
   - Tailwind CSS
 ---
 
-[公式 doc](https://tailwindcss.com/docs/hover-focus-and-other-states#styling-based-on-parent-state)
+[公式doc](https://tailwindcss.com/docs/hover-focus-and-other-states#styling-based-on-parent-state)
 に記載があった。
 
 > When you need to style an element based on the state of some parent element, mark the parent with the `group` class, and use `group-*` modifiers like `group-hover` to style the target element:
@@ -23,4 +23,4 @@ tags:
 全体をまとめるタグに `group` を使って、
 連動してホバーさせたいタグに `group-hover` を使えば良いらしい。
 
-↑ の例の通り、直接の親子関係じゃなくても良いらしい。
+↑の例の通り、直接の親子関係じゃなくても良いらしい。

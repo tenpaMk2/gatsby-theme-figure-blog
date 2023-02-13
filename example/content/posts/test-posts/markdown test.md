@@ -1,10 +1,12 @@
 ---
-date: "2023-01-08 12:11"
 tags:
   - プログラミング
   - markdown
-  - ajo'ajo
 ---
+
+Markdown test post.
+
+<!-- more -->
 
 ## heading\#\#
 

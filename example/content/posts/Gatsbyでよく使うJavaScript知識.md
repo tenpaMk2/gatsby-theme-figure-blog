@@ -6,13 +6,15 @@ tags:
   - Gatsby
 ---
 
-[Qiita にも投稿した。](https://qiita.com/tenpaMk2/items/70012117bbb8d123b592)
+[Qiitaにも投稿した。](https://qiita.com/tenpaMk2/items/70012117bbb8d123b592)
 
-趣味で Gatsby をいじり始めて知見が溜まってきたのでメモる。
+趣味でGatsbyをいじり始めて知見が溜まってきたのでメモる。
 
 この知識を使った実際のソースは
 [拙作の gatsby-theme(GitHub)](https://github.com/tenpaMk2/gatsby-theme-figure-blog)
 に転がってるので、参考まで。
+
+<!-- more -->
 
 ## 配列操作
 

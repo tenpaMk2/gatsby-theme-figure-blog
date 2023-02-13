@@ -6,15 +6,15 @@ tags:
   - React
 ---
 
-React って attributes は基本的に lowerCamelCase になってる。
-例えば ↓。
+Reactってattributesは基本的にlowerCamelCaseになってる。
+例えば↓。
 
 - `datetime` → `dateTime`
 - `stroke-width` → `strokeWidth`
 
 ただし、例外があって、それが `aria-*` と `data-*` なんだそうな。
 
-[React 公式 doc](https://reactjs.org/docs/accessibility.html#wai-aria)
+[React公式doc](https://reactjs.org/docs/accessibility.html#wai-aria)
 に書いてある。
 
 > Note that all `aria-*` HTML attributes are fully supported in JSX. Whereas most DOM properties and attributes in React are camelCased, these attributes should be hyphen-cased (also known as kebab-case, lisp-case, etc) as they are in plain HTML:

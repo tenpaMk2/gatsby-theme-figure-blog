@@ -25,6 +25,8 @@ GraphQL の Playground(<http://localhost:8000/___graphql>)にアクセスして�
 で、これらのプロパティの中には、
 `gatsby-node.js` の `onCreateNode()` 時にはまだ生成されてないものがある。
 
+<!-- more -->
+
 `excerpt` や `html` なんかがそれ。
 
 ```js

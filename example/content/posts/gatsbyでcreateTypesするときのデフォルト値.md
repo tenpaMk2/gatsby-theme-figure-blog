@@ -3,10 +3,14 @@ date: "2023-01-15 00:59"
 tags:
   - プログラミング
   - Gatsby
+  - GraphQL
 ---
 
-GraphQL の型定義をするときは、
-`gatsby-node.js` の `createSchemaCustomization()` にて ↓ のようにする。
+GatsbyのGraphQLの型定義のデフォルト値を決める話。
+
+<!-- more -->
+
+`gatsby-node.js` の `createSchemaCustomization()` にて↓のようにすれば良い。
 
 ```js
 const typeDefs = `
@@ -21,10 +25,9 @@ const typeDefs = `
 createTypes(typeDefs);
 ```
 
-この `excerpt` の `pruneLength` は
-オプション(呼び方が分からん)であり、
-`Int` が型であり、
-`= 140` がデフォルト値。
+この `excerpt` の `pruneLength` はオプション(呼び方が分からん)であり、
+`Int` が型であり、`= 140` がデフォルト値。
+デフォルト値を変える場合はここを変えれば良い。
 
 ~~[公式 Doc はこちら](https://www.gatsbyjs.com/docs/reference/graphql-data-layer/schema-customization/#creating-custom-extensions)~~
 

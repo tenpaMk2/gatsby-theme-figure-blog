@@ -3,12 +3,15 @@ date: "2023-01-09 16:16"
 tags:
   - プログラミング
   - Tailwind CSS
+  - "@tailwindcss/typography"
 ---
 
 [@tailwindcss/typography](https://tailwindcss.com/docs/typography-plugin)
 を使うと markdown の記事をサクッとスタイリングできて便利。
 
-ただ、イマイチな部分もあるのでカスタマイズしたい。
+ただ、イマイチな部分もあるのでカスタマイズしたいって話。
+
+<!-- more -->
 
 `tailwind.config.js` の `module.exports` を ↓ のようにいじればカスタマイズできる。
 
