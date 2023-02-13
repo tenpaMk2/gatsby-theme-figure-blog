@@ -32,6 +32,9 @@ module.exports = {
               "border-radius": "0.5rem",
               overflow: "hidden",
             },
+            "ul > li::marker": {
+              color: `var(--tw-prose-links)`,
+            },
           },
         },
       },
