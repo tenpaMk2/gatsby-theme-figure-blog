@@ -1,5 +1,4 @@
 ---
-title: gatsbyでonCreateNode時にはまだ生成されてないプロパティの扱い
 date: "2023-01-15 12:47"
 tags:
   - プログラミング

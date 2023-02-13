@@ -1,5 +1,4 @@
 ---
-title: hero image portrait 3
 date: "2023-01-27 22:12"
 heroImage: "./images/sample_portrait.jpg"
 tags:

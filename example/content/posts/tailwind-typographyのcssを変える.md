@@ -1,5 +1,4 @@
 ---
-title: tailwind-typographyのcssを変える
 date: "2023-01-09 16:16"
 tags:
   - プログラミング

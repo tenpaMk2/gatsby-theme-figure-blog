@@ -1,5 +1,4 @@
 ---
-title: CSSのmax-heightで画像がはみ出るときの対処
 date: "2023-01-28 22:27"
 tags:
   - プログラミング
@@ -8,23 +7,25 @@ tags:
   - Tailwind CSS
 ---
 
-flex とか使ってカード状のレイアウトをしていて ↓ のようになってしまった。
+flexとか使ってカード状のレイアウトをしていて↓のようになってしまった。
 
 ![css_max-height_image_overflow_ng](./images/css_max-height_image_overflow_ng.png)
 
 画像がはみ出てしまっている。
-期待していたのは ↓。
+期待していたのは↓。
 
 ![css_max-height_image_overflow_ok](./images/css_max-height_image_overflow_ok.png)
 
 この問題を解決する方法をメモっておく。
 
-まず、前提環境は React(もっというと Gatsby)と Tailwind CSS。
-Tailwind CSS を知らない人は `className` の値でググって、
-Vanilla CSS だとどうなるか読み解いてね。
+<!-- more -->
 
-NG のときのカードコンポーネントの jsx が ↓(関係ないプロパティは削ってる)。
-↓ の return を受ける親要素が Flexbox になってると思って。
+まず、前提環境はReact(もっというとGatsby)とTailwind CSS。
+Tailwind CSSを知らない人は `className` の値でググって、
+Vanilla CSSだとどうなるか読み解いてね。
+
+NGのときのカードコンポーネントのjsxが↓(関係ないプロパティは削ってる)。
+↓のreturnを受ける親要素がFlexboxになってると思って。
 
 ```jsx
 return (

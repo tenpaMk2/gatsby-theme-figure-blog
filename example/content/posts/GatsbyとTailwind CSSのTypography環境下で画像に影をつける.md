@@ -1,5 +1,4 @@
 ---
-title: GatsbyとTailwind CSSのTypography環境下で画像に影をつける
 date: "2023-01-21 17:57"
 tags:
   - Gatsby

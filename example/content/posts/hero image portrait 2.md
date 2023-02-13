@@ -1,5 +1,4 @@
 ---
-title: hero image portrait 2
 date: "2023-01-27 22:10"
 heroImage: "./images/150x3000.webp"
 tags:

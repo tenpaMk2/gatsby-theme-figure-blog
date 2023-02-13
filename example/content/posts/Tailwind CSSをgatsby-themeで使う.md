@@ -1,5 +1,4 @@
 ---
-title: Tailwind CSSをgatsby-themeで使う
 date: "2023-01-15 18:19"
 tags:
   - プログラミング

@@ -1,5 +1,4 @@
 ---
-title: URLに使っちゃいけない文字とgatsby-source-filesystemのURL生成
 date: "2022-12-22 22:43"
 description: URLに使っちゃいけない文字を調べた。それらがgatsbyのURL生成にどう関係するのか検証する。
 ---
@@ -156,7 +155,7 @@ RFC3986との違いが分からん。
 ついでにいうと
 [MDNの解説](https://developer.mozilla.org/ja/docs/Glossary/percent-encoding)
 もある。
-が、Living  Standardと記載に違いがある...。
+が、Living Standardと記載に違いがある...。
 バッククォートに対してパーセントエンコーディングするかどうかが違う。
 
 - Living Standard: する

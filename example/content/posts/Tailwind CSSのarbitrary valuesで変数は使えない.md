@@ -1,5 +1,4 @@
 ---
-title: Tailwind CSSのarbitrary valuesで変数は使えない
 date: "2023-01-28 18:09"
 tags:
   - プログラミング

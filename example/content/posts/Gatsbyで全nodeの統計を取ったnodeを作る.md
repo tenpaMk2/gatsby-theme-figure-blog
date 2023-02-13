@@ -1,5 +1,4 @@
 ---
-title: Gatsbyで全nodeの統計を取ったnodeを作る
 date: "2023-02-09 22:17"
 tags:
   - プログラミング
