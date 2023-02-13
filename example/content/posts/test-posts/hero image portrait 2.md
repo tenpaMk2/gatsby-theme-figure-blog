@@ -1,6 +1,6 @@
 ---
 date: "2023-01-27 22:10"
-heroImage: "./images/150x3000.webp"
+heroImage: "../images/150x3000.webp"
 tags:
   - フィギュア
 ---
