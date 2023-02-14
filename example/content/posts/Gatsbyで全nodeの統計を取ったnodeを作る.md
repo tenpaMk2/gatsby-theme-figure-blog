@@ -121,7 +121,7 @@ const allYearMonths = posts.map(
     new Date(date).toLocaleString(`en-US`, {
       year: `numeric`,
       month: `short`,
-    }) // TODO: locale from config.
+    })
 );
 const yearMonthInfos = Array.from(new Set(allYearMonths)).map((yearMonth) => {
   const count = allYearMonths.filter((ym) => ym === yearMonth).length;
