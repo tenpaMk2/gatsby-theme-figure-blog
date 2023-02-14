@@ -365,7 +365,7 @@ exports.createPages = async ({ graphql, actions, reporter }, themeOptions) => {
 
   edges.forEach(({ node, next, previous }) => {
     createPage({
-      path: node.slug,
+      path: node.slug, // `node.slug` may not start with `basePath` and `postPath` .
       component: require.resolve(`./src/templates/blog-post.js`),
       context: {
         id: node.id,
