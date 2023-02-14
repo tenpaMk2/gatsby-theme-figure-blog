@@ -424,10 +424,13 @@ exports.onCreateNode = (
   if (node.internal.type === `MarkdownRemark`) {
     const { relativePath } = getNode(node.parent);
     const { dir, name } = parse(relativePath);
+    const frontmatterSlug = node.frontmatter?.slug;
+
     const slug =
-      name === `index`
+      frontmatterSlug ||
+      (name === `index`
         ? slugify(basePath, postPath, ...dir.split(sep))
-        : slugify(basePath, postPath, ...dir.split(sep), name);
+        : slugify(basePath, postPath, ...dir.split(sep), name));
 
     const modifiedTags =
       node.frontmatter.tags?.map((tag) => ({
