@@ -5,7 +5,7 @@ const Row = ({ items }) => (
   <tr className="border-b bg-white dark:border-gray-700 dark:bg-gray-900">
     {items.map((item, i) => (
       <td key={i} className="max-w-xs px-4 py-2">
-        {item.toString()}
+        {item?.toString()}
       </td>
     ))}
   </tr>
@@ -20,7 +20,13 @@ const isDuplicateTagSlugs = (tagInfos) => {
   return tagInfos.length !== uniqueSlugs.size;
 };
 
-const Debug = ({ data: { postsInfo } }) => {
+const Debug = ({
+  data: {
+    __type: { fields },
+    figureBlogConfig,
+    postsInfo,
+  },
+}) => {
   const { tagInfos, yearInfos, yearMonthInfos } = postsInfo;
 
   const tests = [
@@ -155,7 +161,37 @@ const Debug = ({ data: { postsInfo } }) => {
     </div>
   );
 
-  // TODO: show options
+  const figureBlogConfigFields = fields
+    .filter(({ type: { kind } }) => kind === `SCALAR`)
+    .map(({ name }) => name);
+
+  console.log(figureBlogConfigFields);
+
+  const figureBlogConfigRows = figureBlogConfigFields.map((field) => (
+    <Row
+      key={field}
+      items={[
+        field,
+        figureBlogConfig.hasOwnProperty(field) ? `OK` : `FORGOT`,
+        figureBlogConfig[field],
+      ]}
+    />
+  ));
+  const figureBlogConfigTable = (
+    <div>
+      <h2 className="text- text-2xl">Figure blog config</h2>
+      <table className="table-auto overflow-hidden rounded-lg text-left">
+        <thead className="bg-gray-50 text-gray-700 dark:bg-gray-700 dark:text-gray-400">
+          <tr>
+            <th className="px-4 py-2">field</th>
+            <th className="px-4 py-2">query?</th>
+            <th className="px-4 py-2">value</th>
+          </tr>
+        </thead>
+        <tbody>{figureBlogConfigRows}</tbody>
+      </table>
+    </div>
+  );
 
   return (
     <div className="flex min-h-screen flex-wrap items-start gap-4 bg-slate-800 p-4 text-gray-500 dark:text-gray-400">
@@ -163,6 +199,7 @@ const Debug = ({ data: { postsInfo } }) => {
       {tagInfosTable}
       {yearInfosTable}
       {yearMonthInfosTable}
+      {figureBlogConfigTable}
     </div>
   );
 };
@@ -171,6 +208,24 @@ export default Debug;
 
 export const pageQuery = graphql`
   query {
+    __type(name: "FigureBlogConfig") {
+      fields {
+        name
+        type {
+          kind
+        }
+      }
+    }
+    figureBlogConfig {
+      archivesPath
+      basePath
+      formatString
+      locale
+      pagesPath
+      postPath
+      postsPerPage
+      tagsPath
+    }
     postsInfo {
       id
       tagInfos {
