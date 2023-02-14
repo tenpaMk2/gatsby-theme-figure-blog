@@ -34,6 +34,7 @@ exports.createSchemaCustomization = ({ actions }, themeOptions) => {
     type FigureBlogConfig implements Node {
       archivesPath: String
       basePath: String
+      debugPath: String
       formatString: String
       locale: String
       pagesPath: String
@@ -296,8 +297,14 @@ exports.sourceNodes = (
 exports.createPages = async ({ graphql, actions, reporter }, themeOptions) => {
   const { createPage } = actions;
 
-  const { basePath, formatString, pagesPath, postsPerPage, tagsPath } =
-    getOptions(themeOptions);
+  const {
+    basePath,
+    debugPath,
+    formatString,
+    pagesPath,
+    postsPerPage,
+    tagsPath,
+  } = getOptions(themeOptions);
 
   // Get all markdown blog posts sorted by date
   const result = await graphql(`
@@ -397,7 +404,7 @@ exports.createPages = async ({ graphql, actions, reporter }, themeOptions) => {
 
   if (process.env.NODE_ENV !== `production`) {
     createPage({
-      path: slugify(basePath, `debug`), // TODO: use options.
+      path: slugify(basePath, debugPath),
       component: require.resolve(`./src/templates/debug.js`),
     });
   }

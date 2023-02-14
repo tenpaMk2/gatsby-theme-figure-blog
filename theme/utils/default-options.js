@@ -8,6 +8,7 @@
 const getOptions = (themeOptions) => {
   const archivesPath = themeOptions.archivesPath || `archives`;
   const basePath = themeOptions.basePath || `base`;
+  const debugPath = themeOptions.debugPath || `debug`;
   const formatString = themeOptions.formatString || `YYYY/MM/DD HH:mm:ss`;
   const locale = themeOptions.locale || `en-US`;
   const pagesPath = themeOptions.pagesPath || `pages`;
@@ -15,10 +16,11 @@ const getOptions = (themeOptions) => {
   const postsPerPage = themeOptions.postsPerPage || 6;
   const tagsPath = themeOptions.tagsPath || `tags`;
 
-  // WARNING: If you change these properties, you must also change GraphQL type definitions and `src/libs/query-blog-config.js`.
+  // Check the debug page for any forgotten definitions.
   return {
     archivesPath,
     basePath,
+    debugPath,
     formatString,
     locale,
     pagesPath,
