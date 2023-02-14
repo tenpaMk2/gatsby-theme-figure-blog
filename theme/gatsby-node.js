@@ -30,12 +30,15 @@ exports.createSchemaCustomization = ({ actions }, themeOptions) => {
       slug: String
     }
 
+    # Check the debug page for any forgotten definitions.
     type FigureBlogConfig implements Node {
       archivesPath: String
       basePath: String
       formatString: String
-      postPath: String
+      locale: String
       pagesPath: String
+      postPath: String
+      postsPerPage: Int
       tagsPath: String
     }
 
