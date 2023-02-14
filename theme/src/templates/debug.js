@@ -208,6 +208,7 @@ export default Debug;
 
 export const pageQuery = graphql`
   query {
+    # [Don't use introspection in production.](https://www.apollographql.com/blog/graphql/security/why-you-should-disable-graphql-introspection-in-production/)
     __type(name: "FigureBlogConfig") {
       fields {
         name
