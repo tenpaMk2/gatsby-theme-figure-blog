@@ -24,6 +24,14 @@ exports.createSchemaCustomization = ({ actions }, themeOptions) => {
       title: String!
     }
 
+    type MarkdownPage implements Node {
+      canonicalUrl: String
+      heroImage: File @fileByRelativePath
+      html: String! @html
+      slug: String!
+      title: String!
+    }
+
     type PostTag {
       name: String
       slug: String
@@ -308,6 +316,12 @@ exports.createPages = async ({ graphql, actions, reporter }, themeOptions) => {
   // Get all markdown blog posts sorted by date
   const result = await graphql(`
     {
+      allMarkdownPage {
+        nodes {
+          id
+          slug
+        }
+      }
       allMarkdownPost(sort: { date: ASC }) {
         edges {
           node {
@@ -365,7 +379,7 @@ exports.createPages = async ({ graphql, actions, reporter }, themeOptions) => {
   edges.forEach(({ node, next, previous }) => {
     createPage({
       path: node.slug, // `node.slug` may not start with `basePath` and `postPath` .
-      component: require.resolve(`./src/templates/blog-post.js`),
+      component: require.resolve(`./src/templates/markdown-post.js`),
       context: {
         id: node.id,
         previousPostId: previous?.id,
@@ -401,6 +415,17 @@ exports.createPages = async ({ graphql, actions, reporter }, themeOptions) => {
     });
   });
 
+  result?.data?.allMarkdownPage?.nodes.forEach((node) =>
+    createPage({
+      path: node.slug,
+      component: require.resolve(`./src/templates/markdown-page.js`),
+      context: {
+        id: node.id,
+        formatString,
+      },
+    })
+  );
+
   if (process.env.NODE_ENV !== `production`) {
     createPage({
       path: slugify(basePath, debugPath),
@@ -409,10 +434,45 @@ exports.createPages = async ({ graphql, actions, reporter }, themeOptions) => {
   }
 };
 
-/**
- * @type {import('gatsby').GatsbyNode['onCreateNode']}
- */
-exports.onCreateNode = (
+const createMarkdownPageNode = (
+  { actions, createContentDigest, createNodeId, getNode, node },
+  themeOptions
+) => {
+  const { createNode, createParentChildLink } = actions;
+
+  const { basePath } = getOptions(themeOptions);
+
+  const { name } = getNode(node.parent);
+
+  const slug = slugify(basePath, name);
+
+  const fieldData = {
+    canonicalUrl: node.frontmatter?.canonicalUrl || ``,
+    heroImage: node.frontmatter?.heroImage,
+    slug,
+    title: node.frontmatter.title || name,
+  };
+
+  const id = createNodeId(`${node.id} >>> MarkdownPage`);
+
+  createNode({
+    ...fieldData,
+    // Required fields
+    id,
+    parent: node.id,
+    children: [],
+    internal: {
+      type: `MarkdownPage`,
+      contentDigest: createContentDigest(fieldData),
+      content: JSON.stringify(fieldData),
+      description: `MarkdownPage`,
+    },
+  });
+
+  createParentChildLink({ parent: node, child: getNode(id) });
+};
+
+const createMarkdownPostNode = (
   { actions, createContentDigest, createNodeId, getNode, node },
   themeOptions
 ) => {
@@ -420,48 +480,74 @@ exports.onCreateNode = (
 
   const { basePath, postPath } = getOptions(themeOptions);
 
-  if (node.internal.type === `MarkdownRemark`) {
-    const { relativePath } = getNode(node.parent);
-    const { dir, name } = parse(relativePath);
-    const frontmatterSlug = node.frontmatter?.slug;
+  const { relativePath } = getNode(node.parent);
+  const { dir, name } = parse(relativePath);
+  const frontmatterSlug = node.frontmatter?.slug;
 
-    const slug =
-      frontmatterSlug ||
-      (name === `index`
-        ? slugify(basePath, postPath, ...dir.split(sep))
-        : slugify(basePath, postPath, ...dir.split(sep), name));
+  const slug =
+    frontmatterSlug ||
+    (name === `index`
+      ? slugify(basePath, postPath, ...dir.split(sep))
+      : slugify(basePath, postPath, ...dir.split(sep), name));
 
-    const modifiedTags =
-      node.frontmatter.tags?.map((tag) => ({
-        name: tag,
-        slug: kebabCase(tag),
-      })) || [];
+  const modifiedTags =
+    node.frontmatter.tags?.map((tag) => ({
+      name: tag,
+      slug: kebabCase(tag),
+    })) || [];
 
-    const fieldData = {
-      canonicalUrl: node.frontmatter?.canonicalUrl || ``,
-      date: node.frontmatter?.date || "2999-01-01 00:00",
-      heroImage: node.frontmatter?.heroImage,
-      slug,
-      tags: modifiedTags,
-      title: node.frontmatter.title || name,
-    };
+  const fieldData = {
+    canonicalUrl: node.frontmatter?.canonicalUrl || ``,
+    date: node.frontmatter?.date || "2999-01-01 00:00",
+    heroImage: node.frontmatter?.heroImage,
+    slug,
+    tags: modifiedTags,
+    title: node.frontmatter.title || name,
+  };
 
-    const id = createNodeId(`${node.id} >>> MarkdownPost`);
+  const id = createNodeId(`${node.id} >>> MarkdownPost`);
 
-    createNode({
-      ...fieldData,
-      // Required fields
-      id,
-      parent: node.id,
-      children: [],
-      internal: {
-        type: `MarkdownPost`,
-        contentDigest: createContentDigest(fieldData),
-        content: JSON.stringify(fieldData),
-        description: `MarkdownPost`,
-      },
-    });
+  createNode({
+    ...fieldData,
+    // Required fields
+    id,
+    parent: node.id,
+    children: [],
+    internal: {
+      type: `MarkdownPost`,
+      contentDigest: createContentDigest(fieldData),
+      content: JSON.stringify(fieldData),
+      description: `MarkdownPost`,
+    },
+  });
 
-    createParentChildLink({ parent: node, child: getNode(id) });
+  createParentChildLink({ parent: node, child: getNode(id) });
+};
+
+/**
+ * @type {import('gatsby').GatsbyNode['onCreateNode']}
+ */
+exports.onCreateNode = (args, themeOptions) => {
+  const { getNode, node, reporter } = args;
+
+  if (node.internal.type !== `MarkdownRemark`) return;
+
+  const { sourceInstanceName } = getNode(node.parent);
+
+  switch (sourceInstanceName) {
+    case `pages`:
+      createMarkdownPageNode(args, themeOptions);
+      break;
+    case `blog`:
+      createMarkdownPostNode(args, themeOptions);
+      break;
+    default:
+      reporter.info(
+        [
+          `There are names of \`gatsby-source-filesystem\` that \`gatsby-theme-figure-blog\` does not know.`,
+          `If you do not expect this, check \`gatsby-source-filesystem\` configs.`,
+        ].join(` `)
+      );
+      return;
   }
 };
