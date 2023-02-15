@@ -6,7 +6,6 @@ module.exports = {
     "./src/@tenpamk2/gatsby-theme-figure-blog/templates/**/*.{js,jsx,ts,tsx}",
     "./src/components/**/*.{js,jsx,ts,tsx}",
     "./src/pages/**/*.{js,jsx,ts,tsx}",
-    "./src/components/**/*.{js,jsx,ts,tsx}",
   ],
   theme: {
     extend: {},
