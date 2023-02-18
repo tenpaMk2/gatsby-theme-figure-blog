@@ -1,6 +1,5 @@
 import * as React from "react";
 import { graphql, Link, useStaticQuery } from "gatsby";
-import HeaderImage from "./header-image";
 import TagCloud from "./tag-cloud";
 import Bio from "./bio";
 import ArchiveList from "./archive-list";
@@ -24,14 +23,9 @@ const Layout = ({ children }) => {
 
   return (
     <div className="flex min-h-screen flex-col items-center gap-6 bg-slate-800 text-gray-200">
-      <header className="relative w-full grow-0">
-        <HeaderImage />
-
-        {/* add shade */}
-        <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-slate-800 opacity-70" />
-        <div className="absolute inset-x-0 bottom-0 h-8 bg-gradient-to-t from-slate-800" />
-
-        <div className="absolute top-0 left-0 text-white">
+      {/* I don't use `gatsby-background-image` because it's not maintained. */}
+      <header className="flex min-h-[18rem] w-full flex-col items-center bg-[url('/header.webp')] bg-cover bg-center pb-12 shadow-[inset_0_84px_53px_-53px_rgba(0,0,0,0.5),inset_0_-60px_23px_-23px_rgba(31,41,55,1)]">
+        <div className="flex w-full justify-between text-white">
           <nav>
             <Link to="/">Home</Link>
             <Link to="/archives/">Archives</Link>
@@ -45,7 +39,7 @@ const Layout = ({ children }) => {
             <Link to="/">検索</Link>
           </nav>
         </div>
-        <h1 className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 font-sans text-6xl font-light text-white drop-shadow">
+        <h1 className="drop-shadow-title flex grow flex-col justify-center text-center font-sans text-6xl font-light text-white">
           <Link to="/">{title}</Link>
         </h1>
       </header>
