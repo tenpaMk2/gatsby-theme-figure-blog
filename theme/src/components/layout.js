@@ -7,7 +7,7 @@ import ArchiveList from "./archive-list";
 const Layout = ({ children }) => {
   const {
     site: {
-      siteMetadata: { title },
+      siteMetadata: { title, menuLinks },
     },
   } = useStaticQuery(
     graphql`
@@ -15,29 +15,27 @@ const Layout = ({ children }) => {
         site {
           siteMetadata {
             title
+            menuLinks {
+              link
+              name
+            }
           }
         }
       }
     `
   );
 
+  const menus = menuLinks?.map(({ name, link }) => (
+    <Link to={link}>{name}</Link>
+  ));
+
   return (
     <div className="flex min-h-screen flex-col items-center gap-6 bg-slate-800 text-gray-200">
       {/* I don't use `gatsby-background-image` because it's not maintained. */}
-      <header className="flex min-h-[18rem] w-full flex-col items-center bg-[url('/header.webp')] bg-cover bg-center pb-12 shadow-[inset_0_84px_53px_-53px_rgba(0,0,0,0.5),inset_0_-60px_23px_-23px_rgba(31,41,55,1)]">
-        <div className="flex w-full justify-between text-white">
-          <nav>
-            <Link to="/">Home</Link>
-            <Link to="/archives/">Archives</Link>
-            <Link to="/about/">About</Link>
-            <Link to="/apps/">Apps</Link>
-          </nav>
-          <nav>
-            <Link to="/">RSS</Link>
-            <Link to="/">RSSフィギュア</Link>
-            <Link to="/">RSSドール</Link>
-            <Link to="/">検索</Link>
-          </nav>
+      <header className="flex min-h-[18rem] w-full flex-col items-center bg-[url('/header.webp')] bg-cover bg-center px-4 pb-12 pt-2 shadow-[inset_0_84px_53px_-53px_rgba(0,0,0,0.5),inset_0_-60px_23px_-23px_rgba(31,41,55,1)]">
+        <div className="flex w-full justify-between text-xl text-white">
+          <nav className="flex gap-2">{menus}</nav>
+          <Link to="/">検索</Link>
         </div>
         <h1 className="drop-shadow-title flex grow flex-col justify-center text-center font-sans text-6xl font-light text-white">
           <Link to="/">{title}</Link>
