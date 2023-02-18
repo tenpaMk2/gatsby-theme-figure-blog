@@ -7,12 +7,15 @@
  */
 const getOptions = (themeOptions) => {
   const archivesPath = themeOptions.archivesPath || `archives`;
-  const basePath = themeOptions.basePath || `base`;
+  const basePath =
+    themeOptions.basePath || themeOptions.basePath === `` ? `` : `base`;
   const debugPath = themeOptions.debugPath || `debug`;
   const formatString = themeOptions.formatString || `YYYY/MM/DD HH:mm:ss`;
   const locale = themeOptions.locale || `en-US`;
-  const pagesPath = themeOptions.pagesPath || `pages`;
-  const postPath = themeOptions.postPath || `post`;
+  const pagesPath =
+    themeOptions.pagesPath || themeOptions.pagesPath === `` ? `` : `pages`;
+  const postPath =
+    themeOptions.postPath || themeOptions.postPath === `` ? `` : `post`;
   const postsPerPage = themeOptions.postsPerPage || 6;
   const tagsPath = themeOptions.tagsPath || `tags`;
 
