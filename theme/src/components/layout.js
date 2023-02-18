@@ -53,6 +53,7 @@ const Layout = ({ children }) => {
               value="https://tenpamk2-blog.netlify.app"
             />
             <button type="submit">
+              {/* [Get from.](https://www.svgrepo.com/svg/479944/magnifying-glass) */}
               <svg
                 version="1.1"
                 id="_x32_"
