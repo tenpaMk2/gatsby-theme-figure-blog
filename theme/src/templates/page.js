@@ -5,13 +5,11 @@ import Layout from "../components/layout";
 import Post from "../components/post";
 import PagesNav from "../components/pages-nav";
 
-// `location` : See [Gatsby doc](https://www.gatsbyjs.com/docs/location-data-from-props/#getting-the-absolute-url-of-a-page)
 const Page = ({
   data: {
     allMarkdownPost: { nodes },
   },
   pageContext,
-  location,
 }) => {
   const pagesTotal = pageContext.pagesTotal;
   if (!pagesTotal || pagesTotal <= 0) {
@@ -67,7 +65,10 @@ const Page = ({
 
 export default Page;
 
-export const Head = () => <Seo isTopPage={true} />;
+// `location` : See [Gatsby doc](https://www.gatsbyjs.com/docs/location-data-from-props/#getting-the-absolute-url-of-a-page)
+export const Head = ({ location: { pathname } }) => (
+  <Seo isTopPage={pathname === `/`} />
+);
 
 export const pageQuery = graphql`
   query ($skip: Int!, $limit: Int!, $formatString: String) {
