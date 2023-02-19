@@ -230,6 +230,7 @@ export const pageQuery = graphql`
     figureBlogConfig {
       archivesPath
       basePath
+      debugPath
       formatString
       locale
       pagesPath
