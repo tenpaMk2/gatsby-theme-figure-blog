@@ -384,22 +384,6 @@ exports.createPages = async ({ graphql, actions, reporter }, themeOptions) => {
 
   const edges = result.data.allMarkdownPost.edges;
 
-  if (!edges?.length) {
-    createPage({
-      path: slugify(basePath),
-      component: require.resolve("./src/templates/page.js"),
-      context: {
-        limit: 6,
-        skip: 0,
-        pagesTotal: 1,
-        currentPageNumber: 1,
-        formatString,
-      },
-    });
-
-    return;
-  }
-
   edges.forEach(({ node, next, previous }) => {
     createPage({
       path: node.slug, // `node.slug` may not start with `basePath` and `postPath` .
