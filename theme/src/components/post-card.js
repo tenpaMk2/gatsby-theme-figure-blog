@@ -8,15 +8,16 @@ const PostCard = ({ title, date, slug, imagePath }) => {
     <GatsbyImage
       image={image}
       alt="hero image"
-      className="max-h-96"
+      className="rounded"
       objectFit="contain"
     />
   ) : (
     <StaticImage
       src="../images/no-image.jpg"
       alt="no-image"
-      className="max-h-96"
+      className="rounded"
       objectFit="contain"
+      height="384" // Sync `gatsbyImageData(height: ***)`
     />
   );
 
@@ -38,7 +39,7 @@ const PostCard = ({ title, date, slug, imagePath }) => {
             {date}
           </time>
         </header>
-        <section itemProp="articleBody" className="max-h-96 text-center">
+        <section itemProp="articleBody" className="text-center">
           {imageTag}
         </section>
       </Link>

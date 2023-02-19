@@ -39,7 +39,7 @@ export const pageQuery = graphql`
         date(formatString: $formatString)
         heroImage {
           childImageSharp {
-            gatsbyImageData
+            gatsbyImageData(height: 384)
           }
         }
         slug
