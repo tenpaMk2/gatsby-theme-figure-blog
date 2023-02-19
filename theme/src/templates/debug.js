@@ -67,9 +67,7 @@ const Debug = ({
       category: varToString({ postsInfo }),
       description: `Any no date posts?`,
       isOK: toOKOrNG(
-        !yearMonthInfos.some(
-          ({ dateKey }) => 2999 <= new Date(dateKey).getFullYear()
-        )
+        !yearMonthInfos.some(({ yearNumber }) => 2999 <= yearNumber)
       ),
       message: `Maybe, is there posts that has no date in the frontmatter?`,
     },
@@ -122,15 +120,18 @@ const Debug = ({
   );
 
   const yearRows = yearInfos
-    .sort((a, b) => (a.year < b.year ? -1 : 1))
-    .map(({ count, year }) => <Row key={year} items={[year, count]} />);
+    .sort((a, b) => (a.yearNumber < b.yearNumber ? -1 : 1))
+    .map(({ count, yearNumber, yearString }) => (
+      <Row key={yearNumber} items={[yearNumber, yearString, count]} />
+    ));
   const yearInfosTable = (
     <div>
       <h2 className="text- text-2xl">Year infos</h2>
       <table className="table-auto overflow-hidden rounded-lg text-left">
         <thead className="bg-gray-50 text-gray-700 dark:bg-gray-700 dark:text-gray-400">
           <tr>
-            <th className="px-4 py-2">year</th>
+            <th className="px-4 py-2">yearNumber</th>
+            <th className="px-4 py-2">yearString</th>
             <th className="px-4 py-2">count</th>
           </tr>
         </thead>
@@ -140,9 +141,17 @@ const Debug = ({
   );
 
   const yearMonthRows = yearMonthInfos
-    .sort((a, b) => (a.dateKey < b.dateKey ? -1 : 1))
-    .map(({ count, dateKey, month, year }) => (
-      <Row key={dateKey} items={[dateKey, year, month, count]} />
+    .sort((a, b) =>
+      `${a.yearNumber}${("0" + (a.monthNumber + 1)).slice(-2)}` <
+      `${b.yearNumber}${("0" + (b.monthNumber + 1)).slice(-2)}`
+        ? -1
+        : 1
+    )
+    .map(({ count, monthNumber, monthString, yearNumber, yearString }) => (
+      <Row
+        key={`${yearNumber}${monthNumber}`}
+        items={[yearNumber, yearString, monthNumber, monthString, count]}
+      />
     ));
   const yearMonthInfosTable = (
     <div>
@@ -150,9 +159,10 @@ const Debug = ({
       <table className="table-auto overflow-hidden rounded-lg text-left">
         <thead className="bg-gray-50 text-gray-700 dark:bg-gray-700 dark:text-gray-400">
           <tr>
-            <th className="px-4 py-2">dateKey</th>
-            <th className="px-4 py-2">year</th>
-            <th className="px-4 py-2">month</th>
+            <th className="px-4 py-2">yearNumber</th>
+            <th className="px-4 py-2">yearString</th>
+            <th className="px-4 py-2">monthNumber</th>
+            <th className="px-4 py-2">monthString</th>
             <th className="px-4 py-2">count</th>
           </tr>
         </thead>
@@ -236,13 +246,15 @@ export const pageQuery = graphql`
       }
       yearInfos {
         count
-        year
+        yearNumber
+        yearString
       }
       yearMonthInfos {
         count
-        dateKey
-        month
-        year
+        monthNumber
+        monthString
+        yearNumber
+        yearString
       }
     }
   }

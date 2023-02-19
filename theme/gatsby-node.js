@@ -64,14 +64,16 @@ exports.createSchemaCustomization = ({ actions }, themeOptions) => {
     
     type YearInfo {
       count: Int!
-      year: String!
+      yearNumber: Int!
+      yearString: String!
     }
 
     type YearMonthInfo {
       count: Int!
-      dateKey: String!
-      month: String!
-      year: String!
+      monthNumber: Int!
+      monthString: String!
+      yearNumber: Int!
+      yearString: String!
     }
   `;
   createTypes(typeDefs);
@@ -191,14 +193,25 @@ exports.createSchemaCustomization = ({ actions }, themeOptions) => {
           // The `yearMonthInfos` is not existing when the node was created, so the resolver is required.
           const yearMonthInfos = await resolver(postsInfo, args, context, info);
 
-          const allYears = yearMonthInfos.map(({ year }) => year);
-          const yearInfos = [...new Set(allYears)].map((year) => {
-            // Sum the monthly counts.
-            const infos = yearMonthInfos.filter(({ year: y }) => y === year);
-            const count = infos.reduce((total, { count }) => total + count, 0);
+          // Remove duplicates.
+          const uniqueMap = new Map(
+            yearMonthInfos.map((info) => [info.yearNumber, info])
+          );
 
-            return { year, count };
-          });
+          const yearInfos = [...uniqueMap.values()].map(
+            ({ yearNumber, yearString }) => {
+              // Sum the monthly counts.
+              const infos = yearMonthInfos.filter(
+                ({ yearNumber: y }) => y === yearNumber
+              );
+              const count = infos.reduce(
+                (total, { count }) => total + count,
+                0
+              );
+
+              return { yearNumber, yearString, count };
+            }
+          );
 
           return yearInfos;
         },
@@ -217,21 +230,32 @@ exports.createSchemaCustomization = ({ actions }, themeOptions) => {
           const { entries: postsIterator } = await context.nodeModel.findAll({
             type: `MarkdownPost`,
           });
-
-          const allDateKeys = [...postsIterator].map(({ date }) => {
+          const allDateInfos = [...postsIterator].map(({ date }) => {
             const d = new Date(date);
+            const yearNumber = d.getFullYear();
+            const yearString = d.toLocaleString(locale, { year: `numeric` });
+            const monthNumber = d.getMonth();
+            const monthString = d.toLocaleString(locale, { month: `short` });
 
-            // The return value must be a valid `Date()` string because of later reassignment to `Date()`.
-            // `allDateKeys` must be an array of primitives to use `Set()` to remove duplicates easily,
-            return `${d.getFullYear()}/${("0" + (d.getMonth() + 1)).slice(-2)}`;
+            return { yearNumber, yearString, monthNumber, monthString };
           });
-          const yearMonthInfos = [...new Set(allDateKeys)].map((dateKey) => {
-            const count = allDateKeys.filter((dk) => dk === dateKey).length;
-            const d = new Date(dateKey);
-            const year = d.toLocaleString(locale, { year: `numeric` });
-            const month = d.toLocaleString(locale, { month: `short` });
 
-            return { dateKey, count, year, month };
+          // Remove duplicates.
+          const uniqueMap = new Map(
+            allDateInfos.map((info) => [
+              `${info.yearString} ${info.monthString}`,
+              info,
+            ])
+          );
+
+          const yearMonthInfos = [...uniqueMap.values()].map((info) => {
+            const count = allDateInfos.filter(
+              ({ yearNumber, monthNumber }) =>
+                yearNumber === info.yearNumber &&
+                monthNumber === info.monthNumber
+            ).length;
+
+            return { ...info, count };
           });
 
           return yearMonthInfos;

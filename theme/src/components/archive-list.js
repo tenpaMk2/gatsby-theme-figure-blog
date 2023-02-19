@@ -12,13 +12,15 @@ const ArchiveList = () => {
         postsInfo {
           yearInfos {
             count
-            year
+            yearNumber
+            yearString
           }
           yearMonthInfos {
             count
-            dateKey
-            month
-            year
+            monthNumber
+            monthString
+            yearNumber
+            yearString
           }
         }
       }
@@ -27,45 +29,59 @@ const ArchiveList = () => {
 
   const { basePath, archivesPath } = queryBlogConfig();
 
-  const dateLis = yearInfos.map(({ year, count: yearCount }) => {
-    const monthInfos = yearMonthInfos.filter(({ year: y }) => y === year);
-    const monthLis = monthInfos.map(({ month, count: monthCount }) => {
-      const slug = slugify(basePath, archivesPath, year, month);
+  const dateLis = yearInfos.map(
+    ({ yearNumber, yearString, count: yearCount }) => {
+      const monthInfos = yearMonthInfos.filter(
+        ({ yearNumber: y }) => y === yearNumber
+      );
+      const monthLis = monthInfos.map(
+        ({ monthNumber, monthString, count: monthCount }) => {
+          const slug = slugify(
+            basePath,
+            archivesPath,
+            yearNumber,
+            monthNumber + 1
+          );
+          return (
+            <li key={slug}>
+              <Link
+                to={slug}
+                className="group flex items-stretch justify-center"
+              >
+                <p className="flex items-center rounded-l bg-slate-700 p-1 group-hover:bg-sky-600">
+                  {monthString}
+                </p>
+                <p className="flex items-center rounded-r border-l border-slate-800 bg-gray-600 py-1 px-2 group-hover:bg-sky-500">
+                  {monthCount}
+                </p>
+              </Link>
+            </li>
+          );
+        }
+      );
+
+      const slug = slugify(basePath, archivesPath, yearNumber);
       return (
-        <li key={slug}>
-          <Link to={slug} className="group flex items-stretch justify-center">
+        <li
+          key={slug}
+          className="flex shrink basis-[1024px] flex-col items-center gap-4 border-b border-slate-500 pb-4"
+        >
+          <Link
+            to={slug}
+            className="group flex flex-none items-stretch justify-center text-2xl"
+          >
             <p className="flex items-center rounded-l bg-slate-700 p-1 group-hover:bg-sky-600">
-              {month}
+              {yearString}
             </p>
             <p className="flex items-center rounded-r border-l border-slate-800 bg-gray-600 py-1 px-2 group-hover:bg-sky-500">
-              {monthCount}
+              {yearCount}
             </p>
           </Link>
+          <ol className="flex flex-wrap gap-2">{monthLis}</ol>
         </li>
       );
-    });
-
-    const slug = slugify(basePath, archivesPath, year);
-    return (
-      <li
-        key={slug}
-        className="flex shrink basis-[1024px] flex-col items-center gap-4 border-b border-slate-500 pb-4"
-      >
-        <Link
-          to={slug}
-          className="group flex flex-none items-stretch justify-center text-2xl"
-        >
-          <p className="flex items-center rounded-l bg-slate-700 p-1 group-hover:bg-sky-600">
-            {year}
-          </p>
-          <p className="flex items-center rounded-r border-l border-slate-800 bg-gray-600 py-1 px-2 group-hover:bg-sky-500">
-            {yearCount}
-          </p>
-        </Link>
-        <ol className="flex flex-wrap gap-2">{monthLis}</ol>
-      </li>
-    );
-  });
+    }
+  );
 
   return (
     <div className="flex w-full flex-col gap-4">
