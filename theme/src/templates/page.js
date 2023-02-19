@@ -41,11 +41,7 @@ const Page = ({
   return (
     <Layout>
       {posts}
-      <PagesNav
-        currentPageNumber={currentPage}
-        pagesTotal={pageCount}
-        needNumberLinks={true}
-      />
+      <PagesNav currentPageNumber={currentPage} pagesTotal={pageCount} />
     </Layout>
   );
 };
