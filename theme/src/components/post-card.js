@@ -25,14 +25,17 @@ const PostCard = ({ title, date, slug, imagePath }) => {
     image?.width < image?.height ? `basis-[12rem]` : `basis-[31rem]`;
 
   return (
-    <article
-      className={`${basis} grow rounded bg-slate-700 p-4 text-gray-300`}
-      itemScope
-      itemType="http://schema.org/Article"
+    <Link
+      to={slug}
+      className={`${basis} grow rounded bg-slate-700 text-gray-300 hover:bg-sky-800`}
     >
-      <Link to={slug}>
-        <header>
-          <h1 className="mb-0 text-xl" itemProp="headline">
+      <article
+        className="flex flex-wrap gap-2 p-4"
+        itemScope
+        itemType="http://schema.org/Article"
+      >
+        <header className="basis-full">
+          <h1 className="text-xl" itemProp="headline">
             {title}
           </h1>
           <time className="text-gray-400" dateTime={date}>
@@ -42,8 +45,8 @@ const PostCard = ({ title, date, slug, imagePath }) => {
         <section itemProp="articleBody" className="text-center">
           {imageTag}
         </section>
-      </Link>
-    </article>
+      </article>
+    </Link>
   );
 };
 
