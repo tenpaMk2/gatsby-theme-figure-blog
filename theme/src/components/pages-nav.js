@@ -16,8 +16,8 @@ const PagesNav = ({ currentPageNumber, pagesTotal }) => {
   const { basePath, pagesPath } = queryBlogConfig();
 
   // Generate numbers (including `…` ).
-  // ex: if `currentPageNumber === 4` , `pagesTotal === 7`
-  // result: 1 ... 3 4 5 ... 7
+  // ex: if `currentPageNumber === 5` , `pagesTotal === 9`
+  // result: 1 ... 3 4 5 6 7 ... 9
   const sequence = [...new Array(pagesTotal)].map((_, i) => i + 1);
   const numbers = sequence.filter(
     (i) =>
@@ -30,9 +30,11 @@ const PagesNav = ({ currentPageNumber, pagesTotal }) => {
       i === pagesTotal
   );
 
+  // Add a start ellipsis.
   if (5 <= currentPageNumber) {
     numbers.splice(1, 0, "…");
   }
+  // Add a end ellipsis.
   if (currentPageNumber <= pagesTotal - 4) {
     numbers.splice(numbers.length - 1, 0, "…");
   }
