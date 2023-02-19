@@ -26,7 +26,9 @@ const Layout = ({ children }) => {
   );
 
   const menus = menuLinks?.map(({ name, link }) => (
-    <Link to={link}>{name}</Link>
+    <Link key={link} to={link}>
+      {name}
+    </Link>
   ));
 
   return (
@@ -38,7 +40,7 @@ const Layout = ({ children }) => {
           <form
             action="//google.com/search"
             method="get"
-            accept-charset="UTF-8"
+            acceptCharset="UTF-8"
             className="flex rounded-full bg-white px-4 text-base text-black shadow-lg"
           >
             <input
