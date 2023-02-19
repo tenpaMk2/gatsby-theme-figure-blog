@@ -7,4 +7,4 @@ tags:
 
 Hero image test.
 
-![sample-portrait](./images/sample-portrait-long.webp)
+![sample-portrait-long](../images/sample-portrait-long.webp)
