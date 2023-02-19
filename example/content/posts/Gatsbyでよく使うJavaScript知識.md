@@ -150,7 +150,7 @@ const piyo = { hoge };
 
 ```jsx
 const allTags = [`hoge`, `hoge`, `fuga`, `hoge`, `fuga`, `piyo`];
-const tagInfos = Array.from(new Set(allTagNames)).map((name) => {
+const tagInfos = [...new Set(allTagNames)].map((name) => {
   const count = allTags.filter((n) => n === name).length;
   return { name, count };
 });

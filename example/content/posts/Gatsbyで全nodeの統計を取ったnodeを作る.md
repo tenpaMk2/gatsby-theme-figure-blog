@@ -100,7 +100,7 @@ const allTags = posts
   .flat()
   .filter((tag) => tag);
 const allTagNames = allTags.map(({ name }) => name);
-const tagInfos = Array.from(new Set(allTagNames)).map((name) => {
+const tagInfos = [...new Set(allTagNames)].map((name) => {
   const filtered = allTags.filter(({ name: n }) => n === name);
   const count = filtered.length;
   const slug = filtered[0].slug;
@@ -123,7 +123,7 @@ const allYearMonths = posts.map(
       month: `short`,
     })
 );
-const yearMonthInfos = Array.from(new Set(allYearMonths)).map((yearMonth) => {
+const yearMonthInfos = [...new Set(allYearMonths)].map((yearMonth) => {
   const count = allYearMonths.filter((ym) => ym === yearMonth).length;
   const d = new Date(yearMonth);
   const year = d.toLocaleString(`en-US`, { year: `numeric` });
@@ -141,7 +141,7 @@ const yearMonthInfos = Array.from(new Set(allYearMonths)).map((yearMonth) => {
 
 ```js
 const allYears = yearMonthInfos.map(({ year }) => year);
-const yearInfos = Array.from(new Set(allYears)).map((year) => {
+const yearInfos = [...new Set(allYears)].map((year) => {
   const infos = yearMonthInfos.filter(({ year: y }) => y === year);
   const count = infos.reduce((total, { count }) => total + count, 0);
 
