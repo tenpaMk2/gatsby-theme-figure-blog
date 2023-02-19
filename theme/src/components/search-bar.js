@@ -26,11 +26,7 @@ const SearchBar = () => {
       className="flex rounded-full bg-white px-4 text-base text-black shadow-lg"
     >
       <input type="search" name="q" placeholder="Search" className="p-2" />
-      <input
-        type="hidden"
-        name="sitesearch"
-        value="https://tenpamk2-blog.netlify.app"
-      />
+      <input type="hidden" name="sitesearch" value={siteUrl} />
       <button type="submit">
         {/* [Get from.](https://www.svgrepo.com/svg/479944/magnifying-glass) */}
         <svg
