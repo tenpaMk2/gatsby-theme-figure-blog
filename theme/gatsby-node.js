@@ -364,6 +364,11 @@ exports.createPages = async ({ graphql, actions, reporter }, themeOptions) => {
           }
         }
       }
+      pageInfoPassthrough: allMarkdownPost(limit: ${postsPerPage}) {
+        pageInfo {
+          pageCount
+        }
+      }
       postsInfo {
         tagInfos {
           count
@@ -397,8 +402,8 @@ exports.createPages = async ({ graphql, actions, reporter }, themeOptions) => {
     });
   });
 
-  // Create `/page/{num}/`
-  const pagesTotal = Math.ceil(edges.length / postsPerPage);
+  // Create `/${basePath}/${pagesPath}/${num}/`
+  const pagesTotal = result.data.pageInfoPassthrough.pageInfo.pageCount;
 
   [...new Array(pagesTotal)].forEach((_, i) => {
     createPage({
@@ -407,8 +412,6 @@ exports.createPages = async ({ graphql, actions, reporter }, themeOptions) => {
       context: {
         limit: postsPerPage,
         skip: i * postsPerPage,
-        pagesTotal,
-        currentPageNumber: i + 1,
         formatString,
       },
     });

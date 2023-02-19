@@ -7,25 +7,12 @@ import PagesNav from "../components/pages-nav";
 
 const Page = ({
   data: {
-    allMarkdownPost: { nodes },
+    allMarkdownPost: {
+      nodes,
+      pageInfo: { currentPage, pageCount },
+    },
   },
-  pageContext,
 }) => {
-  const pagesTotal = pageContext.pagesTotal;
-  if (!pagesTotal || pagesTotal <= 0) {
-    return new Error("`pagesTotal` must be integer and greater than 1.");
-  }
-
-  const currentPageNumber = pageContext.currentPageNumber;
-  if (!currentPageNumber || currentPageNumber <= 0) {
-    return new Error("`currentPageNumber` must be integer and greater than 0.");
-  }
-  if (pagesTotal < currentPageNumber) {
-    return new Error(
-      "`currentPageNumber` must be less than equal `pagesTotal` ."
-    );
-  }
-
   if (!nodes?.length) {
     return (
       <Layout>
@@ -55,8 +42,8 @@ const Page = ({
     <Layout>
       {posts}
       <PagesNav
-        currentPageNumber={currentPageNumber}
-        pagesTotal={pagesTotal}
+        currentPageNumber={currentPage}
+        pagesTotal={pageCount}
         needNumberLinks={true}
       />
     </Layout>
@@ -88,6 +75,10 @@ export const pageQuery = graphql`
           slug
         }
         title
+      }
+      pageInfo {
+        currentPage
+        pageCount
       }
     }
   }
