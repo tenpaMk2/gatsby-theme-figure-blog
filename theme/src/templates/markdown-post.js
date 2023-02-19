@@ -16,10 +16,10 @@ const BlogPostTemplate = ({ data: { current, next, previous } }) => {
     throw new Error(
       [
         `Invalid date!!`,
-        `Don't use the \`/\`  as separator.`,
-        `e.g., ❌: \`2023/02/11 09:12\` => ⭕: \`2023-02-11 09:12\` .`,
-        `Set the hour to 2 digits,`,
-        `e.g., ❌: \`2023-02-11 9:12\` => ⭕: \`2023-02-11 09:12\` .`,
+        `If you use the '/' as a separator, replace it with hyphens.`,
+        `Ex) ❌: '2023/02/11 09:12' => ⭕: '2023-02-11 09:12'`,
+        `If you set the hour to 1 digits, set it to 2 digits.`,
+        `Ex) ❌: '2023-02-11 9:12' => ⭕: '2023-02-11 09:12'`,
       ].join(` `)
     );
   }
