@@ -389,6 +389,9 @@ exports.createPages = async ({ graphql, actions, reporter }, themeOptions) => {
 
   const edges = result.data.allMarkdownPost.edges;
 
+  /**
+   * Create each post page.
+   */
   edges.forEach(({ node, next, previous }) => {
     createPage({
       path: node.slug, // `node.slug` may not start with `basePath` and `postPath` .
@@ -402,7 +405,9 @@ exports.createPages = async ({ graphql, actions, reporter }, themeOptions) => {
     });
   });
 
-  // Create `/${basePath}/${pagesPath}/${num}/`
+  /**
+   * Create main page with pagination.
+   */
   const pagesTotal = result.data.pageInfoPassthrough.pageInfo.pageCount;
 
   [...new Array(pagesTotal)].forEach((_, i) => {
@@ -417,7 +422,10 @@ exports.createPages = async ({ graphql, actions, reporter }, themeOptions) => {
     });
   });
 
-  const tagInfos = result?.data?.postsInfo?.tagInfos || [];
+  /**
+   * Create tag page with pagination.
+   */
+  const tagInfos = result.data.postsInfo.tagInfos || [];
   tagInfos.forEach(({ name, slug }) => {
     createPage({
       path: slugify(basePath, tagsPath, slug),
@@ -426,7 +434,10 @@ exports.createPages = async ({ graphql, actions, reporter }, themeOptions) => {
     });
   });
 
-  result?.data?.allMarkdownPage?.nodes.forEach((node) =>
+  /**
+   * Create each static markdown page.
+   */
+  result.data.allMarkdownPage.nodes.forEach((node) =>
     createPage({
       path: node.slug,
       component: require.resolve(`./src/templates/markdown-page.js`),
@@ -437,6 +448,9 @@ exports.createPages = async ({ graphql, actions, reporter }, themeOptions) => {
     })
   );
 
+  /**
+   * Create a debug page.
+   */
   if (process.env.NODE_ENV !== `production`) {
     createPage({
       path: slugify(basePath, debugPath),
