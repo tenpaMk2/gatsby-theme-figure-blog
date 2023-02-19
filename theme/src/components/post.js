@@ -45,7 +45,7 @@ const Post = ({ title, date, html, slug, tags, isPostPage, needReadMore }) => {
 
   return (
     <article
-      className="w-full rounded-xl bg-slate-700 p-6"
+      className="basis-full rounded-xl bg-slate-700 p-6"
       itemScope
       itemType="http://schema.org/Article"
     >

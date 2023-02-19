@@ -91,9 +91,9 @@ const PagesNav = ({ currentPageNumber, pagesTotal }) => {
     );
 
   return (
-    <nav className="flex w-full gap-2">
+    <nav className="flex basis-full gap-2">
       {previous}
-      <div className="flex w-full justify-center gap-2">{numberLinks}</div>
+      <div className="flex grow justify-center gap-2">{numberLinks}</div>
       {next}
     </nav>
   );

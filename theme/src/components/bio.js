@@ -34,7 +34,7 @@ const Bio = () => {
   return (
     <div className="flex flex-wrap gap-4">
       <h1 className="text-4xl">Bio</h1>
-      <div className="flex w-full flex-col items-center gap-4 rounded-lg bg-slate-900 p-4 shadow-inner">
+      <div className="flex basis-full flex-col items-center gap-4 rounded-lg bg-slate-900 p-4 shadow-inner">
         <div className="flex flex-col gap-2">
           <StaticImage
             src="../images/bio.jpg"
