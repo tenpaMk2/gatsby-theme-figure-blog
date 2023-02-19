@@ -9,6 +9,7 @@ const getOptions = (themeOptions) => {
   const archivesPath = themeOptions.archivesPath || `archives`;
   const basePath =
     themeOptions.basePath || themeOptions.basePath === `` ? `` : `base`;
+  const cardsPerPage = themeOptions.cardsPerPage || 12;
   const debugPath = themeOptions.debugPath || `debug`;
   const formatString = themeOptions.formatString || `YYYY/MM/DD HH:mm:ss`;
   const locale = themeOptions.locale || `en-US`;
@@ -23,6 +24,7 @@ const getOptions = (themeOptions) => {
   return {
     archivesPath,
     basePath,
+    cardsPerPage,
     debugPath,
     formatString,
     locale,

@@ -1,11 +1,10 @@
-import { graphql, useStaticQuery } from "gatsby";
 import * as React from "react";
 import { slugify } from "../libs/slugify";
 import { LinkButton } from "./link-button";
 import { ButtonBase } from "./button-base";
 import { queryBlogConfig } from "../libs/query-blog-config";
 
-const PagesNav = ({ currentPageNumber, pagesTotal }) => {
+const PagesNav = ({ currentPageNumber, pagesStartPath, pagesTotal }) => {
   if (currentPageNumber <= 0) {
     throw new Error("`currentPageNumber` must be greater than equal 1.");
   }
@@ -13,7 +12,7 @@ const PagesNav = ({ currentPageNumber, pagesTotal }) => {
     throw new Error("`pagesTotal` must be greater than equal 1.");
   }
 
-  const { basePath, pagesPath } = queryBlogConfig();
+  const { pagesPath } = queryBlogConfig();
 
   // Generate numbers (including `…` ).
   // ex: if `currentPageNumber === 5` , `pagesTotal === 9`
@@ -57,8 +56,8 @@ const PagesNav = ({ currentPageNumber, pagesTotal }) => {
         key={number}
         to={
           number === 1
-            ? slugify(basePath)
-            : slugify(basePath, pagesPath, number)
+            ? slugify(...pagesStartPath.split(`/`))
+            : slugify(...pagesStartPath.split(`/`), pagesPath, number)
         }
       >
         {number}
@@ -72,8 +71,12 @@ const PagesNav = ({ currentPageNumber, pagesTotal }) => {
         key="previous"
         to={
           currentPageNumber === 2
-            ? slugify(basePath)
-            : slugify(basePath, pagesPath, currentPageNumber - 1)
+            ? slugify(...pagesStartPath.split(`/`))
+            : slugify(
+                ...pagesStartPath.split(`/`),
+                pagesPath,
+                currentPageNumber - 1
+              )
         }
       >
         « Previous
@@ -84,7 +87,11 @@ const PagesNav = ({ currentPageNumber, pagesTotal }) => {
     currentPageNumber === pagesTotal ? null : (
       <LinkButton
         key="next"
-        to={slugify(basePath, pagesPath, currentPageNumber + 1)}
+        to={slugify(
+          ...pagesStartPath.split(`/`),
+          pagesPath,
+          currentPageNumber + 1
+        )}
       >
         Next »
       </LinkButton>

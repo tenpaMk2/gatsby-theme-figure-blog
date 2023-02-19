@@ -12,6 +12,7 @@ const Page = ({
       pageInfo: { currentPage, pageCount },
     },
   },
+  pageContext: { pagesStartPath },
 }) => {
   if (!nodes?.length) {
     return (
@@ -41,7 +42,11 @@ const Page = ({
   return (
     <Layout>
       {posts}
-      <PagesNav currentPageNumber={currentPage} pagesTotal={pageCount} />
+      <PagesNav
+        currentPageNumber={currentPage}
+        pagesStartPath={pagesStartPath}
+        pagesTotal={pageCount}
+      />
     </Layout>
   );
 };

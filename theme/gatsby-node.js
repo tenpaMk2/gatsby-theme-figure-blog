@@ -330,6 +330,7 @@ exports.createPages = async ({ graphql, actions, reporter }, themeOptions) => {
 
   const {
     basePath,
+    cardsPerPage,
     debugPath,
     formatString,
     pagesPath,
@@ -418,6 +419,7 @@ exports.createPages = async ({ graphql, actions, reporter }, themeOptions) => {
         limit: postsPerPage,
         skip: i * postsPerPage,
         formatString,
+        pagesStartPath: basePath,
       },
     });
   });
@@ -426,11 +428,26 @@ exports.createPages = async ({ graphql, actions, reporter }, themeOptions) => {
    * Create tag page with pagination.
    */
   const tagInfos = result.data.postsInfo.tagInfos || [];
-  tagInfos.forEach(({ name, slug }) => {
-    createPage({
-      path: slugify(basePath, tagsPath, slug),
-      component: require.resolve(`./src/templates/tag.js`),
-      context: { name, slug, formatString },
+  tagInfos.forEach(({ name, slug, count }) => {
+    const pagesTotal = Math.ceil(count / cardsPerPage);
+    const pagesStartPath = slugify(basePath, tagsPath, slug);
+
+    [...new Array(pagesTotal)].forEach((_, i) => {
+      createPage({
+        path:
+          i === 0
+            ? pagesStartPath
+            : slugify(basePath, tagsPath, slug, pagesPath, i + 1),
+        component: require.resolve(`./src/templates/tag.js`),
+        context: {
+          limit: cardsPerPage,
+          skip: i * cardsPerPage,
+          name,
+          slug,
+          formatString,
+          pagesStartPath,
+        },
+      });
     });
   });
 
