@@ -20,7 +20,7 @@ const isDuplicateTagSlugs = (tagInfos) => {
   return tagInfos.length !== uniqueSlugs.size;
 };
 
-const Debug = ({
+const DebugTemplate = ({
   data: {
     __type: { fields },
     figureBlogConfig,
@@ -214,7 +214,7 @@ const Debug = ({
   );
 };
 
-export default Debug;
+export default DebugTemplate;
 
 export const pageQuery = graphql`
   query {

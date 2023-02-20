@@ -5,7 +5,7 @@ import Layout from "../components/layout";
 import Post from "../components/post";
 import PagesNav from "../components/pages-nav";
 
-const Page = ({
+const PageTemplate = ({
   data: {
     allMarkdownPost: {
       nodes,
@@ -51,7 +51,7 @@ const Page = ({
   );
 };
 
-export default Page;
+export default PageTemplate;
 
 // `location` : See [Gatsby doc](https://www.gatsbyjs.com/docs/location-data-from-props/#getting-the-absolute-url-of-a-page)
 export const Head = ({ location: { pathname } }) => (

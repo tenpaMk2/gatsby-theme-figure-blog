@@ -5,7 +5,7 @@ import Layout from "../components/layout";
 import Post from "../components/post";
 import { PostNav } from "../components/post-nav";
 
-const BlogPostTemplate = ({ data: { current, next, previous } }) => {
+const MarkdownPostTemplate = ({ data: { current, next, previous } }) => {
   const title = current?.title || ``;
   const date = current?.date || ``;
   const html = current?.html || ``;
@@ -44,7 +44,7 @@ const BlogPostTemplate = ({ data: { current, next, previous } }) => {
   );
 };
 
-export default BlogPostTemplate;
+export default MarkdownPostTemplate;
 
 export const Head = ({
   data: {

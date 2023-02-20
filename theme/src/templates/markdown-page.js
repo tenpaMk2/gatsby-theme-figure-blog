@@ -4,7 +4,7 @@ import { Seo } from "../components/seo";
 import Layout from "../components/layout";
 import Post from "../components/post";
 
-const BlogPostTemplate = ({ data: { markdownPage } }) => {
+const MarkdownPageTemplate = ({ data: { markdownPage } }) => {
   const html = markdownPage?.html || ``;
   const slug = markdownPage?.slug || ``;
   const title = markdownPage?.title || ``;
@@ -16,7 +16,7 @@ const BlogPostTemplate = ({ data: { markdownPage } }) => {
   );
 };
 
-export default BlogPostTemplate;
+export default MarkdownPageTemplate;
 
 export const Head = ({
   data: {
