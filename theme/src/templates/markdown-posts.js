@@ -3,7 +3,7 @@ import { graphql } from "gatsby";
 import { Seo } from "../components/seo";
 import { PostsLayout } from "../components/posts-layout";
 
-const PagesTemplate = ({
+const MarkdownPosts = ({
   data: {
     allMarkdownPost: {
       nodes,
@@ -57,7 +57,7 @@ const PagesTemplate = ({
   return <PostsLayout {...props} />;
 };
 
-export default PagesTemplate;
+export default MarkdownPosts;
 
 // `location` : See [Gatsby doc](https://www.gatsbyjs.com/docs/location-data-from-props/#getting-the-absolute-url-of-a-page)
 export const Head = ({ location: { pathname } }) => (
