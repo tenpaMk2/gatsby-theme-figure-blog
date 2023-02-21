@@ -32,22 +32,6 @@ const MarkdownPostTemplate = ({ data: { current, next, previous } }) => {
     console.warn(`No tags!!`);
   }
 
-  if (!previous.title) {
-    console.warn(`No title in previous post!!`);
-  }
-
-  if (!previous.slug) {
-    console.warn(`No slug in previous post!!`);
-  }
-
-  if (!next.title) {
-    console.warn(`No title in next post!!`);
-  }
-
-  if (!next.slug) {
-    console.warn(`No slug in next post!!`);
-  }
-
   const props = { current, next, previous };
   return <PostLayout {...props} />;
 };
