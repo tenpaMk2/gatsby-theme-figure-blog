@@ -1,18 +1,14 @@
 import * as React from "react";
 import { graphql } from "gatsby";
 import { Seo } from "../components/seo";
-import Layout from "../components/layout";
-import Post from "../components/post";
-import { PostNav } from "../components/post-nav";
+import { PostLayout } from "../components/post-layout";
 
 const MarkdownPostTemplate = ({ data: { current, next, previous } }) => {
-  const title = current?.title || ``;
-  const date = current?.date || ``;
-  const html = current?.html || ``;
-  const slug = current?.slug || ``;
-  const tags = current?.tags || [];
+  if (!current.title) {
+    console.warn(`No title!!`);
+  }
 
-  if (date === `Invalid date`) {
+  if (current.date === `Invalid date`) {
     throw new Error(
       [
         `Invalid date!!`,
@@ -24,24 +20,36 @@ const MarkdownPostTemplate = ({ data: { current, next, previous } }) => {
     );
   }
 
-  return (
-    <Layout>
-      <Post
-        title={title}
-        date={date}
-        html={html}
-        slug={slug}
-        tags={tags}
-        isPostPage={true}
-      />
-      <PostNav
-        previousSlug={previous?.slug}
-        previousTitle={previous?.title}
-        nextSlug={next?.slug}
-        nextTitle={next?.title}
-      />
-    </Layout>
-  );
+  if (!current.html) {
+    console.warn(`No HTML!!`);
+  }
+
+  if (!current.slug) {
+    console.warn(`No slug!!`);
+  }
+
+  if (!current.tags?.length) {
+    console.warn(`No tags!!`);
+  }
+
+  if (!previous.title) {
+    console.warn(`No title in previous post!!`);
+  }
+
+  if (!previous.slug) {
+    console.warn(`No slug in previous post!!`);
+  }
+
+  if (!next.title) {
+    console.warn(`No title in next post!!`);
+  }
+
+  if (!next.slug) {
+    console.warn(`No slug in next post!!`);
+  }
+
+  const props = { current, next, previous };
+  return <PostLayout {...props} />;
 };
 
 export default MarkdownPostTemplate;
