@@ -1,8 +1,6 @@
 import * as React from "react";
 import { graphql } from "gatsby";
-import Layout from "../components/layout";
-import PostCard from "../components/post-card";
-import PagesNav from "../components/pages-nav";
+import { CardsLayout } from "../components/cards-layout";
 
 const TagTemplate = ({
   data: {
@@ -13,30 +11,13 @@ const TagTemplate = ({
   },
   pageContext: { name: tagName, pagesStartPath },
 }) => {
-  const postCards = posts.map(({ title, date, slug, heroImage }) => (
-    <PostCard
-      key={slug}
-      title={title}
-      date={date}
-      slug={slug}
-      imagePath={heroImage}
-    />
-  ));
-
-  return (
-    <Layout>
-      <h1 className="my-4 basis-full text-center text-4xl">{`🏷️ ${tagName} 🏷️`}</h1>
-      {postCards}
-      <PagesNav
-        currentPageNumber={currentPage}
-        pagesStartPath={pagesStartPath}
-        pagesTotal={pageCount}
-      />
-    </Layout>
-  );
+  const props = { posts, tagName, pagesStartPath, currentPage, pageCount };
+  return <CardsLayout {...props} />;
 };
 
 export default TagTemplate;
+
+// FIXME: add seo.
 
 export const pageQuery = graphql`
   query ($formatString: String, $limit: Int!, $skip: Int!, $slug: String!) {
