@@ -377,14 +377,20 @@ breakline.
 ## Horizontal Rules
 
 ```markdown
+Sand
+
 ---
+
+Wich
 ```
 
 ↓ .
 
+Sand
+
 ---
 
-Dummy text.
+Wich
 
 ## HTML
 
