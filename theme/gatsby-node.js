@@ -414,7 +414,7 @@ exports.createPages = async ({ graphql, actions, reporter }, themeOptions) => {
   [...new Array(pagesTotal)].forEach((_, i) => {
     createPage({
       path: i === 0 ? slugify(basePath) : slugify(basePath, pagesPath, i + 1),
-      component: require.resolve("./src/templates/page.js"),
+      component: require.resolve("./src/templates/pages.js"),
       context: {
         limit: postsPerPage,
         skip: i * postsPerPage,
