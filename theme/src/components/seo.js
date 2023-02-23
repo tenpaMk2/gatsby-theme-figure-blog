@@ -73,7 +73,9 @@ const Seo = ({
 
   return (
     <>
+      {/* Gatsby Head API: Editing `<html>` and `<body>` : <https://www.gatsbyjs.com/docs/reference/built-in-components/gatsby-head/#editing-html-and-body> */}
       <html lang={seo.htmlLang} />
+
       <title>{seo.title}</title>
 
       {/* MDN doc: <https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta/name> */}
