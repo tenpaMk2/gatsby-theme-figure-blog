@@ -17,7 +17,7 @@ const PostCard = ({ title, date, slug, imagePath }) => {
       alt="no-image"
       className="rounded"
       objectFit="contain"
-      height="384" // Sync `gatsbyImageData(height: ***)`
+      height={384} // Sync `gatsbyImageData(height: ***)`
     />
   );
 
