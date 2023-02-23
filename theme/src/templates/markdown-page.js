@@ -4,14 +4,18 @@ import { Seo } from "../components/seo";
 import Layout from "../components/layout";
 import Post from "../components/post";
 
-const MarkdownPageTemplate = ({ data: { markdownPage } }) => {
-  const html = markdownPage?.html || ``;
-  const slug = markdownPage?.slug || ``;
-  const title = markdownPage?.title || ``;
+const MarkdownPageTemplate = ({
+  data: {
+    markdownPage: { html, id, slug, title },
+  },
+}) => {
+  validateHtml(html, id);
+  validateSlug(slug, id);
+  validateTitle(title, id);
 
   return (
     <Layout>
-      <Post title={title} html={html} slug={slug} isPostPage={true} />
+      <Post html={html} slug={slug} title={title} isPostPage={true} />
     </Layout>
   );
 };
@@ -29,6 +33,7 @@ export const postQuery = graphql`
     markdownPage(id: { eq: $id }) {
       canonicalUrl
       html
+      id
       slug
       title
     }
