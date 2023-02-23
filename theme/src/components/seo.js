@@ -46,6 +46,7 @@ const Seo = ({
   imageUrl.pathname = imagePath || ``;
 
   const seo = {
+    htmlLang: siteMetadata.locale,
     title: title ? `${title} | ${siteMetadata.title}` : siteMetadata.title,
     applicationName: applicationName || ``,
     author: siteMetadata.author?.name || ``,
@@ -72,6 +73,7 @@ const Seo = ({
 
   return (
     <>
+      <html lang={seo.htmlLang} />
       <title>{seo.title}</title>
 
       {/* MDN doc: <https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta/name> */}
