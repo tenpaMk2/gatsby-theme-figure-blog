@@ -64,20 +64,21 @@ const ArchiveList = () => {
       return (
         <li
           key={slug}
-          className="flex shrink basis-[1024px] flex-col items-center gap-4 border-b border-slate-500 pb-4"
+          className="flex shrink basis-full flex-wrap items-center gap-4 border-b border-slate-500 pb-4"
         >
-          <Link
-            to={slug}
-            className="group flex flex-none items-stretch justify-center text-2xl"
-          >
-            <p className="flex items-center rounded-l bg-slate-700 p-1 group-hover:bg-sky-600">
-              {yearString}
-            </p>
-            <p className="flex items-center rounded-r border-l border-slate-800 bg-gray-600 py-1 px-2 group-hover:bg-sky-500">
-              {yearCount}
-            </p>
-          </Link>
-          <ol className="flex flex-wrap gap-2">{monthLis}</ol>
+          <div className="flex basis-full justify-center">
+            <Link to={slug} className="group flex items-stretch text-2xl">
+              <p className="rounded-l bg-slate-700 py-1 pl-2 pr-1 group-hover:bg-sky-600">
+                {yearString}
+              </p>
+              <p className="flex min-w-[2rem] justify-center rounded-r border-l border-slate-800 bg-gray-600 py-1 px-2 group-hover:bg-sky-500">
+                {yearCount}
+              </p>
+            </Link>
+          </div>
+          <ol className="flex basis-full flex-wrap justify-center gap-2">
+            {monthLis}
+          </ol>
         </li>
       );
     }

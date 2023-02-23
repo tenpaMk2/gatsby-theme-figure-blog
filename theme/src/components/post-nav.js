@@ -36,7 +36,7 @@ export const PostNav = ({
   );
 
   return (
-    <nav className="flex w-full justify-center gap-2">
+    <nav className="flex basis-full justify-center gap-2">
       {next}
       <p className="flex flex-none items-center text-gray-600">●</p>
       {previous}

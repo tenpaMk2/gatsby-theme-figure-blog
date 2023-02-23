@@ -34,17 +34,21 @@ const Bio = () => {
   return (
     <div className="flex basis-full flex-wrap content-start gap-4">
       <h1 className="basis-full text-4xl">Bio</h1>
-      <div className="flex basis-full flex-col items-center gap-4 rounded-lg bg-slate-900 p-4 shadow-inner">
-        <div className="flex flex-col gap-2">
-          <StaticImage
-            src="../images/bio.jpg"
-            alt="Bio image"
-            className="w-32 rounded-full"
-          />
-          <h2 className="text-center text-2xl font-bold">{name}</h2>
+      <div className="flex basis-full flex-wrap gap-4 rounded-lg bg-slate-900 p-4 shadow-inner">
+        <div className="flex basis-full flex-wrap gap-2">
+          <div className="flex basis-full justify-center">
+            <StaticImage
+              src="../images/bio.jpg"
+              alt="Bio image"
+              className="isolate w-32 rounded-full" // `isolate` is needed to work around [iOS bug](https://gotohayato.com/content/556/) .
+            />
+          </div>
+          <h2 className="flex basis-full justify-center text-2xl font-bold">
+            {name}
+          </h2>
         </div>
-        <p>{summary}</p>
-        <div className="flex flex-wrap gap-2">
+        <p className="flex basis-full justify-center">{summary}</p>
+        <div className="flex basis-full flex-wrap justify-center gap-2">
           <a
             className="inline-flex items-center rounded-full bg-blue-600 p-3 text-white transition duration-200 hover:bg-blue-700"
             target="_blank"
