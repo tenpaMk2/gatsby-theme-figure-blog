@@ -2,6 +2,13 @@ import * as React from "react";
 import { graphql } from "gatsby";
 import { Seo } from "../components/seo";
 import { PostLayout } from "../components/post-layout";
+import {
+  validateDate,
+  validateHtml,
+  validateSlug,
+  validateTags,
+  validateTitle,
+} from "../libs/validation";
 
 const MarkdownPostTemplate = ({ data: { current, next, previous } }) => {
   validateDate(current.date, current.id);
