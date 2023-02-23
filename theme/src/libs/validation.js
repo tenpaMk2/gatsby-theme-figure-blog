@@ -37,6 +37,18 @@ const validateExcerpt = (excerpt, id) => {
 };
 
 /**
+ * Validate `heroImage` of the post.
+ *
+ * @param  {string} heroImage - a hero image path.
+ * @param  {string} id - the ID of the post node.
+ */
+const validateHeroImage = (heroImage, id) => {
+  if (!heroImage) {
+    console.warn(`No heroImage!! ID: '${id}' .`);
+  }
+};
+
+/**
  * Validate `html` of the post.
  *
  * @param  {string} html - a HTML.
@@ -87,6 +99,7 @@ const validateTitle = (title, id) => {
 module.exports = {
   validateDate,
   validateExcerpt,
+  validateHeroImage,
   validateHtml,
   validateSlug,
   validateTags,
