@@ -4,33 +4,11 @@ import { Seo } from "../components/seo";
 import { PostLayout } from "../components/post-layout";
 
 const MarkdownPostTemplate = ({ data: { current, next, previous } }) => {
-  if (!current.title) {
-    console.warn(`No title!!`);
-  }
-
-  if (current.date === `Invalid date`) {
-    throw new Error(
-      [
-        `Invalid date!!`,
-        `If you use the '/' as a separator, replace it with hyphens.`,
-        `Ex) ❌: '2023/02/11 09:12' => ⭕: '2023-02-11 09:12'`,
-        `If you set the hour to 1 digits, set it to 2 digits.`,
-        `Ex) ❌: '2023-02-11 9:12' => ⭕: '2023-02-11 09:12'`,
-      ].join(` `)
-    );
-  }
-
-  if (!current.html) {
-    console.warn(`No HTML!!`);
-  }
-
-  if (!current.slug) {
-    console.warn(`No slug!!`);
-  }
-
-  if (!current.tags?.length) {
-    console.warn(`No tags!!`);
-  }
+  validateDate(current.date, current.id);
+  validateHtml(current.html, current.id);
+  validateSlug(current.slug, current.id);
+  validateTags(current.tags, current.id);
+  validateTitle(current.title, current.id);
 
   const props = { current, next, previous };
   return <PostLayout {...props} />;
@@ -55,6 +33,7 @@ export const postQuery = graphql`
       canonicalUrl
       date(formatString: $formatString)
       html
+      id
       slug
       tags {
         name
