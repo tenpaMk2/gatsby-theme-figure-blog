@@ -22,7 +22,7 @@ export const Head = ({
   data: {
     markdownPage: { canonicalUrl, slug, title },
   },
-}) => <Seo canonicalUrl={canonicalUrl} pathname={slug} title={title} />;
+}) => <Seo {...{ canonicalUrl, pathname: slug, title }} />;
 
 export const postQuery = graphql`
   query ($id: String!) {

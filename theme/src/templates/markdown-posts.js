@@ -60,9 +60,7 @@ const MarkdownPosts = ({
 export default MarkdownPosts;
 
 // `location` : See [Gatsby doc](https://www.gatsbyjs.com/docs/location-data-from-props/#getting-the-absolute-url-of-a-page)
-export const Head = ({ location: { pathname } }) => (
-  <Seo isTopPage={pathname === `/`} />
-);
+export const Head = ({ location: { pathname } }) => <Seo />;
 
 export const pageQuery = graphql`
   query ($skip: Int!, $limit: Int!, $formatString: String) {

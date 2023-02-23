@@ -7,7 +7,6 @@ const Seo = ({
   canonicalUrl,
   description,
   imagePath,
-  isTopPage = false,
   pathname,
   title,
   children,
@@ -51,7 +50,7 @@ const Seo = ({
     imageUrl: imagePath
       ? addTrailingSlash(`${imageUrl.origin}${imageUrl.pathname}`)
       : ``,
-    ogType: isTopPage ? `website` : `article`,
+    ogType: url.pathname === `/` ? `website` : `article`,
     ogLocale: siteMetadata.locale || ``,
     twitter: siteMetadata.social?.twitter || ``,
     canonicalUrl:
