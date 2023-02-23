@@ -1,6 +1,12 @@
 import * as React from "react";
 import { graphql } from "gatsby";
 import { CardsLayout } from "../components/cards-layout";
+import {
+  validateDate,
+  validateHeroImage,
+  validateSlug,
+  validateTitle,
+} from "../libs/validation";
 
 const TagTemplate = ({
   data: {
@@ -11,6 +17,17 @@ const TagTemplate = ({
   },
   pageContext: { name: tagName, pagesStartPath },
 }) => {
+  if (posts.length === 0) {
+    console.warn(`No posts!!`);
+  }
+
+  posts.forEach(({ date, heroImage, id, slug, title }) => {
+    validateDate(date, id);
+    validateHeroImage(heroImage, id);
+    validateSlug(slug, id);
+    validateTitle(title, id);
+  });
+
   const props = { posts, tagName, pagesStartPath, currentPage, pageCount };
   return <CardsLayout {...props} />;
 };
