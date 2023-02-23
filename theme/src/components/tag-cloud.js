@@ -20,14 +20,6 @@ const TagCloud = () => {
     `
   );
 
-  if (!tagInfos) {
-    return (
-      <div>
-        <p>No tags❗</p>
-      </div>
-    );
-  }
-
   const counts = tagInfos.map(({ count }) => count);
   const min = Math.min(...counts);
   const max = Math.max(...counts);
