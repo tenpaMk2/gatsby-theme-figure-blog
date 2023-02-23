@@ -1,23 +1,15 @@
 import * as React from "react";
 import { graphql } from "gatsby";
 import { Seo } from "../components/seo";
-import Layout from "../components/layout";
-import Post from "../components/post";
+import { PostLayout } from "../components/post-layout";
+import { validateHtml, validateSlug, validateTitle } from "../libs/validation";
 
-const MarkdownPageTemplate = ({
-  data: {
-    markdownPage: { html, id, slug, title },
-  },
-}) => {
-  validateHtml(html, id);
-  validateSlug(slug, id);
-  validateTitle(title, id);
+const MarkdownPageTemplate = ({ data: { markdownPage } }) => {
+  validateHtml(markdownPage.html, markdownPage.id);
+  validateSlug(markdownPage.slug, markdownPage.id);
+  validateTitle(markdownPage.title, markdownPage.id);
 
-  return (
-    <Layout>
-      <Post html={html} slug={slug} title={title} isPostPage={true} />
-    </Layout>
-  );
+  return <PostLayout current={markdownPage} />;
 };
 
 export default MarkdownPageTemplate;
