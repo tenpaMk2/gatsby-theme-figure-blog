@@ -13,7 +13,7 @@ const PostCard = ({ title, date, slug, imagePath }) => {
     />
   ) : (
     <StaticImage
-      src="../images/no-image.jpg"
+      src="../images/no-image.png"
       alt="no-image"
       className="rounded"
       objectFit="contain"
