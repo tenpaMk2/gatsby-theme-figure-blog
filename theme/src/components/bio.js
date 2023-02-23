@@ -32,8 +32,8 @@ const Bio = () => {
   const github = siteMetadata?.social?.github || ``;
 
   return (
-    <div className="flex flex-wrap gap-4">
-      <h1 className="text-4xl">Bio</h1>
+    <div className="flex basis-full flex-wrap content-start gap-4">
+      <h1 className="basis-full text-4xl">Bio</h1>
       <div className="flex basis-full flex-col items-center gap-4 rounded-lg bg-slate-900 p-4 shadow-inner">
         <div className="flex flex-col gap-2">
           <StaticImage

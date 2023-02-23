@@ -46,12 +46,11 @@ const Layout = ({ children }) => {
       </header>
 
       <div className="flex w-full max-w-screen-2xl grow flex-wrap justify-center gap-4 px-4">
-        {/* [Great idea for shrink priority.](https://stackoverflow.com/questions/67858284/how-to-have-one-item-shrink-fully-before-another-starts-to-shrink) */}
-        {/* Must set not only `basis-[***]` but also `max-w-[***]` due to the very long code in the code block. */}
-        <main className="flex max-w-[1024px] shrink grow-0 basis-[1024px] flex-wrap content-start gap-4">
+        <main className="flex max-w-[1024px] shrink grow-[999999] basis-[1024px] flex-wrap content-start gap-4 overflow-scroll">
           {children}
         </main>
-        <div className="flex max-w-[1024px] shrink-0 grow basis-[20rem] flex-col gap-6">
+        {/* Sidebar layout logic is [here](https://every-layout.dev/layouts/sidebar/) . */}
+        <div className="flex max-w-[1024px] shrink grow basis-[20rem] flex-wrap gap-6 overflow-scroll">
           <Bio />
           <TagCloud />
           <ArchiveList />

@@ -23,9 +23,14 @@ const SearchBar = () => {
       action="//google.com/search"
       method="get"
       acceptCharset="UTF-8"
-      className="flex rounded-full bg-white px-4 text-base text-black shadow-lg"
+      className="flex min-w-0 rounded-full bg-white px-4 text-base text-black shadow-lg"
     >
-      <input type="search" name="q" placeholder="Search" className="p-2" />
+      <input
+        type="search"
+        name="q"
+        placeholder="Search"
+        className="min-w-0 p-2"
+      />
       <input type="hidden" name="sitesearch" value={siteUrl} />
       <button type="submit">
         {/* [Get from.](https://www.svgrepo.com/svg/479944/magnifying-glass) */}

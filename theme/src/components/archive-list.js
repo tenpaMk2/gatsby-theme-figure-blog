@@ -84,9 +84,9 @@ const ArchiveList = () => {
   );
 
   return (
-    <div className="flex w-full flex-col gap-4">
-      <h2 className="text-4xl">Archive list</h2>
-      <ol className="flex flex-wrap gap-4 rounded-lg bg-slate-900 p-4 shadow-inner">
+    <div className="flex basis-full flex-wrap content-start gap-4">
+      <h2 className="basis-full text-4xl">Archive list</h2>
+      <ol className="flex basis-full flex-wrap gap-4 rounded-lg bg-slate-900 p-4 shadow-inner">
         {dateLis}
       </ol>
     </div>
