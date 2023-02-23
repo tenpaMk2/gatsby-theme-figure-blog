@@ -11,6 +11,10 @@ const Seo = ({
   title,
   children,
 }) => {
+  if (pathname === undefined) {
+    throw new Error("`pathname` is undefined. It must be set!!");
+  }
+
   const {
     site: { siteMetadata },
   } = useStaticQuery(
