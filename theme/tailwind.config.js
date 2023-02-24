@@ -19,7 +19,6 @@ module.exports = {
           css: {
             blockquote: {
               backgroundColor: `rgba(128, 128, 128, 0.2)`,
-              overflow: `hidden`,
               quotes: null,
             },
             "blockquote p:first-of-type::before": {
