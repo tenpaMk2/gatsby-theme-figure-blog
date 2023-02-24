@@ -1,10 +1,10 @@
 ---
 date: "2023-01-27 22:14"
-heroImage: "../images/sample-landscape-small.webp"
+heroImage: "../images/sample-portrait.jpg"
 tags:
   - フィギュア
 ---
 
 Hero image test.
 
-![sample-portrait](../images/sample-landscape-small.webp)
+![sample-portrait](../images/sample-portrait.jpg)
