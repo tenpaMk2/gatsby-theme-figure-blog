@@ -34,15 +34,18 @@ const PostCard = ({ title, date, slug, imagePath }) => {
         itemScope
         itemType="http://schema.org/Article"
       >
-        <header className="basis-full">
-          <h1 className="text-xl" itemProp="headline">
+        <header className="flex basis-full flex-wrap">
+          <h1 className="basis-full text-xl" itemProp="headline">
             {title}
           </h1>
-          <time className="text-gray-400" dateTime={date}>
+          <time className="basis-full text-gray-400" dateTime={date}>
             {date}
           </time>
         </header>
-        <section itemProp="articleBody" className="text-center">
+        <section
+          itemProp="articleBody"
+          className="flex basis-full justify-center"
+        >
           {imageTag}
         </section>
       </article>
