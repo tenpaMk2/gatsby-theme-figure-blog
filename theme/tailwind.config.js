@@ -42,6 +42,10 @@ module.exports = {
             "ul > li::marker": {
               color: `var(--tw-prose-links)`,
             },
+            table: {
+              width: `auto`,
+              "font-size": `1rem`,
+            },
           },
         },
       },
