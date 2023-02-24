@@ -19,6 +19,7 @@ module.exports = {
           css: {
             blockquote: {
               backgroundColor: `rgba(128, 128, 128, 0.2)`,
+              "padding-right": `1rem`,
               quotes: null,
             },
             "blockquote p:first-of-type::before": {
