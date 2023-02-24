@@ -36,10 +36,14 @@ export const PostNav = ({
   );
 
   return (
-    <nav className="flex basis-full justify-center gap-2">
-      {next}
-      <p className="flex flex-none items-center text-gray-600">●</p>
-      {previous}
-    </nav>
+    // Need the wrapper div because `justify-center` has an unexpected behavior when overflow.
+    // See [StackOverflow](https://stackoverflow.com/questions/34184535/change-justify-content-value-when-flex-items-overflow-container) .
+    <div className="min-w-0 basis-full overflow-x-auto">
+      <nav className="flex min-w-min justify-center gap-2">
+        {next}
+        <p className="flex flex-none items-center text-gray-600">●</p>
+        {previous}
+      </nav>
+    </div>
   );
 };
