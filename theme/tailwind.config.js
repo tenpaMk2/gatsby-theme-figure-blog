@@ -17,8 +17,15 @@ module.exports = {
       typography: {
         DEFAULT: {
           css: {
+            ".gatsby-resp-image-wrapper": {
+              "box-shadow": "0 0 1rem rgba(0, 0, 0, 0.5)",
+              "border-radius": "0.5rem",
+              overflow: "hidden",
+            },
             blockquote: {
               backgroundColor: `rgba(128, 128, 128, 0.2)`,
+              "border-left-color": `rgb(3, 105, 161)`, // sky-700
+              "border-radius": `0.375rem`,
               "padding-right": `1rem`,
               quotes: null,
             },
@@ -34,17 +41,15 @@ module.exports = {
             "code::after": {
               content: null,
             },
-            ".gatsby-resp-image-wrapper": {
-              "box-shadow": "0 0 1rem rgba(0, 0, 0, 0.5)",
-              "border-radius": "0.5rem",
-              overflow: "hidden",
-            },
-            "ul > li::marker": {
-              color: `var(--tw-prose-links)`,
+            hr: {
+              "border-color": `rgb(100, 116, 139)`, // slate-500
             },
             table: {
               width: `auto`,
               "font-size": `1rem`,
+            },
+            "ul > li::marker": {
+              color: `var(--tw-prose-links)`,
             },
           },
         },
