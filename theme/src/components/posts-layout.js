@@ -1,7 +1,7 @@
 import * as React from "react";
 import Layout from "../components/layout";
-import Post from "../components/post";
-import PagesNav from "../components/pages-nav";
+import { Post } from "../components/post";
+import { PagesNav } from "../components/pages-nav";
 
 export const PostsLayout = ({
   posts,
@@ -18,12 +18,26 @@ export const PostsLayout = ({
   }
 
   const postComponents = posts.map(
-    ({ date, excerpt, heroImage, needReadMore, slug, tags, title }) => {
+    ({
+      dateFormal,
+      dateMonthAndDay,
+      dateTime,
+      dateYear,
+      excerpt,
+      heroImage,
+      needReadMore,
+      slug,
+      tags,
+      title,
+    }) => {
       return (
         <Post
+          key={slug}
           {...{
-            key: slug,
-            date,
+            dateFormal,
+            dateMonthAndDay,
+            dateTime,
+            dateYear,
             heroImage,
             html: excerpt,
             isPostPage: false,

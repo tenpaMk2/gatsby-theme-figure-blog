@@ -231,7 +231,9 @@ export const pageQuery = graphql`
       archivesPath
       basePath
       debugPath
-      formatString
+      formatStringMonthAndDay
+      formatStringTime
+      formatStringYear
       locale
       pagesPath
       postPath

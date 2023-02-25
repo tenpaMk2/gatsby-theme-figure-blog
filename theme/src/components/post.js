@@ -3,9 +3,14 @@ import { GatsbyImage, getImage, StaticImage } from "gatsby-plugin-image";
 import * as React from "react";
 import { queryBlogConfig } from "../libs/query-blog-config";
 import { slugify } from "../libs/slugify";
+import { Clock } from "./clock";
+import { PostTitle } from "./post-title";
 
-const Post = ({
-  date,
+export const Post = ({
+  dateFormal,
+  dateMonthAndDay,
+  dateTime,
+  dateYear,
   heroImage,
   html,
   needReadMore,
@@ -33,22 +38,14 @@ const Post = ({
   );
 
   const h1 = isPostPage ? (
-    <h1 itemProp="headline" className="basis-full text-4xl text-white">
-      {title}
-    </h1>
+    <PostTitle>{title}</PostTitle>
   ) : (
-    <h1 itemProp="headline" className="basis-full text-4xl text-white">
+    <PostTitle>
       <Link to={slug} className="no-underline">
         {title}
       </Link>
-    </h1>
+    </PostTitle>
   );
-
-  const time = date ? (
-    <time dateTime={date} className="basis-full text-gray-400">
-      {date}
-    </time>
-  ) : null;
 
   const readMore = needReadMore ? (
     <p className="my-4 basis-full text-xl">
@@ -86,8 +83,11 @@ const Post = ({
       <section className="flex min-w-0 basis-full flex-wrap gap-4">
         <header className="flex min-w-min basis-full flex-wrap justify-between gap-4">
           <div className="flex shrink grow basis-full flex-wrap content-start gap-4">
-            {h1}
-            {time}
+            <div className="flex basis-full flex-wrap gap-2">
+              <Clock {...{ dateFormal, dateMonthAndDay, dateTime, dateYear }} />
+              <div className="border-r border-slate-500" />
+              {h1}
+            </div>
             {tagOl}
           </div>
           <div className="flex basis-full justify-center">{imageComponent}</div>
@@ -109,5 +109,3 @@ const Post = ({
     </article>
   );
 };
-
-export default Post;

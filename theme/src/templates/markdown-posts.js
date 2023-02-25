@@ -24,8 +24,8 @@ const MarkdownPosts = ({
     console.warn(`No posts!!`);
   }
 
-  nodes.forEach(({ date, excerpt, heroImage, id, slug, tags, title }) => {
-    validateDate(date, id);
+  nodes.forEach(({ dateFormal, excerpt, heroImage, id, slug, tags, title }) => {
+    validateDate(dateFormal, id);
     validateExcerpt(excerpt, id);
     validateHeroImage(heroImage, id);
     validateSlug(slug, id);
@@ -48,10 +48,19 @@ export default MarkdownPosts;
 export const Head = ({ location: { pathname } }) => <Seo {...{ pathname }} />;
 
 export const pageQuery = graphql`
-  query ($skip: Int!, $limit: Int!, $formatString: String) {
+  query (
+    $skip: Int!
+    $limit: Int!
+    $formatStringMonthAndDay: String
+    $formatStringTime: String
+    $formatStringYear: String
+  ) {
     allMarkdownPost(sort: { date: DESC }, limit: $limit, skip: $skip) {
       nodes {
-        date(formatString: $formatString)
+        dateFormal: date(formatString: "YYYY-MM-DDTHH:mm:ss.sssZ")
+        dateMonthAndDay: date(formatString: $formatStringMonthAndDay)
+        dateTime: date(formatString: $formatStringTime)
+        dateYear: date(formatString: $formatStringYear)
         excerpt
         heroImage {
           childImageSharp {

@@ -1,7 +1,7 @@
 import * as React from "react";
 import Layout from "./layout";
-import PostCard from "./post-card";
-import PagesNav from "./pages-nav";
+import { PostCard } from "./post-card";
+import { PagesNav } from "./pages-nav";
 
 export const CardsLayout = ({
   posts,
@@ -10,15 +10,30 @@ export const CardsLayout = ({
   currentPage,
   pageCount,
 }) => {
-  const postCards = posts.map(({ title, date, slug, heroImage }) => (
-    <PostCard
-      key={slug}
-      title={title}
-      date={date}
-      slug={slug}
-      imagePath={heroImage}
-    />
-  ));
+  const postCards = posts.map(
+    ({
+      dateFormal,
+      dateMonthAndDay,
+      dateTime,
+      dateYear,
+      slug,
+      title,
+      heroImage,
+    }) => (
+      <PostCard
+        key={slug}
+        {...{
+          dateFormal,
+          dateMonthAndDay,
+          dateTime,
+          dateYear,
+          slug,
+          title,
+          heroImage,
+        }}
+      />
+    )
+  );
 
   return (
     <Layout>

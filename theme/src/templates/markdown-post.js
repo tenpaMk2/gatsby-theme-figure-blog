@@ -12,7 +12,7 @@ import {
 } from "../libs/validation";
 
 const MarkdownPostTemplate = ({ data: { current, next, previous } }) => {
-  validateDate(current.date, current.id);
+  validateDate(current.dateFormal, current.id);
   validateHeroImage(current.heroImage, current.id);
   validateHtml(current.html, current.id);
   validateSlug(current.slug, current.id);
@@ -36,11 +36,16 @@ export const postQuery = graphql`
     $id: String!
     $previousPostId: String
     $nextPostId: String
-    $formatString: String
+    $formatStringMonthAndDay: String
+    $formatStringTime: String
+    $formatStringYear: String
   ) {
     current: markdownPost(id: { eq: $id }) {
       canonicalUrl
-      date(formatString: $formatString)
+      dateFormal: date(formatString: "YYYY-MM-DDTHH:mm:ss.sssZ")
+      dateMonthAndDay: date(formatString: $formatStringMonthAndDay)
+      dateTime: date(formatString: $formatStringTime)
+      dateYear: date(formatString: $formatStringYear)
       heroImage {
         childImageSharp {
           gatsbyImageData(layout: FULL_WIDTH)

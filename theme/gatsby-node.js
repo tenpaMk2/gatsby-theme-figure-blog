@@ -42,7 +42,9 @@ exports.createSchemaCustomization = ({ actions }, themeOptions) => {
       archivesPath: String
       basePath: String
       debugPath: String
-      formatString: String
+      formatStringMonthAndDay: String
+      formatStringTime: String
+      formatStringYear: String
       locale: String
       pagesPath: String
       postPath: String
@@ -332,7 +334,9 @@ exports.createPages = async ({ graphql, actions, reporter }, themeOptions) => {
     basePath,
     cardsPerPage,
     debugPath,
-    formatString,
+    formatStringMonthAndDay,
+    formatStringTime,
+    formatStringYear,
     pagesPath,
     postsPerPage,
     tagsPath,
@@ -401,7 +405,9 @@ exports.createPages = async ({ graphql, actions, reporter }, themeOptions) => {
         id: node.id,
         previousPostId: previous?.id,
         nextPostId: next?.id,
-        formatString,
+        formatStringMonthAndDay,
+        formatStringTime,
+        formatStringYear,
       },
     });
   });
@@ -418,7 +424,9 @@ exports.createPages = async ({ graphql, actions, reporter }, themeOptions) => {
       context: {
         limit: postsPerPage,
         skip: i * postsPerPage,
-        formatString,
+        formatStringMonthAndDay,
+        formatStringTime,
+        formatStringYear,
         pagesStartPath: basePath,
       },
     });
@@ -444,7 +452,9 @@ exports.createPages = async ({ graphql, actions, reporter }, themeOptions) => {
           skip: i * cardsPerPage,
           name,
           slug,
-          formatString,
+          formatStringMonthAndDay,
+          formatStringTime,
+          formatStringYear,
           pagesStartPath,
         },
       });
@@ -460,7 +470,9 @@ exports.createPages = async ({ graphql, actions, reporter }, themeOptions) => {
       component: require.resolve(`./src/templates/markdown-page.js`),
       context: {
         id: node.id,
-        formatString,
+        formatStringMonthAndDay,
+        formatStringTime,
+        formatStringYear,
       },
     })
   );

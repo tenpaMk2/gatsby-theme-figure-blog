@@ -1,9 +1,19 @@
 import { Link } from "gatsby";
 import { GatsbyImage, getImage, StaticImage } from "gatsby-plugin-image";
 import * as React from "react";
+import { Clock } from "./clock";
+import { PostTitle } from "./post-title";
 
-const PostCard = ({ title, date, slug, imagePath }) => {
-  const image = getImage(imagePath);
+export const PostCard = ({
+  dateFormal,
+  dateMonthAndDay,
+  dateTime,
+  dateYear,
+  slug,
+  title,
+  heroImage,
+}) => {
+  const image = getImage(heroImage);
   const imageTag = image ? (
     <GatsbyImage
       image={image}
@@ -34,13 +44,10 @@ const PostCard = ({ title, date, slug, imagePath }) => {
         itemScope
         itemType="http://schema.org/Article"
       >
-        <header className="flex basis-full flex-wrap">
-          <h1 className="basis-full text-xl" itemProp="headline">
-            {title}
-          </h1>
-          <time className="basis-full text-gray-400" dateTime={date}>
-            {date}
-          </time>
+        <header className="flex basis-full flex-wrap gap-2">
+          <Clock {...{ dateFormal, dateMonthAndDay, dateTime, dateYear }} />
+          <div className="border-r border-slate-500" />
+          <PostTitle>{title}</PostTitle>
         </header>
         <section
           itemProp="articleBody"
@@ -52,5 +59,3 @@ const PostCard = ({ title, date, slug, imagePath }) => {
     </Link>
   );
 };
-
-export default PostCard;

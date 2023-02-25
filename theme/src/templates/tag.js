@@ -21,8 +21,8 @@ const TagTemplate = ({
     console.warn(`No posts!!`);
   }
 
-  posts.forEach(({ date, heroImage, id, slug, title }) => {
-    validateDate(date, id);
+  posts.forEach(({ dateFormal, heroImage, id, slug, title }) => {
+    validateDate(dateFormal, id);
     validateHeroImage(heroImage, id);
     validateSlug(slug, id);
     validateTitle(title, id);
@@ -37,7 +37,14 @@ export default TagTemplate;
 // FIXME: add seo.
 
 export const pageQuery = graphql`
-  query ($formatString: String, $limit: Int!, $skip: Int!, $slug: String!) {
+  query (
+    $limit: Int!
+    $skip: Int!
+    $slug: String!
+    $formatStringMonthAndDay: String
+    $formatStringTime: String
+    $formatStringYear: String
+  ) {
     allMarkdownPost(
       filter: { tags: { elemMatch: { slug: { eq: $slug } } } }
       limit: $limit
@@ -45,7 +52,10 @@ export const pageQuery = graphql`
       sort: { date: DESC }
     ) {
       nodes {
-        date(formatString: $formatString)
+        dateFormal: date(formatString: "YYYY-MM-DDTHH:mm:ss.sssZ")
+        dateMonthAndDay: date(formatString: $formatStringMonthAndDay)
+        dateTime: date(formatString: $formatStringTime)
+        dateYear: date(formatString: $formatStringYear)
         heroImage {
           childImageSharp {
             gatsbyImageData(height: 384)
