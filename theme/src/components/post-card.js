@@ -1,6 +1,7 @@
 import { Link } from "gatsby";
 import { GatsbyImage, getImage, StaticImage } from "gatsby-plugin-image";
 import * as React from "react";
+import { Border } from "./border";
 import { Clock } from "./clock";
 import { PostTitle } from "./post-title";
 
@@ -14,47 +15,45 @@ export const PostCard = ({
   heroImage,
 }) => {
   const image = getImage(heroImage);
+  const isPortrait = image?.width < image?.height;
   const imageTag = image ? (
-    <GatsbyImage
-      image={image}
-      alt="hero image"
-      className="isolate rounded" // `isolate` is needed to work around [iOS bug](https://gotohayato.com/content/556/) .
-      objectFit="contain"
-    />
+    <GatsbyImage image={image} alt="Hero image" className="basis-[56.25%]" />
   ) : (
     <StaticImage
       src="../images/no-image.png"
-      alt="no-image"
-      className="isolate rounded" // `isolate` is needed to work around [iOS bug](https://gotohayato.com/content/556/) .
-      objectFit="contain"
-      height={384} // Sync `gatsbyImageData(height: ***)`
+      alt="No hero image"
+      className="basis-[56.25%]"
     />
   );
-
-  const basis =
-    image?.width < image?.height ? `basis-[12rem]` : `basis-[31rem]`;
 
   return (
     <Link
       to={slug}
-      className={`${basis} grow rounded bg-slate-700 text-gray-300 hover:bg-sky-800`}
+      className={`grow basis-96 overflow-hidden rounded bg-slate-700 hover:bg-sky-800`}
     >
       <article
-        className="flex flex-wrap gap-2 p-2 md:p-4"
+        className={`flex aspect-square h-full w-full ${
+          isPortrait ? `flex-row` : `flex-col`
+        }`}
         itemScope
         itemType="http://schema.org/Article"
       >
-        <header className="flex basis-full flex-wrap gap-2">
-          <Clock {...{ dateFormal, dateMonthAndDay, dateTime, dateYear }} />
-          <div className="border-r border-slate-500" />
-          <PostTitle>{title}</PostTitle>
-        </header>
-        <section
-          itemProp="articleBody"
-          className="flex basis-full justify-center"
+        {imageTag}
+        <header
+          className={`flex min-h-0 min-w-0 basis-[43.75%] gap-2 p-2 ${
+            isPortrait ? `flex-col` : `flex-row`
+          }`}
         >
-          {imageTag}
-        </section>
+          <Clock {...{ dateFormal, dateMonthAndDay, dateTime, dateYear }} />
+          <Border />
+          <div className="flex content-center overflow-auto">
+            {/* Need the wrapper div because `content-center` has an unexpected behavior when overflow. */}
+            {/* See [StackOverflow](https://stackoverflow.com/questions/34184535/change-justify-content-value-when-flex-items-overflow-container) . */}
+            <div className="my-auto">
+              <PostTitle>{title}</PostTitle>
+            </div>
+          </div>
+        </header>
       </article>
     </Link>
   );
