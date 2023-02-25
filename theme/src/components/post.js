@@ -27,13 +27,13 @@ export const Post = ({
       image={image}
       alt="Hero image"
       objectPosition="50% 0%"
-      className="aspect-video basis-full rounded"
+      className="isolate aspect-video basis-full rounded" // `isolate` is needed to work around [iOS bug](https://gotohayato.com/content/556/) .
     />
   ) : (
     <StaticImage
       src="../images/no-image.png"
       alt="No hero image"
-      className="aspect-video basis-full rounded"
+      className="isolate aspect-video basis-full rounded" // `isolate` is needed to work around [iOS bug](https://gotohayato.com/content/556/) .
     />
   );
 

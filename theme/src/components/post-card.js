@@ -18,14 +18,14 @@ export const PostCard = ({
     <GatsbyImage
       image={image}
       alt="hero image"
-      className="rounded"
+      className="isolate rounded" // `isolate` is needed to work around [iOS bug](https://gotohayato.com/content/556/) .
       objectFit="contain"
     />
   ) : (
     <StaticImage
       src="../images/no-image.png"
       alt="no-image"
-      className="rounded"
+      className="isolate rounded" // `isolate` is needed to work around [iOS bug](https://gotohayato.com/content/556/) .
       objectFit="contain"
       height={384} // Sync `gatsbyImageData(height: ***)`
     />
