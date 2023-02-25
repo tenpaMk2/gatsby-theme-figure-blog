@@ -40,7 +40,7 @@ export const Layout = ({ children }) => {
           <nav className="flex min-w-0 flex-wrap gap-4">{menus}</nav>
           <SearchBar />
         </div>
-        <h1 className="drop-shadow-title flex min-w-0 grow basis-full justify-center font-sans text-2xl font-light text-white md:text-6xl">
+        <h1 className="drop-shadow-title flex min-w-0 grow basis-full items-start justify-center font-sans text-2xl font-light text-white md:text-6xl">
           <Link to="/" className="min-w-0">
             {title}
           </Link>
