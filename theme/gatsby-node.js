@@ -41,6 +41,7 @@ exports.createSchemaCustomization = ({ actions }, themeOptions) => {
     type FigureBlogConfig implements Node {
       archivesPath: String
       basePath: String
+      cardsPerPage: Int
       debugPath: String
       formatStringMonthAndDay: String
       formatStringTime: String

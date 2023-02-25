@@ -12,12 +12,15 @@ export const queryBlogConfig = () => {
         figureBlogConfig {
           archivesPath
           basePath
+          cardsPerPage
+          debugPath
           formatStringMonthAndDay
           formatStringTime
           formatStringYear
           locale
           pagesPath
           postPath
+          postsPerPage
           tagsPath
         }
       }

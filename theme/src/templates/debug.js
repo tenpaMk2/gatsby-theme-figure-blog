@@ -188,7 +188,7 @@ const DebugTemplate = ({
     />
   ));
   const figureBlogConfigTable = (
-    <div>
+    <div className="max-w-min">
       <h2 className="text- text-2xl">Figure blog config</h2>
       <table className="table-auto overflow-hidden rounded-lg text-left">
         <thead className="bg-gray-50 text-gray-700 dark:bg-gray-700 dark:text-gray-400">
@@ -200,6 +200,10 @@ const DebugTemplate = ({
         </thead>
         <tbody>{figureBlogConfigRows}</tbody>
       </table>
+      <p>
+        If you see any `FORGOT` , check query in `debug.js` , type definitions
+        in `gatsby-node.js` , and return values in `default-options.js` .
+      </p>
     </div>
   );
 
@@ -230,6 +234,7 @@ export const pageQuery = graphql`
     figureBlogConfig {
       archivesPath
       basePath
+      cardsPerPage
       debugPath
       formatStringMonthAndDay
       formatStringTime
