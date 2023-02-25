@@ -82,9 +82,9 @@ const DebugTemplate = ({
     );
   });
   const testsTable = (
-    <div>
-      <h2 className="text- text-2xl">Tests</h2>
-      <table className="table-auto overflow-hidden rounded-lg text-left">
+    <div className="flex-auto">
+      <h2 className="text-2xl">Tests</h2>
+      <table className="w-full table-auto overflow-hidden rounded-lg text-left">
         <thead className="bg-gray-50 text-gray-700 dark:bg-gray-700 dark:text-gray-400">
           <tr>
             <th className="px-4 py-2">category</th>
@@ -104,9 +104,9 @@ const DebugTemplate = ({
       <Row key={slug} items={[name, slug, count]} />
     ));
   const tagInfosTable = (
-    <div>
-      <h2 className="text- text-2xl">Tag infos</h2>
-      <table className="table-auto overflow-hidden rounded-lg text-left">
+    <div className="flex-auto">
+      <h2 className="text-2xl">Tag infos</h2>
+      <table className="w-full table-auto overflow-hidden rounded-lg text-left">
         <thead className="bg-gray-50 text-gray-700 dark:bg-gray-700 dark:text-gray-400">
           <tr>
             <th className="px-4 py-2">name</th>
@@ -125,9 +125,9 @@ const DebugTemplate = ({
       <Row key={yearNumber} items={[yearNumber, yearString, count]} />
     ));
   const yearInfosTable = (
-    <div>
-      <h2 className="text- text-2xl">Year infos</h2>
-      <table className="table-auto overflow-hidden rounded-lg text-left">
+    <div className="flex-auto">
+      <h2 className="text-2xl">Year infos</h2>
+      <table className="w-full table-auto overflow-hidden rounded-lg text-left">
         <thead className="bg-gray-50 text-gray-700 dark:bg-gray-700 dark:text-gray-400">
           <tr>
             <th className="px-4 py-2">yearNumber</th>
@@ -154,9 +154,9 @@ const DebugTemplate = ({
       />
     ));
   const yearMonthInfosTable = (
-    <div>
-      <h2 className="text- text-2xl">Year month infos</h2>
-      <table className="table-auto overflow-hidden rounded-lg text-left">
+    <div className="flex-auto">
+      <h2 className="text-2xl">Year month infos</h2>
+      <table className="w-full table-auto overflow-hidden rounded-lg text-left">
         <thead className="bg-gray-50 text-gray-700 dark:bg-gray-700 dark:text-gray-400">
           <tr>
             <th className="px-4 py-2">yearNumber</th>
@@ -188,9 +188,9 @@ const DebugTemplate = ({
     />
   ));
   const figureBlogConfigTable = (
-    <div className="max-w-min">
-      <h2 className="text- text-2xl">Figure blog config</h2>
-      <table className="table-auto overflow-hidden rounded-lg text-left">
+    <div className="flex-auto">
+      <h2 className="text-2xl">Figure blog config</h2>
+      <table className="w-full table-auto overflow-hidden rounded-lg text-left">
         <thead className="bg-gray-50 text-gray-700 dark:bg-gray-700 dark:text-gray-400">
           <tr>
             <th className="px-4 py-2">field</th>
@@ -200,7 +200,7 @@ const DebugTemplate = ({
         </thead>
         <tbody>{figureBlogConfigRows}</tbody>
       </table>
-      <p>
+      <p className="max-w-prose">
         If you see any `FORGOT` , check query in `debug.js` , type definitions
         in `gatsby-node.js` , and return values in `default-options.js` .
       </p>
