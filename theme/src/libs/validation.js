@@ -7,6 +7,10 @@
  * @param  {string} id - the ID of the post node.
  */
 const validateDate = (date, id) => {
+  if (!date) {
+    console.warn(`No date!! ID: '${id}' .`);
+  }
+
   // If invalid `date` is queried without `formatString` , the value of `date` will not be `"Invalid date"` .
   if (date === `Invalid date`) {
     throw new Error(
