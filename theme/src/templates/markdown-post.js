@@ -4,6 +4,7 @@ import { Seo } from "../components/seo";
 import { PostLayout } from "../components/post-layout";
 import {
   validateDate,
+  validateHeroImage,
   validateHtml,
   validateSlug,
   validateTags,
@@ -12,6 +13,7 @@ import {
 
 const MarkdownPostTemplate = ({ data: { current, next, previous } }) => {
   validateDate(current.date, current.id);
+  validateHeroImage(current.heroImage, current.id);
   validateHtml(current.html, current.id);
   validateSlug(current.slug, current.id);
   validateTags(current.tags, current.id);
@@ -39,6 +41,11 @@ export const postQuery = graphql`
     current: markdownPost(id: { eq: $id }) {
       canonicalUrl
       date(formatString: $formatString)
+      heroImage {
+        childImageSharp {
+          gatsbyImageData(layout: FULL_WIDTH)
+        }
+      }
       html
       id
       slug

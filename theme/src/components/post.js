@@ -1,11 +1,36 @@
 import { Link } from "gatsby";
-import { StaticImage } from "gatsby-plugin-image";
+import { GatsbyImage, getImage, StaticImage } from "gatsby-plugin-image";
 import * as React from "react";
 import { queryBlogConfig } from "../libs/query-blog-config";
 import { slugify } from "../libs/slugify";
 
-const Post = ({ title, date, html, slug, tags, isPostPage, needReadMore }) => {
+const Post = ({
+  date,
+  heroImage,
+  html,
+  needReadMore,
+  isPostPage,
+  slug,
+  tags,
+  title,
+}) => {
   const { basePath, tagsPath } = queryBlogConfig();
+
+  const image = getImage(heroImage);
+  const imageComponent = image ? (
+    <GatsbyImage
+      image={image}
+      alt="Hero image"
+      objectPosition="50% 0%"
+      className="aspect-video basis-full rounded bg-red-200"
+    />
+  ) : (
+    <StaticImage
+      src="../images/no-image.png"
+      alt="No hero image"
+      className="basis-full rounded"
+    />
+  );
 
   const h1 = isPostPage ? (
     <h1 itemProp="headline" className="basis-full text-4xl text-white">
@@ -44,8 +69,12 @@ const Post = ({ title, date, html, slug, tags, isPostPage, needReadMore }) => {
     </li>
   ));
 
+  if (tagLis?.length) {
+    tagLis.unshift(<li key="🏷️">🏷️</li>);
+  }
+
   const tagOl = tagLis?.length ? (
-    <ol className="flex flex-wrap gap-4">{tagLis}</ol>
+    <ol className="flex basis-full flex-wrap gap-4">{tagLis}</ol>
   ) : null;
 
   return (
@@ -55,12 +84,16 @@ const Post = ({ title, date, html, slug, tags, isPostPage, needReadMore }) => {
       itemType="http://schema.org/Article"
     >
       <section className="flex min-w-0 basis-full flex-wrap gap-4">
-        <header className="flex min-w-min basis-full flex-wrap gap-4">
-          {h1}
-          {time}
+        <header className="flex min-w-min basis-full flex-wrap justify-between gap-4">
+          <div className="flex shrink grow basis-full flex-wrap content-start gap-4">
+            {h1}
+            {time}
+            {tagOl}
+          </div>
+          <div className="flex basis-full justify-center">{imageComponent}</div>
           <hr className="basis-full border border-slate-500" />
         </header>
-        <div className="flex min-w-0 basis-full flex-wrap gap-4">
+        <div className="flex min-w-0 basis-full flex-wrap justify-center gap-4">
           <section
             dangerouslySetInnerHTML={{ __html: html }}
             itemProp="articleBody"
@@ -71,7 +104,7 @@ const Post = ({ title, date, html, slug, tags, isPostPage, needReadMore }) => {
       {readMore}
       <footer className="flex basis-full flex-wrap gap-4">
         <hr className="basis-full border border-slate-500" />
-        {tagOl}
+        {/* TODO: Add share buttons */}
       </footer>
     </article>
   );

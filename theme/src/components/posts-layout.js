@@ -18,17 +18,20 @@ export const PostsLayout = ({
   }
 
   const postComponents = posts.map(
-    ({ date, excerpt, slug, tags, title, needReadMore }) => {
+    ({ date, excerpt, heroImage, needReadMore, slug, tags, title }) => {
       return (
         <Post
-          key={slug}
-          title={title}
-          date={date}
-          html={excerpt}
-          slug={slug}
-          tags={tags}
-          needReadMore={needReadMore}
-          isPostPage={false}
+          {...{
+            key: slug,
+            date,
+            heroImage,
+            html: excerpt,
+            isPostPage: false,
+            needReadMore,
+            slug,
+            tags,
+            title,
+          }}
         />
       );
     }
