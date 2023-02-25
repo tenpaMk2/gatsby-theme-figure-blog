@@ -22,13 +22,13 @@ const Post = ({
       image={image}
       alt="Hero image"
       objectPosition="50% 0%"
-      className="aspect-video basis-full rounded bg-red-200"
+      className="aspect-video basis-full rounded"
     />
   ) : (
     <StaticImage
       src="../images/no-image.png"
       alt="No hero image"
-      className="basis-full rounded"
+      className="aspect-video basis-full rounded"
     />
   );
 
