@@ -26,7 +26,7 @@ module.exports = {
               backgroundColor: `rgba(128, 128, 128, 0.2)`,
               "border-left-color": `rgb(3, 105, 161)`, // sky-700
               "border-radius": `0.375rem`,
-              "padding-right": `1rem`,
+              padding: `1px 1rem`,
               quotes: null,
             },
             "blockquote p:first-of-type::before": {
