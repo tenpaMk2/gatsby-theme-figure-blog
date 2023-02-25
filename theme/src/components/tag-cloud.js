@@ -52,7 +52,9 @@ const TagCloud = () => {
 
   return (
     <div className="flex min-w-0 basis-full flex-wrap content-start gap-4">
-      <h1 className="basis-full overflow-x-auto py-1 text-4xl">Tag cloud</h1>
+      <h1 className="basis-full overflow-x-auto py-1 text-xl md:text-4xl">
+        Tag cloud
+      </h1>
       <div className="basis-full overflow-x-auto">
         <ol className="flex min-w-min flex-wrap items-center justify-center gap-2 rounded-lg bg-slate-900 p-4 shadow-inner">
           {tagLis}

@@ -37,7 +37,7 @@ export const CardsLayout = ({
 
   return (
     <Layout>
-      <h1 className="my-4 basis-full text-center text-4xl">{`🏷️ ${tagName} 🏷️`}</h1>
+      <h1 className="my-4 basis-full text-center text-xl md:text-4xl">{`🏷️ ${tagName} 🏷️`}</h1>
       {postCards}
       <PagesNav
         currentPageNumber={currentPage}

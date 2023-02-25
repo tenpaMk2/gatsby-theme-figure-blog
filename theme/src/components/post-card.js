@@ -40,7 +40,7 @@ export const PostCard = ({
       className={`${basis} grow rounded bg-slate-700 text-gray-300 hover:bg-sky-800`}
     >
       <article
-        className="flex flex-wrap gap-2 p-4"
+        className="flex flex-wrap gap-2 p-2 md:p-4"
         itemScope
         itemType="http://schema.org/Article"
       >

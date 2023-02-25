@@ -33,7 +33,9 @@ const Bio = () => {
 
   return (
     <div className="flex min-w-0 basis-full flex-wrap content-start gap-4">
-      <h1 className="basis-full overflow-x-auto py-1 text-4xl">Bio</h1>
+      <h1 className="basis-full overflow-x-auto py-1 text-xl md:text-4xl">
+        Bio
+      </h1>
       <div className="basis-full overflow-x-auto">
         <div className="flex min-w-min flex-wrap gap-4 rounded-lg bg-slate-900 p-4 shadow-inner">
           <div className="flex basis-full flex-wrap gap-2">

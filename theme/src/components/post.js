@@ -76,7 +76,7 @@ export const Post = ({
 
   return (
     <article
-      className="flex min-w-0 basis-full flex-wrap gap-4 overflow-x-auto rounded-xl bg-slate-700 p-6"
+      className="flex min-w-0 basis-full flex-wrap gap-4 overflow-x-auto rounded-xl bg-slate-700 p-2 md:p-6"
       itemScope
       itemType="http://schema.org/Article"
     >
