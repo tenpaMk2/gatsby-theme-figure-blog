@@ -5,7 +5,7 @@ import Bio from "./bio";
 import ArchiveList from "./archive-list";
 import SearchBar from "./search-bar";
 
-const Layout = ({ children }) => {
+export const Layout = ({ children }) => {
   const {
     site: {
       siteMetadata: { title, menuLinks },
@@ -69,5 +69,3 @@ const Layout = ({ children }) => {
     </div>
   );
 };
-
-export default Layout;

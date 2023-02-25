@@ -4,7 +4,7 @@ import { LinkButton } from "./link-button";
 import { ButtonBase } from "./button-base";
 import { queryBlogConfig } from "../libs/query-blog-config";
 
-const PagesNav = ({ currentPageNumber, pagesStartPath, pagesTotal }) => {
+export const PagesNav = ({ currentPageNumber, pagesStartPath, pagesTotal }) => {
   if (currentPageNumber <= 0) {
     throw new Error("`currentPageNumber` must be greater than equal 1.");
   }
@@ -105,5 +105,3 @@ const PagesNav = ({ currentPageNumber, pagesStartPath, pagesTotal }) => {
     </nav>
   );
 };
-
-export default PagesNav;

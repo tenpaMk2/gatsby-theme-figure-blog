@@ -1,6 +1,6 @@
 import * as React from "react";
-import Layout from "../components/layout";
-import Post from "../components/post";
+import { Layout } from "../components/layout";
+import { Post } from "../components/post";
 import { PostNav } from "../components/post-nav";
 
 export const PostLayout = ({ current, next, previous }) => {
