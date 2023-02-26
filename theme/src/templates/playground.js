@@ -98,6 +98,35 @@ const PlaygroundTemplate = () => (
         longlonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglongword.
       </Card>
     </div>
+
+    <br />
+    <h2 className="text-2xl">Flex wrap height test.</h2>
+    <p>Do not set `border` to inline element.</p>
+    <div className="w-[500px] bg-violet-200">
+      <span className="border border-sky-500">
+        Span Span Span Span Span Span
+      </span>
+      <span className="border border-sky-500 text-8xl">Span Span</span>
+      <span className="border border-sky-500 text-8xl">Span Span</span>
+      <span className="border border-sky-500">Span</span>
+    </div>
+    <p>Set `border` to block element.</p>
+    <div className="flex w-[500px] flex-wrap items-center bg-violet-200">
+      <div className=" border border-sky-500 bg-red-200">
+        Div Div Div Div Div Div Div Div Div Div
+      </div>
+      <div className=" border border-sky-500 bg-green-200 text-8xl">Div</div>
+      <div className=" border border-sky-500 bg-blue-200 text-8xl">Div</div>
+      <div className=" border border-sky-500 bg-yellow-200">Div</div>
+    </div>
+
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
   </div>
 );
 
