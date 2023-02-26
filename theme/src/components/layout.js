@@ -59,12 +59,24 @@ export const Layout = ({ children }) => {
         </div>
       </div>
       <footer className="min-w-0 basis-full p-2 text-center text-slate-400">
-        © {new Date().getFullYear()}, Built with
-        {` `}
-        <a href="https://www.gatsbyjs.com" className="underline">
-          Gatsby
-        </a>
-        .
+        <p>
+          © {new Date().getFullYear()}, Built with
+          {` `}
+          <a href="https://www.gatsbyjs.com" className="underline">
+            Gatsby
+          </a>
+          .
+        </p>
+        <p>
+          <a
+            href="https://github.com/tenpaMk2/gatsby-theme-figure-blog"
+            className="underline"
+          >
+            Figure blog theme
+          </a>
+          {` `}
+          by tenpaMk2.
+        </p>
       </footer>
     </div>
   );
