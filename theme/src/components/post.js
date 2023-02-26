@@ -3,6 +3,7 @@ import { GatsbyImage, getImage, StaticImage } from "gatsby-plugin-image";
 import * as React from "react";
 import { queryBlogConfig } from "../libs/query-blog-config";
 import { slugify } from "../libs/slugify";
+import { Border } from "./border";
 import { Clock } from "./clock";
 import { PostTitle } from "./post-title";
 
@@ -48,10 +49,10 @@ export const Post = ({
   );
 
   const readMore = needReadMore ? (
-    <p className="my-4 basis-full text-xl">
+    <p className="text-xl">
       <Link
         to={slug}
-        className="flex w-max items-center rounded bg-sky-500 p-3 font-semibold leading-none text-white hover:bg-sky-400"
+        className="rounded bg-sky-500 p-3 font-semibold leading-none text-white hover:bg-sky-400"
       >
         →Read More
       </Link>
@@ -76,34 +77,32 @@ export const Post = ({
 
   return (
     <article
-      className="flex min-w-0 basis-full flex-wrap gap-4 overflow-x-auto rounded-xl bg-slate-700 p-2 md:p-6"
+      className="flex min-w-0 basis-full flex-col gap-4 overflow-x-auto rounded-xl bg-slate-700 p-2 md:p-6"
       itemScope
       itemType="http://schema.org/Article"
     >
-      <section className="flex min-w-0 basis-full flex-wrap gap-4">
-        <header className="flex min-w-min basis-full flex-wrap justify-between gap-4">
-          <div className="flex shrink grow basis-full flex-wrap content-start gap-4">
-            <div className="flex basis-full flex-wrap gap-2">
-              <Clock {...{ dateFormal, dateMonthAndDay, dateTime, dateYear }} />
-              <div className="border-r border-slate-500" />
-              {h1}
-            </div>
-            {tagOl}
+      <header className="flex flex-col gap-4">
+        <div className="flex w-full grow flex-wrap gap-4">
+          <div className="flex basis-full flex-wrap gap-2">
+            <Clock {...{ dateFormal, dateMonthAndDay, dateTime, dateYear }} />
+            <Border />
+            <div className="flex grow basis-1/2 content-center">{h1}</div>
           </div>
-          <div className="flex basis-full justify-center">{imageComponent}</div>
-          <hr className="basis-full border border-slate-500" />
-        </header>
-        <div className="flex min-w-0 basis-full flex-wrap justify-center gap-4">
-          <section
-            dangerouslySetInnerHTML={{ __html: html }}
-            itemProp="articleBody"
-            className="prose prose-invert max-w-full basis-full"
-          />
+          {tagOl}
         </div>
-      </section>
-      {readMore}
-      <footer className="flex basis-full flex-wrap gap-4">
-        <hr className="basis-full border border-slate-500" />
+        <div className="flex justify-center">{imageComponent}</div>
+      </header>
+      <Border />
+      <div className="flex flex-col gap-4">
+        <section
+          dangerouslySetInnerHTML={{ __html: html }}
+          itemProp="articleBody"
+          className="prose prose-invert max-w-full basis-full"
+        />
+        {readMore}
+      </div>
+      <Border />
+      <footer className="flex flex-col gap-4">
         {/* TODO: Add share buttons */}
       </footer>
     </article>
