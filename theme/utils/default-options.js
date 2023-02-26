@@ -3,7 +3,7 @@
  * If the property of theme options is `undefined` , set the default value.
  *
  * @param  {Object} themeOptions - theme options.
- * @returns {Object} Options that is determined by user options and default options.
+ * @returns {Object} Default options overriden by valid user options.
  */
 const getOptions = (themeOptions) => {
   const archivesPath = themeOptions.archivesPath || `archives`;
