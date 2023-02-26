@@ -1,7 +1,7 @@
 import * as React from "react";
 import { graphql, useStaticQuery } from "gatsby";
 
-const SearchBar = () => {
+export const SearchBar = () => {
   const {
     site: {
       siteMetadata: { siteUrl },
@@ -52,5 +52,3 @@ const SearchBar = () => {
     </form>
   );
 };
-
-export default SearchBar;

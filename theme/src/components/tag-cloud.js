@@ -3,7 +3,7 @@ import { graphql, Link, useStaticQuery } from "gatsby";
 import { queryBlogConfig } from "../libs/query-blog-config";
 import { slugify } from "../libs/slugify";
 
-const TagCloud = () => {
+export const TagCloud = () => {
   const {
     postsInfo: { tagInfos },
   } = useStaticQuery(
@@ -63,5 +63,3 @@ const TagCloud = () => {
     </div>
   );
 };
-
-export default TagCloud;

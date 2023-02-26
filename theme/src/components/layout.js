@@ -1,9 +1,9 @@
 import * as React from "react";
 import { graphql, Link, useStaticQuery } from "gatsby";
-import TagCloud from "./tag-cloud";
-import Bio from "./bio";
-import ArchiveList from "./archive-list";
-import SearchBar from "./search-bar";
+import { TagCloud } from "./tag-cloud";
+import { Bio } from "./bio";
+import { ArchiveList } from "./archive-list";
+import { SearchBar } from "./search-bar";
 
 export const Layout = ({ children }) => {
   const {

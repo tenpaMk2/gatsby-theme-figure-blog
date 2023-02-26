@@ -2,7 +2,7 @@ import * as React from "react";
 import { graphql, useStaticQuery } from "gatsby";
 import { StaticImage } from "gatsby-plugin-image";
 
-const Bio = () => {
+export const Bio = () => {
   const {
     site: { siteMetadata },
   } = useStaticQuery(
@@ -139,5 +139,3 @@ const Bio = () => {
     </div>
   );
 };
-
-export default Bio;
