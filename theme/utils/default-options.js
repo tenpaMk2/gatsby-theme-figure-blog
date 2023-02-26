@@ -18,6 +18,10 @@ const getOptions = (themeOptions) => {
   const locale = themeOptions.locale || `en-US`;
   const pagesPath =
     themeOptions.pagesPath || themeOptions.pagesPath === `` ? `` : `pages`;
+  const playgroundPath =
+    themeOptions.playgroundPath || themeOptions.playgroundPath === ``
+      ? ``
+      : `playground`;
   const postPath =
     themeOptions.postPath || themeOptions.postPath === `` ? `` : `post`;
   const postsPerPage = themeOptions.postsPerPage || 6;
@@ -34,6 +38,7 @@ const getOptions = (themeOptions) => {
     formatStringYear,
     locale,
     pagesPath,
+    playgroundPath,
     postPath,
     postsPerPage,
     tagsPath,

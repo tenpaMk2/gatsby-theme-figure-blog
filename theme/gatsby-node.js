@@ -48,6 +48,7 @@ exports.createSchemaCustomization = ({ actions }, themeOptions) => {
       formatStringYear: String
       locale: String
       pagesPath: String
+      playgroundPath: String
       postPath: String
       postsPerPage: Int
       tagsPath: String
@@ -339,6 +340,7 @@ exports.createPages = async ({ graphql, actions, reporter }, themeOptions) => {
     formatStringTime,
     formatStringYear,
     pagesPath,
+    playgroundPath,
     postsPerPage,
     tagsPath,
   } = getOptions(themeOptions);
@@ -493,7 +495,7 @@ exports.createPages = async ({ graphql, actions, reporter }, themeOptions) => {
    */
   if (process.env.NODE_ENV !== `production`) {
     createPage({
-      path: slugify(basePath, `playground`),
+      path: slugify(basePath, playgroundPath),
       component: require.resolve(`./src/templates/playground.js`),
     });
   }

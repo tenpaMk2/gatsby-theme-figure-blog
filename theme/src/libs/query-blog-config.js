@@ -19,6 +19,7 @@ export const queryBlogConfig = () => {
           formatStringYear
           locale
           pagesPath
+          playgroundPath
           postPath
           postsPerPage
           tagsPath

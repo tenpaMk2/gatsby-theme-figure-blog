@@ -241,6 +241,7 @@ export const pageQuery = graphql`
       formatStringYear
       locale
       pagesPath
+      playgroundPath
       postPath
       postsPerPage
       tagsPath
