@@ -58,7 +58,7 @@ export const Layout = ({ children }) => {
           <ArchiveList />
         </div>
       </div>
-      <footer className="min-w-0 basis-full p-2 text-center text-slate-400">
+      <footer className="min-w-0 basis-full p-2 text-center text-gray-400">
         <p>
           © {new Date().getFullYear()}, Built with
           {` `}

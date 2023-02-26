@@ -48,10 +48,10 @@ export const ArchiveList = () => {
                 to={slug}
                 className="group flex items-stretch justify-center"
               >
-                <p className="flex items-center rounded-l bg-slate-700 p-1 group-hover:bg-sky-600">
+                <p className="flex items-center rounded-l bg-slate-700 p-1 group-hover:bg-sky-400">
                   {monthString}
                 </p>
-                <p className="flex items-center rounded-r border-l border-slate-800 bg-gray-600 py-1 px-2 group-hover:bg-sky-500">
+                <p className="flex items-center rounded-r border-l border-slate-800 bg-gray-600 py-1 px-2 group-hover:bg-sky-400">
                   {monthCount}
                 </p>
               </Link>
@@ -68,10 +68,10 @@ export const ArchiveList = () => {
         >
           <div className="flex basis-full justify-center">
             <Link to={slug} className="group flex items-stretch text-2xl">
-              <p className="flex items-center rounded-l bg-slate-700 py-1 pl-2 pr-1 group-hover:bg-sky-600">
+              <p className="flex items-center rounded-l bg-slate-700 py-1 pl-2 pr-1 group-hover:bg-sky-400">
                 {yearString}
               </p>
-              <p className="flex min-w-[2rem] items-center justify-center rounded-r border-l border-slate-800 bg-gray-600 py-1 px-2 group-hover:bg-sky-500">
+              <p className="flex min-w-[2rem] items-center justify-center rounded-r border-l border-slate-800 bg-gray-600 py-1 px-2 group-hover:bg-sky-400">
                 {yearCount}
               </p>
             </Link>

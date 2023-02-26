@@ -53,7 +53,7 @@ export const Bio = () => {
           <p className="flex basis-full justify-center">{summary}</p>
           <div className="flex basis-full flex-wrap justify-center gap-2">
             <a
-              className="inline-flex items-center rounded-full bg-blue-600 p-3 text-white transition duration-200 hover:bg-blue-700"
+              className="inline-flex items-center rounded-full bg-sky-500 p-3 text-white transition duration-200 hover:bg-sky-400"
               target="_blank"
               rel="noopener"
               href={`https://twitter.com/${twitter}/`}
@@ -72,7 +72,7 @@ export const Bio = () => {
               </svg>
             </a>
             <a
-              className="inline-flex items-center rounded-full bg-blue-600 p-3 text-white transition duration-200 hover:bg-blue-700"
+              className="inline-flex items-center rounded-full bg-sky-500 p-3 text-white transition duration-200 hover:bg-sky-400"
               target="_blank"
               rel="noopener"
               href={`https://www.instagram.com/${instagram}/`}
@@ -110,7 +110,7 @@ export const Bio = () => {
               </svg>
             </a>
             <a
-              className="inline-flex items-center rounded-full bg-blue-600 p-3 text-white transition duration-200 hover:bg-blue-700"
+              className="inline-flex items-center rounded-full bg-sky-500 p-3 text-white transition duration-200 hover:bg-sky-400"
               target="_blank"
               rel="noopener"
               href={`https://github.com/${github}/`}

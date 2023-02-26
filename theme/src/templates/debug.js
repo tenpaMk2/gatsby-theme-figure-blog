@@ -2,7 +2,7 @@ import React from "react";
 import { graphql } from "gatsby";
 
 const Row = ({ items }) => (
-  <tr className="border-b bg-white dark:border-gray-700 dark:bg-gray-900">
+  <tr className="border-b border-slate-500 bg-slate-900 text-gray-400">
     {items.map((item, i) => (
       <td key={i} className="max-w-xs px-4 py-2">
         {item?.toString()}
@@ -85,7 +85,7 @@ const DebugTemplate = ({
     <div className="flex-auto">
       <h2 className="text-2xl">Tests</h2>
       <table className="w-full table-auto overflow-hidden rounded-lg text-left">
-        <thead className="bg-gray-50 text-gray-700 dark:bg-gray-700 dark:text-gray-400">
+        <thead className="bg-slate-700 text-gray-200">
           <tr>
             <th className="px-4 py-2">category</th>
             <th className="px-4 py-2">description</th>
@@ -107,7 +107,7 @@ const DebugTemplate = ({
     <div className="flex-auto">
       <h2 className="text-2xl">Tag infos</h2>
       <table className="w-full table-auto overflow-hidden rounded-lg text-left">
-        <thead className="bg-gray-50 text-gray-700 dark:bg-gray-700 dark:text-gray-400">
+        <thead className="bg-slate-700 text-gray-200">
           <tr>
             <th className="px-4 py-2">name</th>
             <th className="px-4 py-2">slug</th>
@@ -128,7 +128,7 @@ const DebugTemplate = ({
     <div className="flex-auto">
       <h2 className="text-2xl">Year infos</h2>
       <table className="w-full table-auto overflow-hidden rounded-lg text-left">
-        <thead className="bg-gray-50 text-gray-700 dark:bg-gray-700 dark:text-gray-400">
+        <thead className="bg-slate-700 text-gray-200">
           <tr>
             <th className="px-4 py-2">yearNumber</th>
             <th className="px-4 py-2">yearString</th>
@@ -157,7 +157,7 @@ const DebugTemplate = ({
     <div className="flex-auto">
       <h2 className="text-2xl">Year month infos</h2>
       <table className="w-full table-auto overflow-hidden rounded-lg text-left">
-        <thead className="bg-gray-50 text-gray-700 dark:bg-gray-700 dark:text-gray-400">
+        <thead className="bg-slate-700 text-gray-200">
           <tr>
             <th className="px-4 py-2">yearNumber</th>
             <th className="px-4 py-2">yearString</th>
@@ -191,7 +191,7 @@ const DebugTemplate = ({
     <div className="flex-auto">
       <h2 className="text-2xl">Figure blog config</h2>
       <table className="w-full table-auto overflow-hidden rounded-lg text-left">
-        <thead className="bg-gray-50 text-gray-700 dark:bg-gray-700 dark:text-gray-400">
+        <thead className="bg-slate-700 text-gray-200">
           <tr>
             <th className="px-4 py-2">field</th>
             <th className="px-4 py-2">query?</th>
@@ -208,7 +208,7 @@ const DebugTemplate = ({
   );
 
   return (
-    <div className="flex min-h-screen flex-wrap items-start gap-4 bg-slate-800 p-4 text-gray-500 dark:text-gray-400">
+    <div className="flex min-h-screen flex-wrap items-start gap-4 bg-slate-800 p-4 text-gray-200">
       {testsTable}
       {tagInfosTable}
       {yearInfosTable}

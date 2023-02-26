@@ -45,7 +45,7 @@ export const PagesNav = ({ currentPageNumber, pagesStartPath, pagesTotal }) => {
 
     if (number === currentPageNumber) {
       return (
-        <div key={number} className="rounded-lg bg-sky-600/50 font-bold">
+        <div key={number} className="rounded-lg bg-sky-800 font-bold">
           <ButtonBase>{number}</ButtonBase>
         </div>
       );

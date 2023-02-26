@@ -7,7 +7,7 @@ const PostNavLink = ({ slug, isNext, title }) => {
   return (
     <Link
       to={slug}
-      className={`grow basis-0 rounded p-2 hover:bg-sky-600 ${
+      className={`grow basis-0 rounded border border-sky-500 p-2 hover:bg-sky-400 ${
         isNext ? `text-right` : `text-left`
       }`}
     >
@@ -41,7 +41,7 @@ export const PostNav = ({
     <div className="min-w-0 basis-full overflow-x-auto">
       <nav className="flex min-w-min justify-center gap-2">
         {next}
-        <p className="flex flex-none items-center text-gray-600">●</p>
+        <p className="flex flex-none items-center text-gray-400">●</p>
         {previous}
       </nav>
     </div>

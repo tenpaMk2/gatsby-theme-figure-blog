@@ -29,7 +29,7 @@ export const PostCard = ({
   return (
     <Link
       to={slug}
-      className="min-w-0 max-w-lg grow basis-96 overflow-hidden rounded bg-slate-700 hover:bg-sky-800"
+      className="min-w-0 max-w-lg grow basis-96 overflow-hidden rounded bg-slate-700 hover:bg-sky-400"
     >
       <article
         className={`flex aspect-square h-full w-full min-w-0 ${
