@@ -84,8 +84,10 @@ export const Post = ({
       <header className="flex flex-col gap-4">
         <div className="flex w-full grow flex-wrap gap-4">
           <div className="flex basis-full flex-wrap gap-2">
-            <Clock {...{ dateFormal, dateMonthAndDay, dateTime, dateYear }} />
-            <Border />
+            {dateFormal ? (
+              <Clock {...{ dateFormal, dateMonthAndDay, dateTime, dateYear }} />
+            ) : null}
+            {dateFormal ? <Border /> : null}
             <div className="flex grow basis-1/2 content-center">{h1}</div>
           </div>
           {tagOl}
