@@ -2,6 +2,18 @@ import * as React from "react";
 import { graphql, Link, useStaticQuery } from "gatsby";
 import { queryBlogConfig } from "../libs/query-blog-config";
 import { slugify } from "../libs/slugify";
+import { SidebarLayout } from "./sidebar-layout";
+
+const LinkButton = ({ slug, str, count }) => (
+  <Link to={slug} className="group flex items-stretch justify-center">
+    <p className="flex items-center rounded-l bg-slate-700 p-1 group-hover:bg-sky-400">
+      {str}
+    </p>
+    <p className="flex items-center rounded-r border-l border-slate-800 bg-gray-600 py-1 px-2 group-hover:bg-sky-400">
+      {count}
+    </p>
+  </Link>
+);
 
 export const ArchiveList = () => {
   const {
@@ -44,17 +56,7 @@ export const ArchiveList = () => {
           );
           return (
             <li key={slug}>
-              <Link
-                to={slug}
-                className="group flex items-stretch justify-center"
-              >
-                <p className="flex items-center rounded-l bg-slate-700 p-1 group-hover:bg-sky-400">
-                  {monthString}
-                </p>
-                <p className="flex items-center rounded-r border-l border-slate-800 bg-gray-600 py-1 px-2 group-hover:bg-sky-400">
-                  {monthCount}
-                </p>
-              </Link>
+              <LinkButton slug={slug} str={monthString} count={monthCount} />
             </li>
           );
         }
@@ -64,36 +66,20 @@ export const ArchiveList = () => {
       return (
         <li
           key={slug}
-          className="flex shrink basis-full flex-wrap items-center gap-4 border-b border-slate-500 pb-4"
+          className="flex flex-col items-center gap-4 border-b border-slate-500 pb-4"
         >
-          <div className="flex basis-full justify-center">
-            <Link to={slug} className="group flex items-stretch text-2xl">
-              <p className="flex items-center rounded-l bg-slate-700 py-1 pl-2 pr-1 group-hover:bg-sky-400">
-                {yearString}
-              </p>
-              <p className="flex min-w-[2rem] items-center justify-center rounded-r border-l border-slate-800 bg-gray-600 py-1 px-2 group-hover:bg-sky-400">
-                {yearCount}
-              </p>
-            </Link>
+          <div className="flex justify-center">
+            <LinkButton slug={slug} str={yearString} count={yearCount} />
           </div>
-          <ol className="flex basis-full flex-wrap justify-center gap-2">
-            {monthLis}
-          </ol>
+          <ol className="flex flex-wrap justify-center gap-2">{monthLis}</ol>
         </li>
       );
     }
   );
 
   return (
-    <div className="flex min-w-0 basis-full flex-wrap content-start gap-4">
-      <h1 className="basis-full overflow-x-auto py-1 text-xl md:text-4xl">
-        Archive list
-      </h1>
-      <div className="basis-full overflow-x-auto">
-        <ol className="flex min-w-min basis-full flex-wrap gap-4 rounded-lg bg-slate-900 p-4 shadow-inner">
-          {dateLis}
-        </ol>
-      </div>
-    </div>
+    <SidebarLayout title="Archive list">
+      <ol className="flex min-w-min flex-col gap-4">{dateLis}</ol>
+    </SidebarLayout>
   );
 };

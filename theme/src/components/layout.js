@@ -52,7 +52,7 @@ export const Layout = ({ children }) => {
           {children}
         </main>
         {/* Sidebar layout logic is [here](https://every-layout.dev/layouts/sidebar/) . */}
-        <div className="flex min-w-0 max-w-[1024px] shrink grow basis-[20rem] flex-wrap content-start gap-6">
+        <div className="flex min-w-0 max-w-[1024px] shrink grow basis-[20rem] flex-col gap-6">
           <Bio />
           <TagCloud />
           <ArchiveList />
