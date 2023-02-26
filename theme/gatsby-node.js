@@ -487,6 +487,16 @@ exports.createPages = async ({ graphql, actions, reporter }, themeOptions) => {
       component: require.resolve(`./src/templates/debug.js`),
     });
   }
+
+  /**
+   * Create a playground page.
+   */
+  if (process.env.NODE_ENV !== `production`) {
+    createPage({
+      path: slugify(basePath, `playground`),
+      component: require.resolve(`./src/templates/playground.js`),
+    });
+  }
 };
 
 const createMarkdownPageNode = (
