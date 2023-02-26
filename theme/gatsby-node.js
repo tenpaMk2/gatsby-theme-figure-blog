@@ -405,12 +405,14 @@ exports.createPages = async ({ graphql, actions, reporter }, themeOptions) => {
       path: node.slug, // `node.slug` may not start with `basePath` and `postPath` .
       component: require.resolve(`./src/templates/markdown-post.js`),
       context: {
-        id: node.id,
-        previousPostId: previous?.id,
-        nextPostId: next?.id,
         formatStringMonthAndDay,
         formatStringTime,
         formatStringYear,
+        id: node.id,
+        needDateTime: formatStringTime !== ``,
+        needDateYear: formatStringYear !== ``,
+        nextPostId: next?.id,
+        previousPostId: previous?.id,
       },
     });
   });
@@ -425,12 +427,14 @@ exports.createPages = async ({ graphql, actions, reporter }, themeOptions) => {
       path: i === 0 ? slugify(basePath) : slugify(basePath, pagesPath, i + 1),
       component: require.resolve("./src/templates/markdown-posts.js"),
       context: {
-        limit: postsPerPage,
-        skip: i * postsPerPage,
         formatStringMonthAndDay,
         formatStringTime,
         formatStringYear,
+        limit: postsPerPage,
+        needDateTime: formatStringTime !== ``,
+        needDateYear: formatStringYear !== ``,
         pagesStartPath: basePath,
+        skip: i * postsPerPage,
       },
     });
   });
@@ -451,13 +455,15 @@ exports.createPages = async ({ graphql, actions, reporter }, themeOptions) => {
             : slugify(basePath, tagsPath, slug, pagesPath, i + 1),
         component: require.resolve(`./src/templates/tag.js`),
         context: {
-          limit: cardsPerPage,
-          skip: i * cardsPerPage,
-          name,
-          slug,
           formatStringMonthAndDay,
           formatStringTime,
           formatStringYear,
+          limit: cardsPerPage,
+          needDateTime: formatStringTime !== ``,
+          needDateYear: formatStringYear !== ``,
+          skip: i * cardsPerPage,
+          slug,
+          name,
           pagesStartPath,
         },
       });
@@ -473,9 +479,6 @@ exports.createPages = async ({ graphql, actions, reporter }, themeOptions) => {
       component: require.resolve(`./src/templates/markdown-page.js`),
       context: {
         id: node.id,
-        formatStringMonthAndDay,
-        formatStringTime,
-        formatStringYear,
       },
     })
   );

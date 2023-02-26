@@ -13,8 +13,12 @@ const getOptions = (themeOptions) => {
   const debugPath = themeOptions.debugPath || `debug`;
   const formatStringMonthAndDay =
     themeOptions.formatStringMonthAndDay || `MM/DD`;
-  const formatStringTime = themeOptions.formatStringTime || `HH:mm:ss`;
-  const formatStringYear = themeOptions.formatStringYear || `YYYY`;
+  const formatStringTime =
+    themeOptions.formatStringTime ||
+    (themeOptions.formatStringTime === `` ? `` : `HH:mm:ss`);
+  const formatStringYear =
+    themeOptions.formatStringYear ||
+    (themeOptions.formatStringYear === `` ? `` : `YYYY`);
   const locale = themeOptions.locale || `en-US`;
   const pagesPath =
     themeOptions.pagesPath || (themeOptions.pagesPath === `` ? `` : `pages`);

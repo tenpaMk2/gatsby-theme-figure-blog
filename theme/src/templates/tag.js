@@ -38,12 +38,14 @@ export default TagTemplate;
 
 export const pageQuery = graphql`
   query (
-    $limit: Int!
-    $skip: Int!
-    $slug: String!
     $formatStringMonthAndDay: String
     $formatStringTime: String
     $formatStringYear: String
+    $limit: Int!
+    $needDateTime: Boolean!
+    $needDateYear: Boolean!
+    $skip: Int!
+    $slug: String!
   ) {
     allMarkdownPost(
       filter: { tags: { elemMatch: { slug: { eq: $slug } } } }
@@ -55,7 +57,9 @@ export const pageQuery = graphql`
         dateFormal: date(formatString: "YYYY-MM-DDTHH:mm:ss.sssZ")
         dateMonthAndDay: date(formatString: $formatStringMonthAndDay)
         dateTime: date(formatString: $formatStringTime)
+          @include(if: $needDateTime)
         dateYear: date(formatString: $formatStringYear)
+          @include(if: $needDateYear)
         heroImage {
           childImageSharp {
             gatsbyImageData(height: 384)

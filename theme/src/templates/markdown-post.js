@@ -33,19 +33,23 @@ export const Head = ({
 
 export const postQuery = graphql`
   query (
-    $id: String!
-    $previousPostId: String
-    $nextPostId: String
     $formatStringMonthAndDay: String
     $formatStringTime: String
     $formatStringYear: String
+    $id: String!
+    $needDateTime: Boolean!
+    $needDateYear: Boolean!
+    $nextPostId: String
+    $previousPostId: String
   ) {
     current: markdownPost(id: { eq: $id }) {
       canonicalUrl
       dateFormal: date(formatString: "YYYY-MM-DDTHH:mm:ss.sssZ")
       dateMonthAndDay: date(formatString: $formatStringMonthAndDay)
       dateTime: date(formatString: $formatStringTime)
+        @include(if: $needDateTime)
       dateYear: date(formatString: $formatStringYear)
+        @include(if: $needDateYear)
       heroImage {
         childImageSharp {
           gatsbyImageData(layout: FULL_WIDTH)

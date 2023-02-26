@@ -49,18 +49,22 @@ export const Head = ({ location: { pathname } }) => <Seo {...{ pathname }} />;
 
 export const pageQuery = graphql`
   query (
-    $skip: Int!
-    $limit: Int!
     $formatStringMonthAndDay: String
     $formatStringTime: String
     $formatStringYear: String
+    $limit: Int!
+    $needDateTime: Boolean!
+    $needDateYear: Boolean!
+    $skip: Int!
   ) {
     allMarkdownPost(sort: { date: DESC }, limit: $limit, skip: $skip) {
       nodes {
         dateFormal: date(formatString: "YYYY-MM-DDTHH:mm:ss.sssZ")
         dateMonthAndDay: date(formatString: $formatStringMonthAndDay)
         dateTime: date(formatString: $formatStringTime)
+          @include(if: $needDateTime)
         dateYear: date(formatString: $formatStringYear)
+          @include(if: $needDateYear)
         excerpt
         heroImage {
           childImageSharp {
