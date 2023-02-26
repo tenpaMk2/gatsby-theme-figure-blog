@@ -103,7 +103,7 @@ export const PagesNav = ({ currentPageNumber, pagesStartPath, pagesTotal }) => {
     <div className="min-w-0 basis-full overflow-x-auto">
       <nav className="flex min-w-min flex-wrap justify-center gap-2">
         <div className="flex grow basis-0">{previous}</div>
-        <div className="flex flex-wrap justify-center">{numberLinks}</div>
+        <div className="flex flex-wrap justify-center gap-2">{numberLinks}</div>
         <div className="flex grow basis-0 justify-end">{next}</div>
       </nav>
     </div>
