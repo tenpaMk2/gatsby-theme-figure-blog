@@ -8,7 +8,7 @@
 const getOptions = (themeOptions) => {
   const archivesPath = themeOptions.archivesPath || `archives`;
   const basePath =
-    themeOptions.basePath || themeOptions.basePath === `` ? `` : `base`;
+    themeOptions.basePath || (themeOptions.basePath === `` ? `` : `base`);
   const cardsPerPage = themeOptions.cardsPerPage || 12;
   const debugPath = themeOptions.debugPath || `debug`;
   const formatStringMonthAndDay =
@@ -17,13 +17,12 @@ const getOptions = (themeOptions) => {
   const formatStringYear = themeOptions.formatStringYear || `YYYY`;
   const locale = themeOptions.locale || `en-US`;
   const pagesPath =
-    themeOptions.pagesPath || themeOptions.pagesPath === `` ? `` : `pages`;
+    themeOptions.pagesPath || (themeOptions.pagesPath === `` ? `` : `pages`);
   const playgroundPath =
-    themeOptions.playgroundPath || themeOptions.playgroundPath === ``
-      ? ``
-      : `playground`;
+    themeOptions.playgroundPath ||
+    (themeOptions.playgroundPath === `` ? `` : `playground`);
   const postPath =
-    themeOptions.postPath || themeOptions.postPath === `` ? `` : `post`;
+    themeOptions.postPath || (themeOptions.postPath === `` ? `` : `post`);
   const postsPerPage = themeOptions.postsPerPage || 6;
   const tagsPath = themeOptions.tagsPath || `tags`;
 
