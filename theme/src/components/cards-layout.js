@@ -37,7 +37,7 @@ export const CardsLayout = ({
 
   return (
     <Layout>
-      <h1 className="my-4 min-w-0 basis-full text-center text-xl md:text-4xl">{`🏷️ ${tagName} 🏷️`}</h1>
+      <h1 className="my-4 min-w-0 basis-full overflow-auto text-center text-xl md:text-4xl">{`🏷️ ${tagName} 🏷️`}</h1>
       <div className="flex min-w-0 basis-full flex-wrap items-start gap-4">
         {postCards}
       </div>
