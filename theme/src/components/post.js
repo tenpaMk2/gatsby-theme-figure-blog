@@ -58,12 +58,14 @@ export const Post = ({
           ) : null}
         </p>
       </div>
-      <Border />
-      <footer>
-        {isPostPage ? (
-          <ShareButtons {...{ imageSrc, location, title }} />
-        ) : null}
-      </footer>
+      {isPostPage ? (
+        <>
+          <Border />
+          <footer>
+            <ShareButtons {...{ imageSrc, location, title }} />
+          </footer>
+        </>
+      ) : null}
     </article>
   );
 };
