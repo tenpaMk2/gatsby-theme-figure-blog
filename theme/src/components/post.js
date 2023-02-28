@@ -1,12 +1,9 @@
 import * as React from "react";
 import { Link } from "gatsby";
-import { GatsbyImage, getImage, StaticImage } from "gatsby-plugin-image";
-import { queryBlogConfig } from "../libs/query-blog-config";
-import { slugify } from "../libs/slugify";
+import { getImage } from "gatsby-plugin-image";
 import { Border } from "./border";
-import { Clock } from "./clock";
-import { PostTitle } from "./post-title";
 import { ShareButtons } from "./share-buttons";
+import { PostHeader } from "./post-header";
 
 export const Post = ({
   dateFormal,
@@ -22,33 +19,7 @@ export const Post = ({
   tags,
   title,
 }) => {
-  const { basePath, tagsPath } = queryBlogConfig();
-
-  const image = getImage(heroImage);
-  const imageComponent = image ? (
-    <GatsbyImage
-      image={image}
-      alt="Hero image"
-      objectPosition="50% 0%"
-      className="isolate aspect-video basis-full rounded" // `isolate` is needed to work around [iOS bug](https://gotohayato.com/content/556/) .
-    />
-  ) : (
-    <StaticImage
-      src="../images/no-image.png"
-      alt="No hero image"
-      className="isolate aspect-video basis-full rounded" // `isolate` is needed to work around [iOS bug](https://gotohayato.com/content/556/) .
-    />
-  );
-
-  const h1 = isPostPage ? (
-    <PostTitle>{title}</PostTitle>
-  ) : (
-    <PostTitle>
-      <Link to={slug} className="no-underline">
-        {title}
-      </Link>
-    </PostTitle>
-  );
+  const imageSrc = getImage(heroImage)?.images?.fallback?.src;
 
   const readMore = needReadMore ? (
     <p className="text-xl">
@@ -61,41 +32,25 @@ export const Post = ({
     </p>
   ) : null;
 
-  const tagLis = tags?.map(({ name, slug }) => (
-    <li key={slug}>
-      <Link to={slugify(basePath, tagsPath, slug)} className="underline">
-        {name}
-      </Link>
-    </li>
-  ));
-
-  if (tagLis?.length) {
-    tagLis.unshift(<li key="🏷️">🏷️</li>);
-  }
-
-  const tagOl = tagLis?.length ? (
-    <ol className="flex basis-full flex-wrap gap-4">{tagLis}</ol>
-  ) : null;
-
   return (
     <article
       className="flex min-w-0 basis-full flex-col gap-4 overflow-x-auto rounded-xl bg-slate-700 p-2 md:p-6"
       itemScope
       itemType="http://schema.org/Article"
     >
-      <header className="flex flex-col gap-4">
-        <div className="flex w-full grow flex-wrap gap-4">
-          <div className="flex basis-full flex-wrap gap-2">
-            {dateFormal ? (
-              <Clock {...{ dateFormal, dateMonthAndDay, dateTime, dateYear }} />
-            ) : null}
-            {dateFormal ? <Border /> : null}
-            <div className="flex grow basis-1/2 content-center">{h1}</div>
-          </div>
-          {tagOl}
-        </div>
-        <div className="flex justify-center">{imageComponent}</div>
-      </header>
+      <PostHeader
+        {...{
+          dateFormal,
+          dateMonthAndDay,
+          dateTime,
+          dateYear,
+          heroImage,
+          isPostPage,
+          slug,
+          tags,
+          title,
+        }}
+      />
       <Border />
       <div className="flex flex-col gap-4">
         <section
@@ -108,10 +63,7 @@ export const Post = ({
       <Border />
       <footer>
         {isPostPage ? (
-          <ShareButtons
-            {...{ location, title }}
-            imageSrc={image?.images?.fallback?.src}
-          />
+          <ShareButtons {...{ imageSrc, location, title }} />
         ) : null}
       </footer>
     </article>
