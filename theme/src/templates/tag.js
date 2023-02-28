@@ -7,6 +7,7 @@ import {
   validateSlug,
   validateTitle,
 } from "../libs/validation";
+import { Seo } from "../components/seo";
 
 const TagTemplate = ({
   data: {
@@ -34,7 +35,9 @@ const TagTemplate = ({
 
 export default TagTemplate;
 
-// FIXME: add seo.
+export const Head = ({ location: { pathname } }) => (
+  <Seo {...{ pathname, title: `Tag` }} />
+);
 
 export const pageQuery = graphql`
   query (
