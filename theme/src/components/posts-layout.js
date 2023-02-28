@@ -4,10 +4,11 @@ import { Post } from "../components/post";
 import { PagesNav } from "../components/pages-nav";
 
 export const PostsLayout = ({
-  posts,
   currentPage,
-  pagesStartPath,
+  location,
   pageCount,
+  pagesStartPath,
+  posts,
 }) => {
   if (posts.length === 0) {
     return (
@@ -41,6 +42,7 @@ export const PostsLayout = ({
             heroImage,
             html: excerpt,
             isPostPage: false,
+            location,
             needReadMore,
             slug,
             tags,

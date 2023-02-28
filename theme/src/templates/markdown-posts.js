@@ -18,6 +18,7 @@ const MarkdownPosts = ({
       pageInfo: { currentPage, pageCount },
     },
   },
+  location,
   pageContext: { pagesStartPath },
 }) => {
   if (nodes.length === 0) {
@@ -34,10 +35,11 @@ const MarkdownPosts = ({
   });
 
   const props = {
-    posts: nodes,
     currentPage,
-    pagesStartPath,
+    location,
     pageCount,
+    pagesStartPath,
+    posts: nodes,
   };
   return <PostsLayout {...props} />;
 };

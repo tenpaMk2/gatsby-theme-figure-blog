@@ -3,7 +3,7 @@ import { Layout } from "../components/layout";
 import { Post } from "../components/post";
 import { PostNav } from "../components/post-nav";
 
-export const PostLayout = ({ current, next, previous }) => {
+export const PostLayout = ({ current, location, next, previous }) => {
   const postNav =
     !next && !previous ? null : (
       <PostNav
@@ -16,7 +16,7 @@ export const PostLayout = ({ current, next, previous }) => {
 
   return (
     <Layout>
-      <Post {...current} isPostPage={true} />
+      <Post {...{ ...current, location }} isPostPage={true} />
       {postNav}
     </Layout>
   );

@@ -1,11 +1,12 @@
+import * as React from "react";
 import { Link } from "gatsby";
 import { GatsbyImage, getImage, StaticImage } from "gatsby-plugin-image";
-import * as React from "react";
 import { queryBlogConfig } from "../libs/query-blog-config";
 import { slugify } from "../libs/slugify";
 import { Border } from "./border";
 import { Clock } from "./clock";
 import { PostTitle } from "./post-title";
+import { ShareButtons } from "./share-buttons";
 
 export const Post = ({
   dateFormal,
@@ -14,6 +15,7 @@ export const Post = ({
   dateYear,
   heroImage,
   html,
+  location,
   needReadMore,
   isPostPage,
   slug,
@@ -104,8 +106,13 @@ export const Post = ({
         {readMore}
       </div>
       <Border />
-      <footer className="flex flex-col gap-4">
-        {/* TODO: Add share buttons */}
+      <footer>
+        {isPostPage ? (
+          <ShareButtons
+            {...{ location, title }}
+            imageSrc={image?.images?.fallback?.src}
+          />
+        ) : null}
       </footer>
     </article>
   );

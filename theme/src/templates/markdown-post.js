@@ -11,7 +11,10 @@ import {
   validateTitle,
 } from "../libs/validation";
 
-const MarkdownPostTemplate = ({ data: { current, next, previous } }) => {
+const MarkdownPostTemplate = ({
+  data: { current, next, previous },
+  location,
+}) => {
   validateDate(current.dateFormal, current.id);
   validateHeroImage(current.heroImage, current.id);
   validateHtml(current.html, current.id);
@@ -19,7 +22,7 @@ const MarkdownPostTemplate = ({ data: { current, next, previous } }) => {
   validateTags(current.tags, current.id);
   validateTitle(current.title, current.id);
 
-  const props = { current, next, previous };
+  const props = { current, location, next, previous };
   return <PostLayout {...props} />;
 };
 
