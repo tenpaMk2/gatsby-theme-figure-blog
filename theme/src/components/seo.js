@@ -1,6 +1,7 @@
 import * as React from "react";
 import { useStaticQuery, graphql } from "gatsby";
 import { addTrailingSlash } from "../libs/add-trailing-slash";
+import noImage from "../images/no-image.png";
 
 const Seo = ({
   applicationName,
@@ -43,7 +44,7 @@ const Seo = ({
   url.pathname = pathname || ``;
 
   const imageUrl = new URL(siteMetadata.siteUrl);
-  imageUrl.pathname = imagePath || ``;
+  imageUrl.pathname = imagePath || noImage;
 
   const seo = {
     htmlLang: siteMetadata.locale,
@@ -52,9 +53,7 @@ const Seo = ({
     author: siteMetadata.author?.name || ``,
     description: description || siteMetadata.description,
     url: addTrailingSlash(`${url.origin}${url.pathname}`),
-    imageUrl: imagePath
-      ? addTrailingSlash(`${imageUrl.origin}${imageUrl.pathname}`)
-      : ``,
+    imageUrl: addTrailingSlash(`${imageUrl.origin}${imageUrl.pathname}`),
     ogType: url.pathname === `/` ? `website` : `article`,
     ogLocale: siteMetadata.locale || ``,
     twitter: siteMetadata.social?.twitter || ``,
@@ -92,8 +91,6 @@ const Seo = ({
       <meta property="og:description" content={seo.description} />
       <meta property="og:image" content={seo.imageUrl} />
       <meta property="og:image:alt" content={seo.description} />
-      {/* <meta property="og:image:width" content={seo.description} />
-      <meta property="og:image:height" content={seo.description} /> */}
       <meta property="og:type" content={seo.ogType} />
       <meta property="og:locale" content={seo.ogLocale} />
 
