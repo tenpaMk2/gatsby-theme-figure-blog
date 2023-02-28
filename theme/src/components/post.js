@@ -21,17 +21,6 @@ export const Post = ({
 }) => {
   const imageSrc = getImage(heroImage)?.images?.fallback?.src;
 
-  const readMore = needReadMore ? (
-    <p className="text-xl">
-      <Link
-        to={slug}
-        className="rounded bg-sky-500 p-3 font-semibold leading-none text-white hover:bg-sky-400"
-      >
-        →Read More
-      </Link>
-    </p>
-  ) : null;
-
   return (
     <article
       className="flex min-w-0 basis-full flex-col gap-4 overflow-x-auto rounded-xl bg-slate-700 p-2 md:p-6"
@@ -58,7 +47,16 @@ export const Post = ({
           itemProp="articleBody"
           className="prose prose-invert max-w-full basis-full"
         />
-        {readMore}
+        <p>
+          {needReadMore ? (
+            <Link
+              to={slug}
+              className="inline-block rounded bg-sky-500 p-3 text-xl font-semibold leading-none text-white hover:bg-sky-400"
+            >
+              →Read More
+            </Link>
+          ) : null}
+        </p>
       </div>
       <Border />
       <footer>
