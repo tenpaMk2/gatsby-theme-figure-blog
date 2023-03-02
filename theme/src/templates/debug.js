@@ -142,8 +142,12 @@ const DebugTemplate = ({
 
   const yearMonthRows = yearMonthInfos
     .sort((a, b) =>
-      `${a.yearNumber}${("0" + (a.monthNumber + 1)).slice(-2)}` <
-      `${b.yearNumber}${("0" + (b.monthNumber + 1)).slice(-2)}`
+      `${a.yearNumber.toString().padStart(4, `0`)}${a.monthNumber
+        .toString()
+        .padStart(2, `0`)}` <
+      `${b.yearNumber.toString().padStart(4, `0`)}${b.monthNumber
+        .toString()
+        .padStart(2, `0`)}`
         ? -1
         : 1
     )
