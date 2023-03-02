@@ -43,7 +43,7 @@ module.exports = {
       options: {
         basePath: ``,
         locale: `ja-JP`, // See [`Intl.Locale` in MDN](https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale).
-        pagesPath: ``,
+        pagesPath: `pages`,
         postPath: ``,
       },
     },
