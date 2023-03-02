@@ -333,6 +333,7 @@ exports.createPages = async ({ graphql, actions, reporter }, themeOptions) => {
   const { createPage } = actions;
 
   const {
+    archivesPath,
     basePath,
     cardsPerPage,
     debugPath,
@@ -382,6 +383,18 @@ exports.createPages = async ({ graphql, actions, reporter }, themeOptions) => {
           count
           name
           slug
+        }
+        yearInfos {
+          count
+          yearNumber
+          yearString
+        }        
+        yearMonthInfos {
+          count
+          monthNumber
+          monthString
+          yearNumber
+          yearString
         }
       }
     }
@@ -444,7 +457,7 @@ exports.createPages = async ({ graphql, actions, reporter }, themeOptions) => {
    */
   const tagInfos = result.data.postsInfo.tagInfos || [];
   tagInfos.forEach(({ name, slug, count }) => {
-    const pagesTotal = Math.ceil(count / cardsPerPage);
+    const pagesTotal = Math.ceil(count / cardsPerPage); // TODO: Use `pageCount` instead of calc.
     const pagesStartPath = slugify(basePath, tagsPath, slug);
 
     [...new Array(pagesTotal)].forEach((_, i) => {
@@ -461,14 +474,132 @@ exports.createPages = async ({ graphql, actions, reporter }, themeOptions) => {
           limit: cardsPerPage,
           needDateTime: formatStringTime !== ``,
           needDateYear: formatStringYear !== ``,
+          pagesStartPath,
+          pageTitle: name,
           skip: i * cardsPerPage,
           slug,
-          name,
-          pagesStartPath,
         },
       });
     });
   });
+
+  /**
+   * Create root archive page with pagination.
+   */
+  const archivesPagesTotal = Math.ceil(
+    result.data.allMarkdownPost.edges.length / cardsPerPage
+  );
+  const archivesPagesStartPath = slugify(basePath, archivesPath);
+
+  [...new Array(archivesPagesTotal)].forEach((_, i) => {
+    createPage({
+      path:
+        i === 0
+          ? archivesPagesStartPath
+          : slugify(basePath, archivesPath, pagesPath, i + 1),
+      component: require.resolve(`./src/templates/archive.js`),
+      context: {
+        dateGreaterThanEqual: `0000-01`,
+        dateLessThan: `9999-13`,
+        formatStringMonthAndDay,
+        formatStringTime,
+        formatStringYear,
+        limit: cardsPerPage,
+        needDateTime: formatStringTime !== ``,
+        needDateYear: formatStringYear !== ``,
+        pagesStartPath: archivesPagesStartPath,
+        pageTitle: `Archives`,
+        skip: i * cardsPerPage,
+      },
+    });
+  });
+
+  /**
+   * Create year archive page with pagination.
+   */
+  const yearInfos = result.data.postsInfo.yearInfos || [];
+
+  yearInfos.forEach(({ count, yearNumber, yearString }) => {
+    const pagesTotal = Math.ceil(count / cardsPerPage);
+    const yearPadded = yearNumber.toString().padStart(4, `0`);
+    const nextPadded = (yearNumber + 1).toString().padStart(4, `0`);
+    const pagesStartPath = slugify(basePath, archivesPath, yearPadded);
+
+    [...new Array(pagesTotal)].forEach((_, i) => {
+      createPage({
+        path:
+          i === 0
+            ? pagesStartPath
+            : slugify(basePath, archivesPath, yearPadded, pagesPath, i + 1),
+        component: require.resolve(`./src/templates/archive.js`),
+        context: {
+          dateGreaterThanEqual: yearPadded,
+          dateLessThan: nextPadded,
+          formatStringMonthAndDay,
+          formatStringTime,
+          formatStringYear,
+          limit: cardsPerPage,
+          needDateTime: formatStringTime !== ``,
+          needDateYear: formatStringYear !== ``,
+          pagesStartPath,
+          pageTitle: yearString,
+          skip: i * cardsPerPage,
+        },
+      });
+    });
+  });
+
+  /**
+   * Create month-and-year archive page with pagination.
+   */
+  const yearMonthInfos = result.data.postsInfo.yearMonthInfos || [];
+
+  yearMonthInfos.forEach(
+    ({ count, monthNumber, monthString, yearNumber, yearString }) => {
+      const pagesTotal = Math.ceil(count / cardsPerPage);
+      const yearPadded = yearNumber.toString().padStart(4, `0`);
+      const monthPadded = (monthNumber + 1).toString().padStart(2, `0`);
+      const nextPadded = `${yearPadded}-${(monthNumber + 2)
+        .toString()
+        .padStart(2, `0`)}`;
+      const pagesStartPath = slugify(
+        basePath,
+        archivesPath,
+        yearPadded,
+        monthPadded
+      );
+
+      [...new Array(pagesTotal)].forEach((_, i) => {
+        createPage({
+          path:
+            i === 0
+              ? pagesStartPath
+              : slugify(
+                  basePath,
+                  archivesPath,
+                  yearPadded,
+                  monthPadded,
+                  pagesPath,
+                  i + 1
+                ),
+          component: require.resolve(`./src/templates/archive.js`),
+          context: {
+            dateGreaterThanEqual: `${yearPadded}-${monthPadded}`,
+            dateLessThan: nextPadded,
+            formatStringMonthAndDay,
+            formatStringTime,
+            formatStringYear,
+            limit: cardsPerPage,
+            needDateTime: formatStringTime !== ``,
+            needDateYear: formatStringYear !== ``,
+            pagesStartPath,
+            pageTitle: `${yearString} ${monthString}`,
+            skip: i * cardsPerPage,
+          },
+        });
+      });
+    }
+  );
 
   /**
    * Create each static markdown page.

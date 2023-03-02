@@ -52,7 +52,7 @@ export const ArchiveList = () => {
             basePath,
             archivesPath,
             yearNumber,
-            monthNumber + 1
+            (monthNumber + 1).toString().padStart(2, `0`)
           );
           return (
             <li key={slug}>
@@ -62,7 +62,11 @@ export const ArchiveList = () => {
         }
       );
 
-      const slug = slugify(basePath, archivesPath, yearNumber);
+      const slug = slugify(
+        basePath,
+        archivesPath,
+        yearNumber.toString().padStart(4, `0`)
+      );
       return (
         <li
           key={slug}

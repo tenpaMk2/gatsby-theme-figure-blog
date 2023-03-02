@@ -1,15 +1,10 @@
 import * as React from "react";
 import { graphql } from "gatsby";
 import { CardsLayout } from "../components/cards-layout";
-import {
-  validateDate,
-  validateHeroImage,
-  validateSlug,
-  validateTitle,
-} from "../libs/validation";
+import { validateDate, validateSlug, validateTitle } from "../libs/validation";
 import { Seo } from "../components/seo";
 
-const TagTemplate = ({
+const ArchiveTemplate = ({
   data: {
     allMarkdownPost: {
       nodes: posts,
@@ -22,9 +17,8 @@ const TagTemplate = ({
     console.warn(`No posts!!`);
   }
 
-  posts.forEach(({ dateFormal, heroImage, id, slug, title }) => {
+  posts.forEach(({ dateFormal, id, slug, title }) => {
     validateDate(dateFormal, id);
-    validateHeroImage(heroImage, id);
     validateSlug(slug, id);
     validateTitle(title, id);
   });
@@ -33,7 +27,7 @@ const TagTemplate = ({
   return <CardsLayout {...props} />;
 };
 
-export default TagTemplate;
+export default ArchiveTemplate;
 
 export const Head = ({ location: { pathname } }) => (
   <Seo {...{ pathname, title: `Tag` }} />
@@ -41,6 +35,8 @@ export const Head = ({ location: { pathname } }) => (
 
 export const pageQuery = graphql`
   query (
+    $dateGreaterThanEqual: Date
+    $dateLessThan: Date
     $formatStringMonthAndDay: String
     $formatStringTime: String
     $formatStringYear: String
@@ -48,10 +44,9 @@ export const pageQuery = graphql`
     $needDateTime: Boolean!
     $needDateYear: Boolean!
     $skip: Int!
-    $slug: String!
   ) {
     allMarkdownPost(
-      filter: { tags: { elemMatch: { slug: { eq: $slug } } } }
+      filter: { date: { gte: $dateGreaterThanEqual, lt: $dateLessThan } }
       limit: $limit
       skip: $skip
       sort: { date: DESC }
@@ -68,6 +63,7 @@ export const pageQuery = graphql`
             gatsbyImageData(height: 384)
           }
         }
+        id
         slug
         title
       }
