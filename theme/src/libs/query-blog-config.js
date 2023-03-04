@@ -14,6 +14,10 @@ export const queryBlogConfig = () => {
           basePath
           cardsPerPage
           debugPath
+          externalLinks {
+            name
+            url
+          }
           formatStringMonthAndDay
           formatStringTime
           formatStringYear

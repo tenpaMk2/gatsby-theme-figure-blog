@@ -238,6 +238,10 @@ export const pageQuery = graphql`
     figureBlogConfig {
       archivesPath
       basePath
+      externalLinks {
+        name
+        url
+      }
       cardsPerPage
       debugPath
       formatStringMonthAndDay

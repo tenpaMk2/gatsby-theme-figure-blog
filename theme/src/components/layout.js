@@ -4,6 +4,7 @@ import { TagCloud } from "./tag-cloud";
 import { Bio } from "./bio";
 import { ArchiveList } from "./archive-list";
 import { SearchBar } from "./search-bar";
+import { ExternalLinks } from "./external-links";
 
 export const Layout = ({ children }) => {
   const {
@@ -56,6 +57,7 @@ export const Layout = ({ children }) => {
           <Bio />
           <TagCloud />
           <ArchiveList />
+          <ExternalLinks />
         </div>
       </div>
       <footer className="min-w-0 basis-full p-2 text-center text-gray-400">

@@ -43,6 +43,7 @@ exports.createSchemaCustomization = ({ actions }, themeOptions) => {
       basePath: String
       cardsPerPage: Int
       debugPath: String
+      externalLinks: [ExternalLink]!
       formatStringMonthAndDay: String
       formatStringTime: String
       formatStringYear: String
@@ -52,6 +53,11 @@ exports.createSchemaCustomization = ({ actions }, themeOptions) => {
       postPath: String
       postsPerPage: Int
       tagsPath: String
+    }
+
+    type ExternalLink {
+      name: String!
+      url: String!
     }
 
     type PostsInfo implements Node {

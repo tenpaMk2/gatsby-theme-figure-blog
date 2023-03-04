@@ -11,6 +11,7 @@ const getOptions = (themeOptions) => {
     themeOptions.basePath || (themeOptions.basePath === `` ? `` : `base`);
   const cardsPerPage = themeOptions.cardsPerPage || 12;
   const debugPath = themeOptions.debugPath || `debug`;
+  const externalLinks = themeOptions.externalLinks || [];
   const formatStringMonthAndDay =
     themeOptions.formatStringMonthAndDay || `MM/DD`;
   const formatStringTime =
@@ -34,6 +35,7 @@ const getOptions = (themeOptions) => {
     basePath,
     cardsPerPage,
     debugPath,
+    externalLinks,
     formatStringMonthAndDay,
     formatStringTime,
     formatStringYear,
