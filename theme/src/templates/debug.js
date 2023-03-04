@@ -11,6 +11,23 @@ const Row = ({ items }) => (
   </tr>
 );
 
+const Table = ({ title, headers, children, annotation }) => (
+  <div className="flex flex-auto flex-col gap-2">
+    <h2 className="text-2xl">{title}</h2>
+    <table className="w-full table-auto overflow-hidden rounded-lg text-left">
+      <thead className="bg-slate-700 text-gray-200">
+        <tr>
+          {headers.map((header) => (
+            <th className="px-4 py-2">{header}</th>
+          ))}
+        </tr>
+      </thead>
+      <tbody>{children}</tbody>
+    </table>
+    {annotation}
+  </div>
+);
+
 const varToString = (varObj) => Object.keys(varObj)[0];
 
 const toOKOrNG = (x) => (x ? `OK` : `NG`);
@@ -82,20 +99,12 @@ const DebugTemplate = ({
     );
   });
   const testsTable = (
-    <div className="flex-auto">
-      <h2 className="text-2xl">Tests</h2>
-      <table className="w-full table-auto overflow-hidden rounded-lg text-left">
-        <thead className="bg-slate-700 text-gray-200">
-          <tr>
-            <th className="px-4 py-2">category</th>
-            <th className="px-4 py-2">description</th>
-            <th className="px-4 py-2">OK or NG</th>
-            <th className="px-4 py-2">message</th>
-          </tr>
-        </thead>
-        <tbody>{testRows}</tbody>
-      </table>
-    </div>
+    <Table
+      title="Tests"
+      headers={[`category`, `description`, `OK or NG`, `message`]}
+    >
+      {testRows}
+    </Table>
   );
 
   const tagRows = tagInfos
@@ -104,19 +113,9 @@ const DebugTemplate = ({
       <Row key={slug} items={[name, slug, count]} />
     ));
   const tagInfosTable = (
-    <div className="flex-auto">
-      <h2 className="text-2xl">Tag infos</h2>
-      <table className="w-full table-auto overflow-hidden rounded-lg text-left">
-        <thead className="bg-slate-700 text-gray-200">
-          <tr>
-            <th className="px-4 py-2">name</th>
-            <th className="px-4 py-2">slug</th>
-            <th className="px-4 py-2">count</th>
-          </tr>
-        </thead>
-        <tbody>{tagRows}</tbody>
-      </table>
-    </div>
+    <Table title="Tag infos" headers={[`name`, `slug`, `count`]}>
+      {tagRows}
+    </Table>
   );
 
   const yearRows = yearInfos
@@ -125,19 +124,9 @@ const DebugTemplate = ({
       <Row key={yearNumber} items={[yearNumber, yearString, count]} />
     ));
   const yearInfosTable = (
-    <div className="flex-auto">
-      <h2 className="text-2xl">Year infos</h2>
-      <table className="w-full table-auto overflow-hidden rounded-lg text-left">
-        <thead className="bg-slate-700 text-gray-200">
-          <tr>
-            <th className="px-4 py-2">yearNumber</th>
-            <th className="px-4 py-2">yearString</th>
-            <th className="px-4 py-2">count</th>
-          </tr>
-        </thead>
-        <tbody>{yearRows}</tbody>
-      </table>
-    </div>
+    <Table title="Year infos" headers={[`yearNumber`, `yearString`, `count`]}>
+      {yearRows}
+    </Table>
   );
 
   const yearMonthRows = yearMonthInfos
@@ -158,21 +147,18 @@ const DebugTemplate = ({
       />
     ));
   const yearMonthInfosTable = (
-    <div className="flex-auto">
-      <h2 className="text-2xl">Year month infos</h2>
-      <table className="w-full table-auto overflow-hidden rounded-lg text-left">
-        <thead className="bg-slate-700 text-gray-200">
-          <tr>
-            <th className="px-4 py-2">yearNumber</th>
-            <th className="px-4 py-2">yearString</th>
-            <th className="px-4 py-2">monthNumber</th>
-            <th className="px-4 py-2">monthString</th>
-            <th className="px-4 py-2">count</th>
-          </tr>
-        </thead>
-        <tbody>{yearMonthRows}</tbody>
-      </table>
-    </div>
+    <Table
+      title="Year month infos"
+      headers={[
+        `yearNumber`,
+        `yearString`,
+        `monthNumber`,
+        `monthString`,
+        `count`,
+      ]}
+    >
+      {yearMonthRows}
+    </Table>
   );
 
   const figureBlogConfigFields = fields
@@ -194,42 +180,30 @@ const DebugTemplate = ({
     />
   ));
   const figureBlogConfigTable = (
-    <div className="flex-auto">
-      <h2 className="text-2xl">Figure blog config</h2>
-      <table className="w-full table-auto overflow-hidden rounded-lg text-left">
-        <thead className="bg-slate-700 text-gray-200">
-          <tr>
-            <th className="px-4 py-2">field</th>
-            <th className="px-4 py-2">query?</th>
-            <th className="px-4 py-2">value</th>
-          </tr>
-        </thead>
-        <tbody>{figureBlogConfigRows}</tbody>
-      </table>
-      <p className="max-w-prose">
-        If you see any `FORGOT` , check query in `debug.js` , type definitions
-        in `gatsby-node.js` , and return values in `default-options.js` .
-      </p>
-    </div>
+    <Table
+      title="Figure blog config"
+      headers={[`field`, `query?`, `value`]}
+      annotation={
+        <p className="max-w-prose">
+          If you see any `FORGOT` , check query in `debug.js` , type definitions
+          in `gatsby-node.js` , and return values in `default-options.js` .
+        </p>
+      }
+    >
+      {figureBlogConfigRows}
+    </Table>
   );
 
   const externalLinksRows = figureBlogConfig.externalLinks.map(
     ({ name, url }, i) => <Row key={url} items={[i, name, url]} />
   );
   const externalLinksTable = (
-    <div className="flex-auto">
-      <h2 className="text-2xl">Figure blog config: externalLinks</h2>
-      <table className="w-full table-auto overflow-hidden rounded-lg text-left">
-        <thead className="bg-slate-700 text-gray-200">
-          <tr>
-            <th className="px-4 py-2">id</th>
-            <th className="px-4 py-2">name</th>
-            <th className="px-4 py-2">url</th>
-          </tr>
-        </thead>
-        <tbody>{externalLinksRows}</tbody>
-      </table>
-    </div>
+    <Table
+      title="Figure blog config: externalLinks"
+      headers={[`id`, `name`, `url`]}
+    >
+      {externalLinksRows}
+    </Table>
   );
 
   return (
