@@ -42,6 +42,30 @@ module.exports = {
       resolve: `@tenpamk2/gatsby-theme-figure-blog`,
       options: {
         basePath: ``,
+        externalLinks: [
+          {
+            name: `Asahiwa.jp(よつばとフィギュア)`,
+            url: `https://asahiwa.jp/`,
+          },
+          { name: `ふぃぎゅる！`, url: `http://blog.livedoor.jp/nobuno88/` },
+          { name: `fig-memo`, url: `https://fig-memo.com/` },
+          {
+            name: `Analographicsworks`,
+            url: `https://analographics.net/archives/category/figure-review`,
+          },
+          {
+            name: `雪の降る空に`,
+            url: `https://yukinofurusorani.livedoor.blog/`,
+          },
+          {
+            name: `mattintosh note`,
+            url: `https://mattintosh.hatenablog.com/archive/category/スケールフィギュア`,
+          },
+          {
+            name: `affilabo.com`,
+            url: `https://affilabo.com/category/figure/`,
+          },
+        ],
         locale: `ja-JP`, // See [`Intl.Locale` in MDN](https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale).
         pagesPath: `pages`,
         postPath: ``,
