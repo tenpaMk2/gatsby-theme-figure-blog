@@ -101,7 +101,7 @@ const DebugTemplate = ({
   const testsTable = (
     <Table
       title="Tests"
-      headers={[`category`, `description`, `OK or NG`, `message`]}
+      headers={[`Category`, `Description`, `OK or NG`, `Message`]}
     >
       {testRows}
     </Table>
@@ -113,7 +113,7 @@ const DebugTemplate = ({
       <Row key={slug} items={[name, slug, count]} />
     ));
   const tagInfosTable = (
-    <Table title="Tag infos" headers={[`name`, `slug`, `count`]}>
+    <Table title="Tag infos" headers={["`name`", "`slug`", "`count`"]}>
       {tagRows}
     </Table>
   );
@@ -124,7 +124,10 @@ const DebugTemplate = ({
       <Row key={yearNumber} items={[yearNumber, yearString, count]} />
     ));
   const yearInfosTable = (
-    <Table title="Year infos" headers={[`yearNumber`, `yearString`, `count`]}>
+    <Table
+      title="Year infos"
+      headers={["`yearNumber`", "`yearString`", "`count`"]}
+    >
       {yearRows}
     </Table>
   );
@@ -150,11 +153,11 @@ const DebugTemplate = ({
     <Table
       title="Year month infos"
       headers={[
-        `yearNumber`,
-        `yearString`,
-        `monthNumber`,
-        `monthString`,
-        `count`,
+        "`yearNumber`",
+        "`yearString`",
+        "`monthNumber`",
+        "`monthString`",
+        "`count`",
       ]}
     >
       {yearMonthRows}
@@ -172,7 +175,7 @@ const DebugTemplate = ({
       key={field}
       items={[
         field,
-        figureBlogConfig.hasOwnProperty(field) ? `OK` : `FORGOTTEN`,
+        figureBlogConfig.hasOwnProperty(field) ? `Yes` : `FORGOT`,
         typeof figureBlogConfig[field] === `object`
           ? `**See other tables.**`
           : JSON.stringify(figureBlogConfig[field]),
@@ -182,7 +185,7 @@ const DebugTemplate = ({
   const figureBlogConfigTable = (
     <Table
       title="Figure blog config"
-      headers={[`field`, `query?`, `value`]}
+      headers={[`Field`, `Have queried?`, `Value`]}
       annotation={
         <p className="max-w-prose">
           If you see any `FORGOT` , check query in `debug.js` , type definitions
@@ -200,7 +203,7 @@ const DebugTemplate = ({
   const externalLinksTable = (
     <Table
       title="Figure blog config: externalLinks"
-      headers={[`id`, `name`, `url`]}
+      headers={[`No.`, "`name`", "`url`"]}
     >
       {externalLinksRows}
     </Table>
