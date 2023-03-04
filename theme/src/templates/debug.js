@@ -176,10 +176,10 @@ const DebugTemplate = ({
   );
 
   const figureBlogConfigFields = fields
-    .filter(({ type: { kind } }) => kind === `SCALAR`)
+    .filter(
+      ({ name }) => ![`id`, `parent`, `children`, `internal`].includes(name)
+    )
     .map(({ name }) => name);
-
-  console.log(figureBlogConfigFields);
 
   const figureBlogConfigRows = figureBlogConfigFields.map((field) => (
     <Row
@@ -187,7 +187,9 @@ const DebugTemplate = ({
       items={[
         field,
         figureBlogConfig.hasOwnProperty(field) ? `OK` : `FORGOTTEN`,
-        figureBlogConfig[field],
+        typeof figureBlogConfig[field] === `object`
+          ? `**See other tables.**`
+          : JSON.stringify(figureBlogConfig[field]),
       ]}
     />
   ));
@@ -211,6 +213,25 @@ const DebugTemplate = ({
     </div>
   );
 
+  const externalLinksRows = figureBlogConfig.externalLinks.map(
+    ({ name, url }, i) => <Row key={url} items={[i, name, url]} />
+  );
+  const externalLinksTable = (
+    <div className="flex-auto">
+      <h2 className="text-2xl">Figure blog config: externalLinks</h2>
+      <table className="w-full table-auto overflow-hidden rounded-lg text-left">
+        <thead className="bg-slate-700 text-gray-200">
+          <tr>
+            <th className="px-4 py-2">id</th>
+            <th className="px-4 py-2">name</th>
+            <th className="px-4 py-2">url</th>
+          </tr>
+        </thead>
+        <tbody>{externalLinksRows}</tbody>
+      </table>
+    </div>
+  );
+
   return (
     <div className="flex min-h-screen flex-wrap items-start gap-4 bg-slate-800 p-4 text-gray-200">
       {testsTable}
@@ -218,6 +239,7 @@ const DebugTemplate = ({
       {yearInfosTable}
       {yearMonthInfosTable}
       {figureBlogConfigTable}
+      {externalLinksTable}
     </div>
   );
 };
