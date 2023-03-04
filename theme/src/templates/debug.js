@@ -186,7 +186,7 @@ const DebugTemplate = ({
       key={field}
       items={[
         field,
-        figureBlogConfig.hasOwnProperty(field) ? `OK` : `FORGOT`,
+        figureBlogConfig.hasOwnProperty(field) ? `OK` : `FORGOTTEN`,
         figureBlogConfig[field],
       ]}
     />
