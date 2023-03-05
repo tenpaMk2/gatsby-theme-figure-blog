@@ -3,6 +3,7 @@ import { Header } from "./header";
 import { CloseCircle } from "./svgs/close-circle";
 import { NavLinks } from "./nav-links";
 import { Sidebar } from "./sidebar";
+import { Footer } from "./footer";
 
 export const Layout = ({ children }) => (
   <div className="flex min-h-screen flex-wrap content-start justify-center gap-6 bg-slate-800 text-gray-200">
@@ -17,26 +18,9 @@ export const Layout = ({ children }) => (
         <Sidebar />
       </div>
     </div>
-    <footer className="min-w-0 basis-full p-2 text-center text-gray-400">
-      <p>
-        © {new Date().getFullYear()}, Built with
-        {` `}
-        <a href="https://www.gatsbyjs.com" className="underline">
-          Gatsby
-        </a>
-        .
-      </p>
-      <p>
-        <a
-          href="https://github.com/tenpaMk2/gatsby-theme-figure-blog"
-          className="underline"
-        >
-          Figure blog theme
-        </a>
-        {` `}
-        by tenpaMk2.
-      </p>
-    </footer>
+    <div className="min-w-0 basis-full">
+      <Footer />
+    </div>
 
     {/* This `hamburger` affects `<body>` , see `seo.js` . */}
     <input type="checkbox" id="hamburger" className="peer hidden" />
