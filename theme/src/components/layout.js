@@ -38,10 +38,10 @@ export const Layout = ({ children }) => (
       </p>
     </footer>
 
-    {/* This `hamburger` affect `<body>` , see `seo.js` . */}
+    {/* This `hamburger` affects `<body>` , see `seo.js` . */}
     <input type="checkbox" id="hamburger" className="peer hidden" />
-    <div className="absolute hidden h-screen w-screen min-w-0 bg-black/50 peer-checked:block md:!hidden">
-      <div className="flex h-screen w-2/3 min-w-0 flex-col gap-4 bg-slate-800 p-4">
+    <div className="invisible absolute h-screen w-screen min-w-0 bg-black/50 opacity-0 transition peer-checked:visible peer-checked:opacity-100 md:!hidden">
+      <div className="flex h-screen w-2/3 min-w-0 -translate-x-2/3 flex-col gap-4 bg-slate-800 p-4 transition duration-500 [#hamburger:checked+div>&]:translate-x-0">
         <label htmlFor="hamburger" className="block h-12 w-12 text-2xl">
           <CloseCircle />
         </label>
