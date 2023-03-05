@@ -18,7 +18,7 @@ export const Layout = ({ children }) => (
         <Sidebar />
       </div>
     </div>
-    <div className="min-w-0 basis-full">
+    <div className="min-w-0 basis-full overflow-auto">
       <Footer />
     </div>
 
