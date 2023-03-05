@@ -1,11 +1,8 @@
 import * as React from "react";
-import { TagCloud } from "./tag-cloud";
-import { Bio } from "./bio";
-import { ArchiveList } from "./archive-list";
-import { ExternalLinks } from "./external-links";
 import { Header } from "./header";
 import { CloseCircle } from "./svgs/close-circle";
 import { NavLinks } from "./nav-links";
+import { Sidebar } from "./sidebar";
 
 export const Layout = ({ children }) => (
   <div className="flex min-h-screen flex-wrap content-start justify-center gap-6 bg-slate-800 text-gray-200">
@@ -16,11 +13,8 @@ export const Layout = ({ children }) => (
         {children}
       </main>
       {/* Sidebar layout logic is [here](https://every-layout.dev/layouts/sidebar/) . */}
-      <div className="flex min-w-0 max-w-[1024px] shrink grow basis-[20rem] flex-col gap-6">
-        <Bio />
-        <TagCloud />
-        <ArchiveList />
-        <ExternalLinks />
+      <div className="min-w-0 max-w-[1024px] shrink grow basis-[20rem]">
+        <Sidebar />
       </div>
     </div>
     <footer className="min-w-0 basis-full p-2 text-center text-gray-400">
