@@ -121,6 +121,67 @@ const PlaygroundTemplate = () => (
     </div>
 
     <br />
+    <h2 className="text-2xl">
+      Flex(row) automatically makes the width full(100%).
+    </h2>
+    <p>Top level `flex` makes the width full(100%), e.g., red background.</p>
+    <div className="flex gap-2 bg-red-200 p-2">
+      <div className="bg-sky-200 p-2">
+        <p className="bg-yellow-200">
+          But, second level `flex` (a flex in a flex) does not make the width
+          full.
+        </p>
+      </div>
+      <div className="bg-green-200">green</div>
+      <div className="bg-blue-200">blue</div>
+    </div>
+
+    <br />
+    <h2 className="text-2xl">Burger menu test.</h2>
+    <nav role="navigation" className="bg-red-200">
+      {/* About `peer` , see [Tailwind CSS doc](https://tailwindcss.com/docs/hover-focus-and-other-states#styling-based-on-sibling-state) . */}
+      <input
+        type="checkbox"
+        className="peer block h-8 w-8 opacity-30"
+        id="burger"
+      />
+      <label for="burger">
+        <p>Click me!! 1</p>
+      </label>
+      <label for="burger">
+        <p>Click me!! 2</p>
+      </label>
+
+      <ul className="absolute hidden w-1/3 min-w-[320px] bg-sky-200 peer-checked:block">
+        <li>
+          <a href="#">Home</a>
+        </li>
+        <li>
+          <a href="#">Aboutooooooooooooooooo</a>
+        </li>
+        <li>
+          <a href="#">Apps</a>
+        </li>
+      </ul>
+    </nav>
+    <p>ahoaho1</p>
+    <p>ahoaho2</p>
+    <p>ahoaho3</p>
+    <p>ahoaho4</p>
+
+    <br />
+    <h2 className="text-2xl">Animation test.</h2>
+    <div className="bg-green-200 p-4">
+      <div className="w-min translate-x-0 rounded border-4 border-blue-500 bg-red-200 transition hover:translate-x-12 hover:border-violet-500 hover:bg-yellow-600 hover:text-white">
+        Hover me!!
+      </div>
+      <input type="checkbox" className="peer block h-8 w-8" />
+      <div className="invisible absolute block w-24 -translate-x-24 bg-sky-200 opacity-30 transition duration-500 peer-checked:visible peer-checked:block peer-checked:translate-x-0 peer-checked:opacity-100">
+        Check above.
+      </div>
+    </div>
+
+    <br />
     <br />
     <br />
     <br />
