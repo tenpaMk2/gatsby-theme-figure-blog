@@ -1,6 +1,6 @@
 import * as React from "react";
 
-export const SidebarLayout = ({ children, title }) => (
+export const SidebarItemLayout = ({ children, title }) => (
   <div className="flex min-w-0 flex-wrap content-start gap-4">
     <h1 className="basis-full overflow-x-auto py-1 text-xl md:text-4xl">
       {title}

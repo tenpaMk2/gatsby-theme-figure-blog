@@ -1,6 +1,6 @@
 import * as React from "react";
 import { queryBlogConfig } from "../libs/query-blog-config";
-import { SidebarLayout } from "./sidebar-layout";
+import { SidebarItemLayout } from "./sidebar-item-layout";
 
 export const ExternalLinks = () => {
   const { externalLinks } = queryBlogConfig();
@@ -16,8 +16,8 @@ export const ExternalLinks = () => {
   });
 
   return (
-    <SidebarLayout title="External links">
+    <SidebarItemLayout title="External links">
       <ol className="list-disc pl-4 text-lg">{links}</ol>
-    </SidebarLayout>
+    </SidebarItemLayout>
   );
 };

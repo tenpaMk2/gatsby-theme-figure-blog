@@ -2,7 +2,7 @@ import * as React from "react";
 import { graphql, Link, useStaticQuery } from "gatsby";
 import { queryBlogConfig } from "../libs/query-blog-config";
 import { slugify } from "../libs/slugify";
-import { SidebarLayout } from "./sidebar-layout";
+import { SidebarItemLayout } from "./sidebar-item-layout";
 
 const LinkButton = ({ slug, str, count }) => (
   <Link to={slug} className="group flex items-stretch justify-center">
@@ -82,8 +82,8 @@ export const ArchiveList = () => {
   );
 
   return (
-    <SidebarLayout title="Archive list">
+    <SidebarItemLayout title="Archive list">
       <ol className="flex min-w-min flex-col gap-4">{dateLis}</ol>
-    </SidebarLayout>
+    </SidebarItemLayout>
   );
 };

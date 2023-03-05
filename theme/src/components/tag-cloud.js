@@ -2,7 +2,7 @@ import * as React from "react";
 import { graphql, Link, useStaticQuery } from "gatsby";
 import { queryBlogConfig } from "../libs/query-blog-config";
 import { slugify } from "../libs/slugify";
-import { SidebarLayout } from "./sidebar-layout";
+import { SidebarItemLayout } from "./sidebar-item-layout";
 
 export const TagCloud = () => {
   const {
@@ -47,10 +47,10 @@ export const TagCloud = () => {
   });
 
   return (
-    <SidebarLayout title="Tag cloud">
+    <SidebarItemLayout title="Tag cloud">
       <ol className="flex min-w-min flex-wrap items-center justify-center gap-2">
         {tagLis}
       </ol>
-    </SidebarLayout>
+    </SidebarItemLayout>
   );
 };

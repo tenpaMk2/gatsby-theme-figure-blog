@@ -1,7 +1,7 @@
 import * as React from "react";
 import { graphql, useStaticQuery } from "gatsby";
 import { StaticImage } from "gatsby-plugin-image";
-import { SidebarLayout } from "./sidebar-layout";
+import { SidebarItemLayout } from "./sidebar-item-layout";
 import { Twitter } from "./svgs/twitter";
 import { Instagram } from "./svgs/instagram";
 import { GitHub } from "./svgs/github";
@@ -49,7 +49,7 @@ export const Bio = () => {
   const github = siteMetadata?.social?.github || ``;
 
   return (
-    <SidebarLayout title="Bio">
+    <SidebarItemLayout title="Bio">
       <div className="flex min-w-min flex-col items-center gap-4">
         <div className="flex flex-col gap-2">
           <StaticImage
@@ -75,6 +75,6 @@ export const Bio = () => {
           </IconLink>
         </div>
       </div>
-    </SidebarLayout>
+    </SidebarItemLayout>
   );
 };
