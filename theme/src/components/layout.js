@@ -1,10 +1,11 @@
 import * as React from "react";
-import { graphql, Link, useStaticQuery } from "gatsby";
 import { TagCloud } from "./tag-cloud";
 import { Bio } from "./bio";
 import { ArchiveList } from "./archive-list";
 import { ExternalLinks } from "./external-links";
 import { Header } from "./header";
+import { CloseCircle } from "./svgs/close-circle";
+import { NavLinks } from "./nav-links";
 
 export const Layout = ({ children }) => (
   <div className="flex min-h-screen flex-wrap content-start justify-center gap-6 bg-slate-800 text-gray-200">
@@ -42,5 +43,19 @@ export const Layout = ({ children }) => (
         by tenpaMk2.
       </p>
     </footer>
+
+    {/* This `hamburger` affect `<body>` , see `seo.js` . */}
+    <input type="checkbox" id="hamburger" className="peer hidden" />
+    <div className="absolute hidden h-screen w-screen min-w-0 bg-black/50 peer-checked:block md:!hidden">
+      <div className="flex h-screen w-2/3 min-w-0 flex-col gap-4 bg-slate-800 p-4">
+        <label htmlFor="hamburger" className="block h-12 w-12 text-2xl">
+          <CloseCircle />
+        </label>
+
+        <nav className="flex min-w-0 flex-col gap-4 text-lg">
+          <NavLinks />
+        </nav>
+      </div>
+    </div>
   </div>
 );

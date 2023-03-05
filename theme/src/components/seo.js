@@ -74,6 +74,7 @@ const Seo = ({
     <>
       {/* Gatsby Head API: Editing `<html>` and `<body>` : <https://www.gatsbyjs.com/docs/reference/built-in-components/gatsby-head/#editing-html-and-body> */}
       <html lang={seo.htmlLang} />
+      <body className="[&:has(#hamburger:checked)]:overflow-hidden" />
 
       <title>{seo.title}</title>
 
