@@ -2,6 +2,7 @@ const { kebabCase } = require("./src/libs/kebab-case");
 const { slugify } = require("./src/libs/slugify");
 const { getOptions } = require("./utils/default-options");
 const { parse, sep } = require("path");
+const { excerptASTToDescription } = require("./utils/excerptASTToDescription");
 
 /**
  * @type {import('gatsby').GatsbyNode['createSchemaCustomization']}
@@ -15,6 +16,7 @@ exports.createSchemaCustomization = ({ actions }, themeOptions) => {
       canonicalUrl: String
       date: Date! @dateformat
       excerpt: String! @excerpt
+      description: String! @description
       # About \`@fileByRelativePath\` , see [Gatsby issue](https://github.com/gatsbyjs/gatsby/issues/18271) .
       heroImage: File @fileByRelativePath
       html: String! @html
@@ -116,6 +118,36 @@ exports.createSchemaCustomization = ({ actions }, themeOptions) => {
             info
           );
           return result;
+        },
+      };
+    },
+  });
+
+  createFieldExtension({
+    name: `description`,
+    extend() {
+      return {
+        async resolve(source, args, context, info) {
+          const markdownRemarkNode = context.nodeModel.getNodeById({
+            id: source.parent,
+          });
+
+          const type = info.schema.getType(`MarkdownRemark`);
+          const resolver = type.getFields()[`excerptAst`].resolve;
+
+          const ast = await resolver(
+            markdownRemarkNode,
+            {
+              ...{
+                pruneLength: 512, // TODO: Use options.
+                truncate: true,
+              },
+              ...args,
+            },
+            context,
+            info
+          );
+          return excerptASTToDescription(ast);
         },
       };
     },
