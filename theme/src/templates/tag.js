@@ -1,12 +1,7 @@
 import * as React from "react";
 import { graphql } from "gatsby";
 import { CardsLayout } from "../components/cards-layout";
-import {
-  validateDate,
-  validateHeroImage,
-  validateSlug,
-  validateTitle,
-} from "../libs/validation";
+import { validateDate, validateSlug, validateTitle } from "../libs/validation";
 import { Seo } from "../components/seo";
 
 const TagTemplate = ({
@@ -24,7 +19,6 @@ const TagTemplate = ({
 
   posts.forEach(({ dateFormal, heroImage, id, slug, title }) => {
     validateDate(dateFormal, id);
-    validateHeroImage(heroImage, id);
     validateSlug(slug, id);
     validateTitle(title, id);
   });

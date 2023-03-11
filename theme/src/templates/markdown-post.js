@@ -4,7 +4,6 @@ import { Seo } from "../components/seo";
 import { PostLayout } from "../components/post-layout";
 import {
   validateDate,
-  validateHeroImage,
   validateHtml,
   validateSlug,
   validateTags,
@@ -16,7 +15,6 @@ const MarkdownPostTemplate = ({
   location,
 }) => {
   validateDate(current.dateFormal, current.id);
-  validateHeroImage(current.heroImage, current.id);
   validateHtml(current.html, current.id);
   validateSlug(current.slug, current.id);
   validateTags(current.tags, current.id);

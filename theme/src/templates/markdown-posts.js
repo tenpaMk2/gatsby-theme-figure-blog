@@ -5,7 +5,6 @@ import { PostsLayout } from "../components/posts-layout";
 import {
   validateDate,
   validateExcerpt,
-  validateHeroImage,
   validateSlug,
   validateTags,
   validateTitle,
@@ -25,10 +24,9 @@ const MarkdownPosts = ({
     console.warn(`No posts!!`);
   }
 
-  nodes.forEach(({ dateFormal, excerpt, heroImage, id, slug, tags, title }) => {
+  nodes.forEach(({ dateFormal, excerpt, id, slug, tags, title }) => {
     validateDate(dateFormal, id);
     validateExcerpt(excerpt, id);
-    validateHeroImage(heroImage, id);
     validateSlug(slug, id);
     validateTags(tags, id);
     validateTitle(title, id);
