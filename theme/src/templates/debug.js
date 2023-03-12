@@ -42,6 +42,7 @@ const DebugTemplate = ({
     __type: { fields },
     figureBlogConfig,
     postsInfo,
+    allMarkdownPost: { nodes },
   },
 }) => {
   const { tagInfos, yearInfos, yearMonthInfos } = postsInfo;
@@ -217,6 +218,27 @@ const DebugTemplate = ({
       {yearMonthInfosTable}
       {figureBlogConfigTable}
       {externalLinksTable}
+      <div className="flex min-w-0 flex-auto flex-col gap-2">
+        <h2 className="text-2xl">{"RSS <description>"}</h2>
+        <div className="flex min-w-0 flex-wrap items-start gap-4">
+          {nodes.map(({ rssDescription }) => (
+            <div className="min-w-0 rounded border bg-slate-700 p-2">
+              {rssDescription}
+            </div>
+          ))}
+        </div>
+      </div>
+      <div className="flex min-w-0 flex-auto flex-col gap-2">
+        <h2 className="text-2xl">{"RSS <content:encoded>"}</h2>
+        <div className="flex min-w-0 flex-wrap items-start gap-4">
+          {nodes.map(({ rssContentEncoded }) => (
+            <div
+              className="min-w-0 rounded border bg-slate-700 p-2"
+              dangerouslySetInnerHTML={{ __html: rssContentEncoded }}
+            />
+          ))}
+        </div>
+      </div>
     </div>
   );
 };
@@ -251,6 +273,8 @@ export const pageQuery = graphql`
       playgroundPath
       postPath
       postsPerPage
+      rssPruneLength
+      rssTruncate
       tagsPath
     }
     postsInfo {
@@ -271,6 +295,12 @@ export const pageQuery = graphql`
         monthString
         yearNumber
         yearString
+      }
+    }
+    allMarkdownPost {
+      nodes {
+        rssContentEncoded
+        rssDescription
       }
     }
   }

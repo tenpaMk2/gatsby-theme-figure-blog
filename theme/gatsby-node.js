@@ -2,25 +2,29 @@ const { kebabCase } = require("./src/libs/kebab-case");
 const { slugify } = require("./src/libs/slugify");
 const { getOptions } = require("./utils/default-options");
 const { parse, sep } = require("path");
-const { excerptASTToDescription } = require("./utils/excerptASTToDescription");
+const {
+  excerptASTToDescription,
+  excerptASTToContentEncoded,
+} = require("./utils/rss");
 
 /**
  * @type {import('gatsby').GatsbyNode['createSchemaCustomization']}
  */
 exports.createSchemaCustomization = ({ actions }, themeOptions) => {
   const { createFieldExtension, createTypes } = actions;
-  const { locale } = getOptions(themeOptions);
+  const { locale, rssPruneLength, rssTruncate } = getOptions(themeOptions);
 
   const typeDefs = `
     type MarkdownPost implements Node {
       canonicalUrl: String
       date: Date! @dateformat
       excerpt: String! @excerpt
-      description: String! @description
       # About \`@fileByRelativePath\` , see [Gatsby issue](https://github.com/gatsbyjs/gatsby/issues/18271) .
       heroImage: File @fileByRelativePath
       html: String! @html
       needReadMore: Boolean! @needReadMore
+      rssDescription: String! @rssDescription
+      rssContentEncoded: String! @rssContentEncoded
       slug: String!
       tags: [PostTag]
       title: String!
@@ -54,6 +58,8 @@ exports.createSchemaCustomization = ({ actions }, themeOptions) => {
       playgroundPath: String
       postPath: String
       postsPerPage: Int
+      rssPruneLength: Int
+      rssTruncate: Boolean
       tagsPath: String
     }
 
@@ -124,7 +130,7 @@ exports.createSchemaCustomization = ({ actions }, themeOptions) => {
   });
 
   createFieldExtension({
-    name: `description`,
+    name: `rssDescription`,
     extend() {
       return {
         async resolve(source, args, context, info) {
@@ -148,6 +154,42 @@ exports.createSchemaCustomization = ({ actions }, themeOptions) => {
             info
           );
           return excerptASTToDescription(ast);
+        },
+      };
+    },
+  });
+
+  createFieldExtension({
+    name: `rssContentEncoded`,
+    extend() {
+      return {
+        async resolve(source, args, context, info) {
+          const markdownRemarkNode = context.nodeModel.getNodeById({
+            id: source.parent,
+          });
+
+          const type = info.schema.getType(`MarkdownRemark`);
+          const resolver = type.getFields()[`excerptAst`].resolve;
+
+          const {
+            siteMetadata: { siteUrl },
+          } = await context.nodeModel.findOne({
+            type: `Site`,
+          });
+
+          const ast = await resolver(
+            markdownRemarkNode,
+            {
+              ...{
+                pruneLength: rssPruneLength,
+                truncate: rssTruncate,
+              },
+              ...args,
+            },
+            context,
+            info
+          );
+          return excerptASTToContentEncoded(ast, siteUrl);
         },
       };
     },
