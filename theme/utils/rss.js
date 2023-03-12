@@ -137,6 +137,11 @@ const excerptASTToContentEncoded = (ast, baseUrl) => {
       return null;
     }
 
+    if (leaf.type === `comment`) {
+      // Ignore comment.
+      return null;
+    }
+
     // if (leaf.properties?.className?.includes(`gatsby-highlight`)) {
     //   // Ignore code block.
     //   return null;
@@ -234,6 +239,10 @@ const decideWrapper = (tagName) => {
 const excerptASTToDescription = (ast) => {
   const recursive = (leaf) => {
     if ([`ul`, `li`, `pre`, `table`].includes(leaf.tagName)) {
+      return null;
+    }
+
+    if (leaf.type === `comment`) {
       return null;
     }
 
