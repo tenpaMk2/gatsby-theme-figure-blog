@@ -12,7 +12,8 @@ const {
  */
 exports.createSchemaCustomization = ({ actions }, themeOptions) => {
   const { createFieldExtension, createTypes } = actions;
-  const { locale, rssPruneLength, rssTruncate } = getOptions(themeOptions);
+  const { locale, rssNeedFullContent, rssPruneLength, rssTruncate } =
+    getOptions(themeOptions);
 
   const typeDefs = `
     type MarkdownPost implements Node {
@@ -58,6 +59,7 @@ exports.createSchemaCustomization = ({ actions }, themeOptions) => {
       playgroundPath: String
       postPath: String
       postsPerPage: Int
+      rssNeedFullContent: Boolean
       rssPruneLength: Int
       rssTruncate: Boolean
       tagsPath: String
@@ -169,7 +171,9 @@ exports.createSchemaCustomization = ({ actions }, themeOptions) => {
           });
 
           const type = info.schema.getType(`MarkdownRemark`);
-          const resolver = type.getFields()[`excerptAst`].resolve;
+          const resolver = rssNeedFullContent
+            ? type.getFields()[`htmlAst`].resolve
+            : type.getFields()[`excerptAst`].resolve;
 
           const {
             siteMetadata: { siteUrl },
@@ -179,13 +183,15 @@ exports.createSchemaCustomization = ({ actions }, themeOptions) => {
 
           const ast = await resolver(
             markdownRemarkNode,
-            {
-              ...{
-                pruneLength: rssPruneLength,
-                truncate: rssTruncate,
-              },
-              ...args,
-            },
+            rssNeedFullContent
+              ? {}
+              : {
+                  ...{
+                    pruneLength: rssPruneLength,
+                    truncate: rssTruncate,
+                  },
+                  ...args,
+                },
             context,
             info
           );

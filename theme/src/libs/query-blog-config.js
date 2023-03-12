@@ -26,6 +26,7 @@ export const queryBlogConfig = () => {
           playgroundPath
           postPath
           postsPerPage
+          rssNeedFullContent
           rssPruneLength
           rssTruncate
           tagsPath

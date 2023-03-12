@@ -27,6 +27,7 @@ const getOptions = (themeOptions) => {
   const postPath =
     themeOptions.postPath || (themeOptions.postPath === `` ? `` : `post`);
   const postsPerPage = themeOptions.postsPerPage || 6;
+  const rssNeedFullContent = themeOptions.rssNeedFullContent === true;
   const rssPruneLength =
     themeOptions.rssPruneLength ||
     (themeOptions.rssPruneLength === 0 ? 0 : 128);
@@ -48,6 +49,7 @@ const getOptions = (themeOptions) => {
     playgroundPath,
     postPath,
     postsPerPage,
+    rssNeedFullContent,
     rssPruneLength,
     rssTruncate,
     tagsPath,

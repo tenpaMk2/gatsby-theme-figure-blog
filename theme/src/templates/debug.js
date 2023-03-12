@@ -273,6 +273,7 @@ export const pageQuery = graphql`
       playgroundPath
       postPath
       postsPerPage
+      rssNeedFullContent
       rssPruneLength
       rssTruncate
       tagsPath
