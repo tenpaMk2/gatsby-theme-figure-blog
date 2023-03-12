@@ -147,8 +147,8 @@ exports.createSchemaCustomization = ({ actions }, themeOptions) => {
             markdownRemarkNode,
             {
               ...{
-                pruneLength: 512, // TODO: Use options.
-                truncate: true,
+                pruneLength: rssPruneLength,
+                truncate: rssTruncate,
               },
               ...args,
             },
