@@ -150,23 +150,28 @@ const excerptASTToContentEncoded = (ast, baseUrl) => {
     const children = leaf.children?.map((c) => recursive(c)) || [leaf.value];
 
     if (leaf.properties?.className?.includes(`gatsby-resp-image-wrapper`)) {
+      // Skip.
       return createElement(Fragment, {}, ...children);
     }
 
     if (leaf.properties?.className) {
+      // `className` is array, so it need to be joined.
       leaf.properties.className = leaf.properties.className.join(` `);
     }
 
     if (leaf.properties?.style) {
+      // Decompose style text to each property and value.
       const csss = leaf.properties.style.split(`;`).map((css) => {
         const [property, value] = css.split(`:`).map((s) => s.trim());
         return { property, value };
       });
 
+      // Filter only what are acceptable.
       const acceptables = csss.filter(({ property }) =>
         acceptableCSSProperties.includes(property)
       );
 
+      // Convert property and value to React style object.
       const reactStyleObj = acceptables.reduce(
         (x, { property, value }) => ({
           ...x,
@@ -179,19 +184,23 @@ const excerptASTToContentEncoded = (ast, baseUrl) => {
     }
 
     if (leaf.properties?.dataLanguage) {
+      // Rename `dataLanguage` to `data-language` .
       leaf.properties[`data-language`] = leaf.properties.dataLanguage;
       delete leaf.properties.dataLanguage;
     }
 
     if (leaf.properties?.href) {
+      // Convert any URL to full URL.
       leaf.properties.href = urlToFullUrl(leaf.properties.href, baseUrl);
     }
 
     if (leaf.properties?.src) {
+      // Convert any URL to full URL.
       leaf.properties.src = urlToFullUrl(leaf.properties.src, baseUrl);
     }
 
     if (leaf.properties?.srcSet) {
+      // Convert any URL to full URL.
       leaf.properties.srcSet = leaf.properties.srcSet.map((str) => {
         const [src, breakpoint] = str.split(` `);
         return `${urlToFullUrl(src, baseUrl)} ${breakpoint}`;
