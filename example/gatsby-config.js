@@ -37,6 +37,78 @@ module.exports = {
     ],
   },
   plugins: [
+    {
+      // See [gatsby-plugin-feed doc](https://www.gatsbyjs.com/plugins/gatsby-plugin-feed/) .
+      resolve: `gatsby-plugin-feed`,
+      options: {
+        query: `
+          {
+            site {
+              siteMetadata {
+                description # This is not unused field. 
+                siteUrl
+              }
+            }
+          }
+        `,
+        feeds: [
+          {
+            serialize: ({ query: { site, allMarkdownPost } }) =>
+              allMarkdownPost.nodes.map(
+                ({ date, rssContentEncoded, rssDescription, slug, title }) => ({
+                  date,
+                  title,
+                  description: rssDescription,
+                  url: new URL(slug, site.siteMetadata.siteUrl).href, // Unlike Gatsby, URL must be percent-encoded in RSS.
+                  custom_elements: [{ "content:encoded": rssContentEncoded }],
+                })
+              ),
+            query: `
+              {
+                allMarkdownPost(limit: 20, sort: {date: DESC}) {
+                  nodes {
+                    date
+                    rssContentEncoded
+                    rssDescription
+                    slug
+                    title
+                  }
+                }
+              }
+            `,
+            output: "/rss.xml",
+            title: "Your site's RSS feed | All",
+          },
+          {
+            serialize: ({ query: { site, allMarkdownPost } }) =>
+              allMarkdownPost.nodes.map(
+                ({ date, rssContentEncoded, rssDescription, slug, title }) => ({
+                  date,
+                  title,
+                  description: rssDescription,
+                  url: new URL(slug, site.siteMetadata.siteUrl).href, // Unlike Gatsby, URL must be percent-encoded in RSS.
+                  custom_elements: [{ "content:encoded": rssContentEncoded }],
+                })
+              ),
+            query: `
+              {
+                allMarkdownPost(filter: {tags: {elemMatch: {slug: {eq: "フィギュア"}}}}, limit: 20, sort: {date: DESC}) {
+                  nodes {
+                    date
+                    rssContentEncoded
+                    rssDescription
+                    slug
+                    title
+                  }
+                }
+              }
+            `,
+            output: "/tags/フィギュア/rss.xml",
+            title: "Your site's RSS feed | tag: フィギュア",
+          },
+        ],
+      },
+    },
     "gatsby-plugin-postcss",
     {
       resolve: `@tenpamk2/gatsby-theme-figure-blog`,
@@ -69,6 +141,9 @@ module.exports = {
         locale: `ja-JP`, // See [`Intl.Locale` in MDN](https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale).
         pagesPath: `pages`,
         postPath: ``,
+        rssNeedFullContent: false, // Set `true` if you want to privide full content via RSS.
+        rssPruneLength: 256, // I don't provide full content via RSS because I want viewers to visit my site!!
+        rssTruncate: true,
       },
     },
   ],
