@@ -142,11 +142,6 @@ const excerptASTToContentEncoded = (ast, baseUrl) => {
       return null;
     }
 
-    // if (leaf.properties?.className?.includes(`gatsby-highlight`)) {
-    //   // Ignore code block.
-    //   return null;
-    // }
-
     const children = leaf.children?.map((c) => recursive(c)) || [leaf.value];
 
     if (leaf.properties?.className?.includes(`gatsby-resp-image-wrapper`)) {
