@@ -28,10 +28,20 @@ const Table = ({ title, headers, children, annotation }) => (
   </div>
 );
 
-const varToString = (varObj) => Object.keys(varObj)[0];
-
+/**
+ * Returns 'OK' if input is truthy.
+ *
+ * @param  {Boolean} x - Input.
+ * @returns {"OK"|"NG"} Returns 'OK' or 'NG' .
+ */
 const toOKOrNG = (x) => (x ? `OK` : `NG`);
 
+/**
+ * Returns `true` if there are duplicate tag-slugs.
+ *
+ * @param  {object} tagInfos - `tagInfos` .
+ * @returns {Boolean} `true` if there are duplicate tag-slugs
+ */
 const isDuplicateTagSlugs = (tagInfos) => {
   const uniqueSlugs = new Set(tagInfos.map(({ slug }) => slug));
   return tagInfos.length !== uniqueSlugs.size;
@@ -49,31 +59,31 @@ const DebugTemplate = ({
 
   const tests = [
     {
-      category: varToString({ postsInfo }),
-      description: `${varToString({ postsInfo })} exists?`,
+      category: `Existence check`,
+      description: "`postsInfo` exists?",
       isOK: toOKOrNG(!!postsInfo),
       message: ``,
     },
     {
-      category: varToString({ postsInfo }),
-      description: `${varToString({ tagInfos })} exists?`,
+      category: `Existence check`,
+      description: "`tagInfos` exists?",
       isOK: toOKOrNG(!!tagInfos),
       message: ``,
     },
     {
-      category: varToString({ postsInfo }),
-      description: `${varToString({ yearInfos })} exists?`,
+      category: `Existence check`,
+      description: "`yearInfos` exists?",
       isOK: toOKOrNG(!!yearInfos),
       message: ``,
     },
     {
-      category: varToString({ postsInfo }),
-      description: `${varToString({ yearMonthInfos })} exists?`,
+      category: `Existence check`,
+      description: "`yearMonthInfos` exists?",
       isOK: toOKOrNG(!!yearMonthInfos),
       message: ``,
     },
     {
-      category: varToString({ postsInfo }),
+      category: `Post check`,
       description: `Duplicate tag-slugs?`,
       isOK: toOKOrNG(!isDuplicateTagSlugs(tagInfos)),
       message: [
@@ -82,20 +92,20 @@ const DebugTemplate = ({
       ].join(` `),
     },
     {
-      category: varToString({ postsInfo }),
-      description: `Any no date posts?`,
-      isOK: toOKOrNG(
-        !yearMonthInfos.some(({ yearNumber }) => 2999 <= yearNumber)
-      ),
-      message: `Maybe, is there posts that has no date in the frontmatter?`,
-    },
-    {
-      category: varToString({ postsInfo }),
+      category: `Post check`,
       description: `Same date posts?`,
       isOK: toOKOrNG(
         new Set(nodes.map(({ date }) => date)).size === nodes.length
       ),
       message: `Maybe, is there posts that has same date in the frontmatter?`,
+    },
+    {
+      category: `Post check`,
+      description: `Any no date posts?`,
+      isOK: toOKOrNG(
+        !yearMonthInfos.some(({ yearNumber }) => 2999 <= yearNumber)
+      ),
+      message: `Maybe, is there posts that has no date in the frontmatter?`,
     },
   ];
 
@@ -218,14 +228,8 @@ const DebugTemplate = ({
     </Table>
   );
 
-  return (
-    <div className="flex min-h-screen flex-wrap items-start gap-4 bg-slate-800 p-4 text-gray-200">
-      {testsTable}
-      {tagInfosTable}
-      {yearInfosTable}
-      {yearMonthInfosTable}
-      {figureBlogConfigTable}
-      {externalLinksTable}
+  const rss = (
+    <>
       <div className="flex min-w-0 flex-auto flex-col gap-2">
         <h2 className="text-2xl">{"RSS <description>"}</h2>
         <div className="flex min-w-0 flex-wrap items-start gap-4">
@@ -247,6 +251,18 @@ const DebugTemplate = ({
           ))}
         </div>
       </div>
+    </>
+  );
+
+  return (
+    <div className="flex min-h-screen flex-wrap items-start gap-4 bg-slate-800 p-4 text-gray-200">
+      {testsTable}
+      {tagInfosTable}
+      {yearInfosTable}
+      {yearMonthInfosTable}
+      {figureBlogConfigTable}
+      {externalLinksTable}
+      {rss}
     </div>
   );
 };
