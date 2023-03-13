@@ -89,6 +89,14 @@ const DebugTemplate = ({
       ),
       message: `Maybe, is there posts that has no date in the frontmatter?`,
     },
+    {
+      category: varToString({ postsInfo }),
+      description: `Same date posts?`,
+      isOK: toOKOrNG(
+        new Set(nodes.map(({ date }) => date)).size === nodes.length
+      ),
+      message: `Maybe, is there posts that has same date in the frontmatter?`,
+    },
   ];
 
   const testRows = tests.map(({ category, description, isOK, message }) => {
@@ -300,6 +308,7 @@ export const pageQuery = graphql`
     }
     allMarkdownPost {
       nodes {
+        date
         rssContentEncoded
         rssDescription
       }
