@@ -60,6 +60,7 @@ module.exports = (themeOptions) => ({
                 ...themeOptions.optionsGatsbyRemarkPrismjs,
               },
             },
+            `gatsby-remark-responsive-iframe`,
           ],
         },
         ...themeOptions.optionsGatsbyTransformerRemark,
@@ -69,5 +70,6 @@ module.exports = (themeOptions) => ({
       resolve: `gatsby-transformer-sharp`,
       options: { ...{}, ...themeOptions.optionsGatsbyTransformerSharp },
     },
+    `gatsby-plugin-twitter`,
   ],
 });
