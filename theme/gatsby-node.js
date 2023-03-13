@@ -355,6 +355,9 @@ exports.createSchemaCustomization = ({ actions }, themeOptions) => {
   });
 };
 
+/**
+ * @type {import('gatsby').GatsbyNode['sourceNodes']}
+ */
 exports.sourceNodes = (
   { actions, createContentDigest, getNodesByType, reporter },
   themeOptions
@@ -543,7 +546,7 @@ exports.createPages = async ({ graphql, actions, reporter }, themeOptions) => {
    */
   const tagInfos = result.data.postsInfo.tagInfos || [];
   tagInfos.forEach(({ name, slug, count }) => {
-    const pagesTotal = Math.ceil(count / cardsPerPage); // TODO: Use `pageCount` instead of calc.
+    const pagesTotal = Math.ceil(count / cardsPerPage);
     const pagesStartPath = slugify(basePath, tagsPath, slug);
 
     [...new Array(pagesTotal)].forEach((_, i) => {
@@ -721,6 +724,13 @@ exports.createPages = async ({ graphql, actions, reporter }, themeOptions) => {
   }
 };
 
+/**
+ * Create a Markdown page node.
+ *
+ * @param {import('gatsby').CreateNodeArgs<Record<string, unknown>>} args
+ * @param {import('gatsby').PluginOptions} themeOptions
+ * @returns {void}
+ */
 const createMarkdownPageNode = (
   { actions, createContentDigest, createNodeId, getNode, node },
   themeOptions
@@ -759,6 +769,13 @@ const createMarkdownPageNode = (
   createParentChildLink({ parent: node, child: getNode(id) });
 };
 
+/**
+ * Create a Markdown post node.
+ *
+ * @param {import('gatsby').CreateNodeArgs<Record<string, unknown>>} args
+ * @param {import('gatsby').PluginOptions} themeOptions
+ * @returns {void}
+ */
 const createMarkdownPostNode = (
   { actions, createContentDigest, createNodeId, getNode, node },
   themeOptions
