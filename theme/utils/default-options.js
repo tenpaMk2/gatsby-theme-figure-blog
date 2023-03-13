@@ -2,6 +2,9 @@
  * Get options from theme options.
  * If the property of theme options is `undefined` , set the default value.
  *
+ * `options***` of theme options are ignored.
+ * If you want to use it, query `SitePlugin` nodes.
+ *
  * @param  {Object} themeOptions - theme options.
  * @returns {Object} Default options overriden by valid user options.
  */
