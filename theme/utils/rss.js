@@ -110,16 +110,7 @@ const kebabToCamel = (kebab) => kebab.replace(/-./g, (x) => x[1].toUpperCase());
  * @param  {string} baseUrl - The base URL. It must end with `/` if it contains directories.
  * @returns {string} The full URL such as 'https://example.com/foo/#bar' .
  */
-const urlToFullUrl = (url, baseUrl) => {
-  if (/^\/\//.test(url)) {
-    // Protocol-relative URL
-    return new URL(`https:${url}`).href;
-  }
-
-  // Others
-  // `URL()` is super powerful!! It can handle various inputs.
-  return new URL(url, baseUrl).href;
-};
+const urlToFullUrl = (url, baseUrl) => new URL(url, baseUrl).href;
 
 /**
  * Convert AST of remark excerpt to `<content:encoded>` for RSS.
