@@ -45,8 +45,11 @@ module.exports = {
           {
             site {
               siteMetadata {
-                description # This is not unused field. 
+                # All fields are pass through as \`feedOptions\` .
+                title # This is overwritten by \`title\` of \`feeds\` .
+                description
                 siteUrl
+                site_url: siteUrl
               }
             }
           }
