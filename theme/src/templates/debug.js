@@ -18,7 +18,9 @@ const Table = ({ title, headers, children, annotation }) => (
       <thead className="bg-slate-700 text-gray-200">
         <tr>
           {headers.map((header) => (
-            <th className="px-4 py-2">{header}</th>
+            <th key={header} className="px-4 py-2">
+              {header}
+            </th>
           ))}
         </tr>
       </thead>
@@ -233,8 +235,8 @@ const DebugTemplate = ({
       <div className="flex min-w-0 flex-auto flex-col gap-2">
         <h2 className="text-2xl">{"RSS <description>"}</h2>
         <div className="flex min-w-0 flex-wrap items-start gap-4">
-          {nodes.map(({ rssDescription }) => (
-            <div className="min-w-0 rounded border bg-slate-700 p-2">
+          {nodes.map(({ rssDescription, slug }) => (
+            <div key={slug} className="min-w-0 rounded border bg-slate-700 p-2">
               {rssDescription}
             </div>
           ))}
@@ -243,8 +245,9 @@ const DebugTemplate = ({
       <div className="flex min-w-0 flex-auto flex-col gap-2">
         <h2 className="text-2xl">{"RSS <content:encoded>"}</h2>
         <div className="flex min-w-0 flex-wrap items-start gap-4">
-          {nodes.map(({ rssContentEncoded }) => (
+          {nodes.map(({ rssContentEncoded, slug }) => (
             <div
+              key={slug}
               className="min-w-0 rounded border bg-slate-700 p-2"
               dangerouslySetInnerHTML={{ __html: rssContentEncoded }}
             />
@@ -327,6 +330,7 @@ export const pageQuery = graphql`
         date
         rssContentEncoded
         rssDescription
+        slug
       }
     }
   }
