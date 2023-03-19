@@ -18,40 +18,11 @@ export const PostsLayout = ({
     );
   }
 
-  const postComponents = posts.map(
-    ({
-      dateFormal,
-      dateMonthAndDay,
-      dateTime,
-      dateYear,
-      excerpt,
-      heroImage,
-      needReadMore,
-      slug,
-      tags,
-      title,
-    }) => {
-      return (
-        <Post
-          key={slug}
-          {...{
-            dateFormal,
-            dateMonthAndDay,
-            dateTime,
-            dateYear,
-            heroImage,
-            html: excerpt,
-            isPostPage: false,
-            location,
-            needReadMore,
-            slug,
-            tags,
-            title,
-          }}
-        />
-      );
-    }
-  );
+  const postComponents = posts.map((post) => {
+    return (
+      <Post key={post.slug} {...{ ...post, location }} isPostPage={false} />
+    );
+  });
 
   return (
     <Layout>

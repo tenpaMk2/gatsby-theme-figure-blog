@@ -15,7 +15,6 @@ const MarkdownPostTemplate = ({
   location,
 }) => {
   validateDate(current.dateFormal, current.id);
-  validateHtml(current.html, current.id);
   validateSlug(current.slug, current.id);
   validateTags(current.tags, current.id);
   validateTitle(current.title, current.id);
@@ -45,6 +44,7 @@ export const postQuery = graphql`
   ) {
     current: markdownPost(id: { eq: $id }) {
       canonicalUrl
+      customHast
       dateFormal: date(formatString: "YYYY-MM-DDTHH:mm:ss.sssZ")
       dateMonthAndDay: date(formatString: $formatStringMonthAndDay)
       dateTime: date(formatString: $formatStringTime)
@@ -56,7 +56,6 @@ export const postQuery = graphql`
           gatsbyImageData(layout: FULL_WIDTH)
         }
       }
-      html
       id
       slug
       tags {

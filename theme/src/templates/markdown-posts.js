@@ -59,13 +59,13 @@ export const pageQuery = graphql`
   ) {
     allMarkdownPost(sort: { date: DESC }, limit: $limit, skip: $skip) {
       nodes {
+        customHast: customExcerptHast
         dateFormal: date(formatString: "YYYY-MM-DDTHH:mm:ss.sssZ")
         dateMonthAndDay: date(formatString: $formatStringMonthAndDay)
         dateTime: date(formatString: $formatStringTime)
           @include(if: $needDateTime)
         dateYear: date(formatString: $formatStringYear)
           @include(if: $needDateYear)
-        excerpt
         heroImage {
           childImageSharp {
             gatsbyImageData

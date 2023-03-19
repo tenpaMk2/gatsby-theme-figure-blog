@@ -5,7 +5,6 @@ import { PostLayout } from "../components/post-layout";
 import { validateHtml, validateSlug, validateTitle } from "../libs/validation";
 
 const MarkdownPageTemplate = ({ data: { markdownPage }, location }) => {
-  validateHtml(markdownPage.html, markdownPage.id);
   validateSlug(markdownPage.slug, markdownPage.id);
   validateTitle(markdownPage.title, markdownPage.id);
 
@@ -24,7 +23,7 @@ export const postQuery = graphql`
   query ($id: String!) {
     markdownPage(id: { eq: $id }) {
       canonicalUrl
-      html
+      customHast
       id
       slug
       title

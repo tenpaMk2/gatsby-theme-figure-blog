@@ -1,3 +1,4 @@
+const visitParents = require("unist-util-visit-parents");
 const { kebabCase } = require("./src/libs/kebab-case");
 const { slugify } = require("./src/libs/slugify");
 const { getOptions } = require("./utils/default-options");
@@ -6,6 +7,66 @@ const {
   excerptASTToDescription,
   excerptASTToContentEncoded,
 } = require("./utils/rss");
+
+const customizeHast = async (hast, context) => {
+  // Store processing-targets.
+  // We can't use async function ( `context.nodeModel.findOne()` ) in the `visitor()` of `visitParents()`
+  // because `visitor()` must be non async function.
+  // See [unist issues](https://github.com/syntax-tree/unist-util-visit-parents/issues/8#issuecomment-1413405543) .
+  const targets = [];
+  visitParents(hast, "element", (node, ancestor) => {
+    if (ancestor.length !== 1) return;
+    if (ancestor[0].type !== `root`) return;
+    if (node.tagName !== `p`) return;
+    if (node.children.length !== 1) return;
+    if (node.children[0].tagName !== `a`) return;
+    // Process only if the link is alone and placed at top level.
+
+    const href = node.children[0].properties.href;
+    const dummyOrigin = `https://example.com`; // TODO: Use `location` . See [website](https://nocache.org/p/check-if-an-url-is-internal-or-external-in-javascript-typescript) .
+    const url = new URL(href, dummyOrigin);
+
+    if (url.origin !== dummyOrigin) {
+      return;
+    }
+    // Process only if this link is internal.
+
+    if (!/^\//.test(href)) {
+      return;
+    }
+    // Process only if this link is root relative URL.
+
+    targets.push({ node, href });
+  });
+
+  // Process the targets.
+  const promises = targets.map(async ({ node, href }) => {
+    // `href` is percent encoded.
+    const slug = decodeURI(href);
+
+    const postNode = await context.nodeModel.findOne({
+      type: `MarkdownPost`,
+      query: {
+        filter: { slug: { eq: slug } },
+      },
+    });
+    const pageNode = await context.nodeModel.findOne({
+      type: `MarkdownPage`,
+      query: {
+        filter: { slug: { eq: slug } },
+      },
+    });
+
+    if (!postNode && !pageNode) return;
+    // Process only if post or page node exist.
+
+    node.tagName = `PostLinkCard`; // Sync this name with definitions in `src/libs/hast-to-jsx-runtime.js` .
+    node.properties = { slug };
+    node.children = [];
+  });
+
+  return Promise.all(promises);
+};
 
 /**
  * @type {import('gatsby').GatsbyNode['createSchemaCustomization']}
@@ -16,13 +77,27 @@ exports.createSchemaCustomization = ({ actions }, themeOptions) => {
     getOptions(themeOptions);
 
   const typeDefs = `
-    type MarkdownPost implements Node {
+    interface FigureBlogMarkdown {
       canonicalUrl: String
+      heroImage: File
+      html: String!
+      id: ID!
+      slug: String!
+      title: String!
+    }
+
+    type MarkdownPost implements FigureBlogMarkdown & Node {
+      canonicalUrl: String
+      customHast: JSON! @customHast
+      customExcerptHast: JSON! @customExcerptHast
       date: Date! @dateformat
       excerpt: String! @excerpt
+      excerptAst: JSON! @excerptAst
       # About \`@fileByRelativePath\` , see [Gatsby issue](https://github.com/gatsbyjs/gatsby/issues/18271) .
+      # \`@fileByRelativePath\` works properly only if it has a \`File\` node as its ancestor.
       heroImage: File @fileByRelativePath
       html: String! @html
+      htmlAst: JSON! @htmlAst
       needReadMore: Boolean! @needReadMore
       rssDescription: String! @rssDescription
       rssContentEncoded: String! @rssContentEncoded
@@ -31,10 +106,12 @@ exports.createSchemaCustomization = ({ actions }, themeOptions) => {
       title: String!
     }
 
-    type MarkdownPage implements Node {
+    type MarkdownPage implements FigureBlogMarkdown & Node {
       canonicalUrl: String
+      customHast: JSON! @customHast
       heroImage: File @fileByRelativePath
       html: String! @html
+      htmlAst: JSON! @htmlAst
       slug: String!
       title: String!
     }
@@ -132,6 +209,51 @@ exports.createSchemaCustomization = ({ actions }, themeOptions) => {
   });
 
   createFieldExtension({
+    name: `excerptAst`,
+    extend() {
+      return {
+        async resolve(source, args, context, info) {
+          const markdownRemarkNode = context.nodeModel.getNodeById({
+            id: source.parent,
+          });
+
+          const type = info.schema.getType(`MarkdownRemark`);
+          const resolver = type.getFields()[`excerptAst`].resolve;
+
+          const result = await resolver(
+            markdownRemarkNode,
+            {
+              pruneLength: 2147483647, // Max value of 32bit signed integer.
+              truncate: true, // Truncate the text even in the middle of a world. It is needed for CJK texts.
+            },
+            context,
+            info
+          );
+          return result;
+        },
+      };
+    },
+  });
+
+  createFieldExtension({
+    name: `customExcerptHast`,
+    extend() {
+      return {
+        async resolve(source, args, context, info) {
+          const type = info.schema.getType(`MarkdownPost`);
+          const resolver = type.getFields()[`excerptAst`].resolve;
+          const hast = await resolver(source, args, context, info);
+
+          await customizeHast(hast, context);
+          // After this line, `hast` is customized.
+
+          return hast;
+        },
+      };
+    },
+  });
+
+  createFieldExtension({
     name: `rssDescription`,
     extend() {
       return {
@@ -206,10 +328,6 @@ exports.createSchemaCustomization = ({ actions }, themeOptions) => {
     extend() {
       return {
         async resolve(source, args, context, info) {
-          if (Object.keys(args).length !== 0) {
-            throw new Error(`Don't use args!!`);
-          }
-
           const markdownRemarkNode = context.nodeModel.getNodeById({
             id: source.parent,
           });
@@ -220,6 +338,48 @@ exports.createSchemaCustomization = ({ actions }, themeOptions) => {
           // The args must be fixed becase excerpt is used later to determine if it represents the entire HTML.
           const result = await resolver(markdownRemarkNode, {}, context, info);
           return result;
+        },
+      };
+    },
+  });
+
+  createFieldExtension({
+    name: `htmlAst`,
+    extend() {
+      return {
+        async resolve(source, args, context, info) {
+          const markdownRemarkNode = context.nodeModel.getNodeById({
+            id: source.parent,
+          });
+
+          const type = info.schema.getType(`MarkdownRemark`);
+          const resolver = type.getFields()[`htmlAst`].resolve;
+
+          const result = await resolver(
+            markdownRemarkNode,
+            args,
+            context,
+            info
+          );
+          return result;
+        },
+      };
+    },
+  });
+
+  createFieldExtension({
+    name: `customHast`,
+    extend() {
+      return {
+        async resolve(source, args, context, info) {
+          const type = info.schema.getType(`MarkdownPost`);
+          const resolver = type.getFields()[`htmlAst`].resolve;
+          const hast = await resolver(source, args, context, info);
+
+          await customizeHast(hast, context);
+          // After this line, `hast` is customized.
+
+          return hast;
         },
       };
     },

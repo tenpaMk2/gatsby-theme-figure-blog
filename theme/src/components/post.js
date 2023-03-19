@@ -4,22 +4,25 @@ import { getImage } from "gatsby-plugin-image";
 import { Border } from "./border";
 import { ShareButtons } from "./share-buttons";
 import { PostHeader } from "./post-header";
+import { hastToReactComponents } from "../libs/hast-to-jsx-runtime";
 
 export const Post = ({
+  customHast,
   dateFormal,
   dateMonthAndDay,
   dateTime,
   dateYear,
   heroImage,
-  html,
+  isPostPage,
   location,
   needReadMore,
-  isPostPage,
   slug,
   tags,
   title,
 }) => {
   const imageSrc = getImage(heroImage)?.images?.fallback?.src;
+
+  const react = hastToReactComponents(customHast);
 
   return (
     <article
@@ -43,10 +46,11 @@ export const Post = ({
       <Border />
       <div className="flex flex-col gap-4">
         <section
-          dangerouslySetInnerHTML={{ __html: html }}
           itemProp="articleBody"
           className="prose prose-invert max-w-full basis-full"
-        />
+        >
+          {react}
+        </section>
         <p>
           {needReadMore ? (
             <Link
