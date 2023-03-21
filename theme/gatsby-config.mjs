@@ -41,7 +41,7 @@ export default (themeOptions) => ({
               resolve: `gatsby-remark-images`,
               options: {
                 ...{
-                  maxWidth: 1024, // sync the value of `max-w-screen-lg` by Tailwind CSS.
+                  maxWidth: 1024, // DON'T ERASE IT!! This value is used as base breakpoints. See [doc](https://www.gatsbyjs.com/plugins/gatsby-remark-images/) .
                   linkImagesToOriginal: true,
                   withWebp: true,
                   withAvif: true,
