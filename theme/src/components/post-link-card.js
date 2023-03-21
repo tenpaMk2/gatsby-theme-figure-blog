@@ -5,7 +5,8 @@ import { PostTitle } from "./post-title";
 
 export const PostLinkCard = ({ slug }) => {
   const {
-    allMarkdownPost: { nodes },
+    allMarkdownPost: { nodes: posts },
+    allMarkdownPage: { nodes: pages },
   } = useStaticQuery(
     graphql`
       query {
@@ -20,12 +21,25 @@ export const PostLinkCard = ({ slug }) => {
             title
           }
         }
+        allMarkdownPage {
+          nodes {
+            heroImage {
+              childImageSharp {
+                gatsbyImageData
+              }
+            }
+            slug
+            title
+          }
+        }
       }
     `
   );
 
-  const linkedPost = nodes.filter((node) => node.slug === slug)?.[0];
-  const image = getImage(linkedPost?.heroImage);
+  const linked =
+    posts.filter((node) => node.slug === slug)?.[0] ??
+    pages.filter((node) => node.slug === slug)?.[0];
+  const image = getImage(linked?.heroImage);
 
   const imageTag = image ? (
     <GatsbyImage
@@ -45,7 +59,7 @@ export const PostLinkCard = ({ slug }) => {
     />
   );
 
-  const title = linkedPost?.title ?? `No title post`;
+  const title = linked?.title ?? `No title post`;
   return (
     <section className="my-4">
       <Link
