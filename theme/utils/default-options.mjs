@@ -1,60 +1,32 @@
 /**
- * Get options from theme options.
- * If the property of theme options is `undefined` , set the default value.
+ * Get (decide) options from inputted theme options.
+ * If the property of theme options is a `undefined` , set the default value.
+ * Some options can not be empty string.
  *
  * `options***` of theme options are ignored.
- * If you want to use it, query `SitePlugin` nodes.
+ * (If you want to use it, query `SitePlugin.pluginOptions` from GraphQL.)
  *
- * @param  {Object} themeOptions - theme options.
- * @returns {Object} Default options overriden by valid user options.
+ * If you change some options by shodowing, you should also update the debug page.
+ *
+ * @param  {Object} themeOptions - Theme options.
+ * @returns {Object} Options.
  */
-export const getOptions = (themeOptions) => {
-  const archivesPath = themeOptions.archivesPath || `archives`;
-  const basePath =
-    themeOptions.basePath || (themeOptions.basePath === `` ? `` : `base`);
-  const cardsPerPage = themeOptions.cardsPerPage || 12;
-  const debugPath = themeOptions.debugPath || `debug`;
-  const externalLinks = themeOptions.externalLinks || [];
-  const formatStringMonthAndDay =
-    themeOptions.formatStringMonthAndDay || `MM/DD`;
-  const formatStringTime =
-    themeOptions.formatStringTime ||
-    (themeOptions.formatStringTime === `` ? `` : `HH:mm:ss`);
-  const formatStringYear =
-    themeOptions.formatStringYear ||
-    (themeOptions.formatStringYear === `` ? `` : `YYYY`);
-  const locale = themeOptions.locale || `en-US`;
-  const pagesPath =
-    themeOptions.pagesPath || (themeOptions.pagesPath === `` ? `` : `pages`);
-  const playgroundPath = themeOptions.playgroundPath || `playground`;
-  const postPath =
-    themeOptions.postPath || (themeOptions.postPath === `` ? `` : `post`);
-  const postsPerPage = themeOptions.postsPerPage || 6;
-  const rssNeedFullContent = themeOptions.rssNeedFullContent === true;
-  const rssPruneLength =
-    themeOptions.rssPruneLength ||
-    (themeOptions.rssPruneLength === 0 ? 0 : 128);
-  const rssTruncate = themeOptions.rssTruncate === true;
-  const tagsPath = themeOptions.tagsPath || `tags`;
-
-  // Check the debug page for any forgotten definitions.
-  return {
-    archivesPath,
-    basePath,
-    cardsPerPage,
-    debugPath,
-    externalLinks,
-    formatStringMonthAndDay,
-    formatStringTime,
-    formatStringYear,
-    locale,
-    pagesPath,
-    playgroundPath,
-    postPath,
-    postsPerPage,
-    rssNeedFullContent,
-    rssPruneLength,
-    rssTruncate,
-    tagsPath,
-  };
-};
+export const getOptions = (themeOptions) => ({
+  archivesPath: themeOptions.archivesPath || `archives`,
+  basePath: themeOptions.basePath ?? `base`,
+  cardsPerPage: themeOptions.cardsPerPage || 12,
+  debugPath: themeOptions.debugPath || `debug`,
+  externalLinks: themeOptions.externalLinks || [],
+  formatStringMonthAndDay: themeOptions.formatStringMonthAndDay || `MM/DD`,
+  formatStringTime: themeOptions.formatStringTime ?? `HH:mm:ss`,
+  formatStringYear: themeOptions.formatStringYear ?? `YYYY`,
+  locale: themeOptions.locale || `en-US`,
+  pagesPath: themeOptions.pagesPath ?? `pages`,
+  playgroundPath: themeOptions.playgroundPath || `playground`,
+  postPath: themeOptions.postPath ?? `post`,
+  postsPerPage: themeOptions.postsPerPage || 6,
+  rssNeedFullContent: themeOptions.rssNeedFullContent === true,
+  rssPruneLength: themeOptions.rssPruneLength ?? 128,
+  rssTruncate: themeOptions.rssTruncate === true,
+  tagsPath: themeOptions.tagsPath || `tags`,
+});
