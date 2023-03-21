@@ -1,5 +1,5 @@
 import React from "react";
-import { graphql } from "gatsby";
+import { graphql, Link } from "gatsby";
 
 const Row = ({ items }) => (
   <tr className="border-b border-slate-500 bg-slate-900 text-gray-400">
@@ -236,8 +236,16 @@ export default ({
         <h2 className="text-2xl">{"RSS <description>"}</h2>
         <div className="flex min-w-0 flex-wrap items-start gap-4">
           {nodes.map(({ rssDescription, slug }) => (
-            <div key={slug} className="min-w-0 rounded border bg-slate-700 p-2">
-              {rssDescription}
+            <div
+              key={slug}
+              className="flex min-w-0 flex-col gap-2 rounded border bg-slate-700 p-2"
+            >
+              <h2>
+                <Link to={slug} className="text-xl font-bold underline">
+                  {slug}
+                </Link>
+              </h2>
+              <div>{rssDescription}</div>
             </div>
           ))}
         </div>
@@ -248,9 +256,15 @@ export default ({
           {nodes.map(({ rssContentEncoded, slug }) => (
             <div
               key={slug}
-              className="min-w-0 rounded border bg-slate-700 p-2"
-              dangerouslySetInnerHTML={{ __html: rssContentEncoded }}
-            />
+              className="flex min-w-0 flex-col gap-2 rounded border bg-slate-700 p-2"
+            >
+              <h2>
+                <Link to={slug} className="text-xl font-bold underline">
+                  {slug}
+                </Link>
+              </h2>
+              <div dangerouslySetInnerHTML={{ __html: rssContentEncoded }} />
+            </div>
           ))}
         </div>
       </div>
