@@ -129,7 +129,7 @@ export const createSchemaCustomization = ({ actions }, themeOptions) => {
       rssDescription(pruneLength: Int = ${rssPruneLength}, truncate: Boolean = ${rssTruncate}): String! @rssDescription
       rssContentEncoded(needFullContent: Boolean = ${rssNeedFullContent}, pruneLength: Int = ${rssPruneLength}, truncate: Boolean = ${rssTruncate}): String! @rssContentEncoded
       slug: String!
-      tags: [PostTag]
+      tags: [PostTag]!
       title: String!
     }
 
@@ -144,29 +144,29 @@ export const createSchemaCustomization = ({ actions }, themeOptions) => {
     }
 
     type PostTag {
-      name: String
-      slug: String
+      name: String!
+      slug: String!
     }
 
     # Check the debug page for any forgotten definitions.
     type FigureBlogConfig implements Node {
-      archivesPath: String
-      basePath: String
-      cardsPerPage: Int
-      debugPath: String
+      archivesPath: String!
+      basePath: String!
+      cardsPerPage: Int!
+      debugPath: String!
       externalLinks: [ExternalLink]!
-      formatStringMonthAndDay: String
-      formatStringTime: String
-      formatStringYear: String
-      locale: String
-      pagesPath: String
-      playgroundPath: String
-      postPath: String
-      postsPerPage: Int
-      rssNeedFullContent: Boolean
-      rssPruneLength: Int
-      rssTruncate: Boolean
-      tagsPath: String
+      formatStringMonthAndDay: String!
+      formatStringTime: String!
+      formatStringYear: String!
+      locale: String!
+      pagesPath: String!
+      playgroundPath: String!
+      postPath: String!
+      postsPerPage: Int!
+      rssNeedFullContent: Boolean!
+      rssPruneLength: Int!
+      rssTruncate: Boolean!
+      tagsPath: String!
     }
 
     type ExternalLink {
