@@ -2,12 +2,7 @@ import React from "react";
 import { graphql } from "gatsby";
 import { Seo } from "../components/seo";
 import { PostsLayout } from "../components/posts-layout";
-import {
-  validateDate,
-  validateSlug,
-  validateTags,
-  validateTitle,
-} from "../libs/validation";
+import { validateDate } from "../libs/validation";
 
 const MarkdownPosts = ({
   data: {
@@ -23,11 +18,8 @@ const MarkdownPosts = ({
     console.warn(`No posts!!`);
   }
 
-  nodes.forEach(({ dateFormal, id, slug, tags, title }) => {
+  nodes.forEach(({ dateFormal, id }) => {
     validateDate(dateFormal, id);
-    validateSlug(slug, id);
-    validateTags(tags, id);
-    validateTitle(title, id);
   });
 
   const props = {

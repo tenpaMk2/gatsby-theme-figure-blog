@@ -1,7 +1,7 @@
 import * as React from "react";
 import { graphql } from "gatsby";
 import { CardsLayout } from "../components/cards-layout";
-import { validateDate, validateSlug, validateTitle } from "../libs/validation";
+import { validateDate } from "../libs/validation";
 import { Seo } from "../components/seo";
 
 const ArchiveTemplate = ({
@@ -17,10 +17,8 @@ const ArchiveTemplate = ({
     console.warn(`No posts!!`);
   }
 
-  posts.forEach(({ dateFormal, id, slug, title }) => {
+  posts.forEach(({ dateFormal, id }) => {
     validateDate(dateFormal, id);
-    validateSlug(slug, id);
-    validateTitle(title, id);
   });
 
   const props = { posts, pageTitle, pagesStartPath, currentPage, pageCount };

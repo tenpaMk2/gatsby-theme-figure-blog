@@ -2,22 +2,13 @@ import * as React from "react";
 import { graphql } from "gatsby";
 import { Seo } from "../components/seo";
 import { PostLayout } from "../components/post-layout";
-import {
-  validateDate,
-  validateHtml,
-  validateSlug,
-  validateTags,
-  validateTitle,
-} from "../libs/validation";
+import { validateDate } from "../libs/validation";
 
 const MarkdownPostTemplate = ({
   data: { current, next, previous },
   location,
 }) => {
   validateDate(current.dateFormal, current.id);
-  validateSlug(current.slug, current.id);
-  validateTags(current.tags, current.id);
-  validateTitle(current.title, current.id);
 
   const props = { current, location, next, previous };
   return <PostLayout {...props} />;
