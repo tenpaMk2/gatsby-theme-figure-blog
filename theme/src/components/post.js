@@ -51,16 +51,16 @@ export const Post = ({
         >
           {react}
         </section>
-        <p>
-          {needReadMore ? (
+        {needReadMore ? (
+          <p>
             <Link
               to={slug}
               className="inline-block rounded bg-sky-500 p-3 text-xl font-semibold leading-none text-white hover:bg-sky-400"
             >
               →Read More
             </Link>
-          ) : null}
-        </p>
+          </p>
+        ) : null}
       </div>
       {isPostPage ? (
         <>
