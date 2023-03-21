@@ -18,6 +18,11 @@ export const postQuery = graphql`
     markdownPage(id: { eq: $id }) {
       canonicalUrl
       customHast
+      heroImage {
+        childImageSharp {
+          gatsbyImageData(layout: FULL_WIDTH)
+        }
+      }
       id
       slug
       title
