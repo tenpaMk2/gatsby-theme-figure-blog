@@ -27,9 +27,6 @@ export const PostLinkCard = ({ slug }) => {
   const linkedPost = nodes.filter((node) => node.slug === slug)?.[0];
   const image = getImage(linkedPost?.heroImage);
 
-  console.log(`title: ${linkedPost?.title}`);
-  console.log(image);
-
   const imageTag = image ? (
     <GatsbyImage
       image={image}
