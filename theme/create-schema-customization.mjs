@@ -126,8 +126,8 @@ module.exports = ({ actions }, themeOptions) => {
       html: String! @markdownRemarkResolverPassThrough(fieldName: "html")
       htmlAst: JSON! @markdownRemarkResolverPassThrough(fieldName: "htmlAst")
       needReadMore: Boolean! @needReadMore
-      rssDescription: String! @rssDescription
-      rssContentEncoded: String! @rssContentEncoded
+      rssDescription(pruneLength: Int = ${rssPruneLength}, truncate: Boolean = ${rssTruncate}): String! @rssDescription
+      rssContentEncoded(needFullContent: Boolean = ${rssNeedFullContent}, pruneLength: Int = ${rssPruneLength}, truncate: Boolean = ${rssTruncate}): String! @rssContentEncoded
       slug: String!
       tags: [PostTag]
       title: String!
@@ -245,17 +245,9 @@ module.exports = ({ actions }, themeOptions) => {
       return {
         async resolve(source, args, context, info) {
           const resolver = markdownRemarkResolverPassThrough(`excerptAst`);
-          const ast = await resolver(
-            source,
-            {
-              pruneLength: rssPruneLength,
-              truncate: rssTruncate,
-            },
-            context,
-            info
-          );
+          const hast = await resolver(source, args, context, info);
 
-          return excerptASTToDescription(ast);
+          return excerptASTToDescription(hast);
         },
       };
     },
@@ -266,16 +258,16 @@ module.exports = ({ actions }, themeOptions) => {
     extend() {
       return {
         async resolve(source, args, context, info) {
-          const resolver = rssNeedFullContent
+          const resolver = args.needFullContent
             ? markdownRemarkResolverPassThrough(`htmlAst`)
             : markdownRemarkResolverPassThrough(`excerptAst`);
           const hast = await resolver(
             source,
-            rssNeedFullContent
+            args.needFullContent
               ? {}
               : {
-                  pruneLength: rssPruneLength,
-                  truncate: rssTruncate,
+                  pruneLength: args.pruneLength,
+                  truncate: args.truncate,
                 },
             context,
             info
