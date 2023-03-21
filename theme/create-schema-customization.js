@@ -5,6 +5,17 @@ const {
   excerptASTToContentEncoded,
 } = require("./utils/rss");
 
+/**
+ * Max int value of GraphQL.
+ */
+const intMax = 2147483647;
+
+/**
+ * Customize hast.
+ * See also [hast-to-jsx-runtime](./src/libs/hast-to-jsx-runtime.js) .
+ * @param {Object} hast - HTML AST. See [syntax-tree](https://github.com/syntax-tree) .
+ * @param {Object} context - `context` of the argument of resolver.
+ */
 const customizeHast = async (hast, context) => {
   // Store processing-targets.
   // We can't use async function ( `context.nodeModel.findOne()` ) in the `visitor()` of `visitParents()`
@@ -66,6 +77,23 @@ const customizeHast = async (hast, context) => {
 };
 
 /**
+ * Return resolver of MarkdownRemark nodes.
+ * Refer to [@LekoArts](https://github.com/LekoArts/gatsby-themes/blob/main/packages/themes-utils/src/index.ts) .
+ * @param {string} fieldName
+ * @returns
+ */
+const markdownRemarkResolverPassThrough =
+  (fieldName) => async (source, args, context, info) => {
+    const type = info.schema.getType(`MarkdownRemark`);
+    const markdownRemarkNode = context.nodeModel.getNodeById({
+      id: source.parent,
+    });
+    const resolver = type.getFields()[fieldName].resolve;
+    const result = await resolver(markdownRemarkNode, args, context, info);
+    return result;
+  };
+
+/**
  * @type {import('gatsby').GatsbyNode['createSchemaCustomization']}
  */
 module.exports = ({ actions }, themeOptions) => {
@@ -88,13 +116,15 @@ module.exports = ({ actions }, themeOptions) => {
       customHast: JSON! @customHast
       customExcerptHast: JSON! @customExcerptHast
       date: Date! @dateformat
-      excerpt: String! @excerpt
-      excerptAst: JSON! @excerptAst
+      excerpt(pruneLength: Int = ${intMax}, truncate: Boolean = true, format: MarkdownExcerptFormats = HTML): String! @markdownRemarkResolverPassThrough(fieldName: "excerpt")
+      excerptAst(pruneLength: Int = ${intMax}, truncate: Boolean = true): JSON! @markdownRemarkResolverPassThrough(fieldName: "excerptAst")
+
       # About \`@fileByRelativePath\` , see [Gatsby issue](https://github.com/gatsbyjs/gatsby/issues/18271) .
       # \`@fileByRelativePath\` works properly only if it has a \`File\` node as its ancestor.
       heroImage: File @fileByRelativePath
-      html: String! @html
-      htmlAst: JSON! @htmlAst
+
+      html: String! @markdownRemarkResolverPassThrough(fieldName: "html")
+      htmlAst: JSON! @markdownRemarkResolverPassThrough(fieldName: "htmlAst")
       needReadMore: Boolean! @needReadMore
       rssDescription: String! @rssDescription
       rssContentEncoded: String! @rssContentEncoded
@@ -107,8 +137,8 @@ module.exports = ({ actions }, themeOptions) => {
       canonicalUrl: String
       customHast: JSON! @customHast
       heroImage: File @fileByRelativePath
-      html: String! @html
-      htmlAst: JSON! @htmlAst
+      html: String! @markdownRemarkResolverPassThrough(fieldName: "html")
+      htmlAst: JSON! @markdownRemarkResolverPassThrough(fieldName: "htmlAst")
       slug: String!
       title: String!
     }
@@ -173,61 +203,13 @@ module.exports = ({ actions }, themeOptions) => {
   createTypes(typeDefs);
 
   createFieldExtension({
-    name: `excerpt`,
-    extend() {
-      return {
-        async resolve(source, args, context, info) {
-          if (Object.keys(args).length !== 0) {
-            throw new Error(`Don't use args!!`);
-          }
-
-          const markdownRemarkNode = context.nodeModel.getNodeById({
-            id: source.parent,
-          });
-
-          const type = info.schema.getType(`MarkdownRemark`);
-          const resolver = type.getFields()[`excerpt`].resolve;
-
-          const result = await resolver(
-            markdownRemarkNode,
-            // The following args must be fixed becase excerpt is used later to determine if it represents the entire HTML.
-            {
-              pruneLength: 2147483647, // Max value of 32bit signed integer.
-              truncate: true, // Truncate the text even in the middle of a world. It is needed for CJK texts.
-              format: "HTML",
-            },
-            context,
-            info
-          );
-          return result;
-        },
-      };
+    name: `markdownRemarkResolverPassThrough`,
+    args: {
+      fieldName: `String!`,
     },
-  });
-
-  createFieldExtension({
-    name: `excerptAst`,
-    extend() {
+    extend({ fieldName }) {
       return {
-        async resolve(source, args, context, info) {
-          const markdownRemarkNode = context.nodeModel.getNodeById({
-            id: source.parent,
-          });
-
-          const type = info.schema.getType(`MarkdownRemark`);
-          const resolver = type.getFields()[`excerptAst`].resolve;
-
-          const result = await resolver(
-            markdownRemarkNode,
-            {
-              pruneLength: 2147483647, // Max value of 32bit signed integer.
-              truncate: true, // Truncate the text even in the middle of a world. It is needed for CJK texts.
-            },
-            context,
-            info
-          );
-          return result;
-        },
+        resolve: markdownRemarkResolverPassThrough(fieldName),
       };
     },
   });
@@ -237,9 +219,16 @@ module.exports = ({ actions }, themeOptions) => {
     extend() {
       return {
         async resolve(source, args, context, info) {
-          const type = info.schema.getType(`MarkdownPost`);
-          const resolver = type.getFields()[`excerptAst`].resolve;
-          const hast = await resolver(source, args, context, info);
+          const resolver = markdownRemarkResolverPassThrough(`excerptAst`);
+          const hast = await resolver(
+            source,
+            {
+              pruneLength: intMax, // Max value of 32bit signed integer.
+              truncate: true, // Truncate the text even in the middle of a world. It is needed for CJK texts.
+            },
+            context,
+            info
+          );
 
           await customizeHast(hast, context);
           // After this line, `hast` is customized.
@@ -255,25 +244,17 @@ module.exports = ({ actions }, themeOptions) => {
     extend() {
       return {
         async resolve(source, args, context, info) {
-          const markdownRemarkNode = context.nodeModel.getNodeById({
-            id: source.parent,
-          });
-
-          const type = info.schema.getType(`MarkdownRemark`);
-          const resolver = type.getFields()[`excerptAst`].resolve;
-
+          const resolver = markdownRemarkResolverPassThrough(`excerptAst`);
           const ast = await resolver(
-            markdownRemarkNode,
+            source,
             {
-              ...{
-                pruneLength: rssPruneLength,
-                truncate: rssTruncate,
-              },
-              ...args,
+              pruneLength: rssPruneLength,
+              truncate: rssTruncate,
             },
             context,
             info
           );
+
           return excerptASTToDescription(ast);
         },
       };
@@ -285,14 +266,20 @@ module.exports = ({ actions }, themeOptions) => {
     extend() {
       return {
         async resolve(source, args, context, info) {
-          const markdownRemarkNode = context.nodeModel.getNodeById({
-            id: source.parent,
-          });
-
-          const type = info.schema.getType(`MarkdownRemark`);
           const resolver = rssNeedFullContent
-            ? type.getFields()[`htmlAst`].resolve
-            : type.getFields()[`excerptAst`].resolve;
+            ? markdownRemarkResolverPassThrough(`htmlAst`)
+            : markdownRemarkResolverPassThrough(`excerptAst`);
+          const hast = await resolver(
+            source,
+            rssNeedFullContent
+              ? {}
+              : {
+                  pruneLength: rssPruneLength,
+                  truncate: rssTruncate,
+                },
+            context,
+            info
+          );
 
           const {
             siteMetadata: { siteUrl },
@@ -300,65 +287,7 @@ module.exports = ({ actions }, themeOptions) => {
             type: `Site`,
           });
 
-          const ast = await resolver(
-            markdownRemarkNode,
-            rssNeedFullContent
-              ? {}
-              : {
-                  ...{
-                    pruneLength: rssPruneLength,
-                    truncate: rssTruncate,
-                  },
-                  ...args,
-                },
-            context,
-            info
-          );
-          return excerptASTToContentEncoded(ast, siteUrl);
-        },
-      };
-    },
-  });
-
-  createFieldExtension({
-    name: `html`,
-    extend() {
-      return {
-        async resolve(source, args, context, info) {
-          const markdownRemarkNode = context.nodeModel.getNodeById({
-            id: source.parent,
-          });
-
-          const type = info.schema.getType(`MarkdownRemark`);
-          const resolver = type.getFields()[`html`].resolve;
-
-          // The args must be fixed becase excerpt is used later to determine if it represents the entire HTML.
-          const result = await resolver(markdownRemarkNode, {}, context, info);
-          return result;
-        },
-      };
-    },
-  });
-
-  createFieldExtension({
-    name: `htmlAst`,
-    extend() {
-      return {
-        async resolve(source, args, context, info) {
-          const markdownRemarkNode = context.nodeModel.getNodeById({
-            id: source.parent,
-          });
-
-          const type = info.schema.getType(`MarkdownRemark`);
-          const resolver = type.getFields()[`htmlAst`].resolve;
-
-          const result = await resolver(
-            markdownRemarkNode,
-            args,
-            context,
-            info
-          );
-          return result;
+          return excerptASTToContentEncoded(hast, siteUrl);
         },
       };
     },
@@ -369,8 +298,7 @@ module.exports = ({ actions }, themeOptions) => {
     extend() {
       return {
         async resolve(source, args, context, info) {
-          const type = info.schema.getType(`MarkdownPost`);
-          const resolver = type.getFields()[`htmlAst`].resolve;
+          const resolver = markdownRemarkResolverPassThrough(`htmlAst`);
           const hast = await resolver(source, args, context, info);
 
           await customizeHast(hast, context);
@@ -387,12 +315,19 @@ module.exports = ({ actions }, themeOptions) => {
     extend() {
       return {
         async resolve(source, args, context, info) {
-          const type = info.schema.getType(`MarkdownPost`);
-          const htmlResolver = type.getFields()[`html`].resolve;
-          const excerptResolver = type.getFields()[`excerpt`].resolve;
+          const htmlResolver = markdownRemarkResolverPassThrough(`html`);
+          const html = await htmlResolver(source, args, context, info);
+          const excerptResolver = markdownRemarkResolverPassThrough(`excerpt`);
+          const excerpt = await excerptResolver(
+            source,
+            {
+              pruneLength: intMax,
+              format: `HTML`,
+            },
+            context,
+            info
+          );
 
-          const html = await htmlResolver(source, {}, context, info);
-          const excerpt = await excerptResolver(source, {}, context, info);
           return html !== excerpt;
         },
       };
@@ -408,8 +343,8 @@ module.exports = ({ actions }, themeOptions) => {
             type: `MarkdownPost`,
           });
 
-          const tagsPerPosts = [...postsIterator].map(({ tags }) => tags);
-          const allTags = tagsPerPosts?.flat().filter((tag) => tag);
+          const tagsOfPosts = [...postsIterator].map(({ tags }) => tags);
+          const allTags = tagsOfPosts?.flat().filter((tag) => tag);
           const allTagNames = allTags.map(({ name }) => name);
           const tagInfos = [...new Set(allTagNames)].map((name) => {
             const filtered = allTags.filter(({ name: n }) => n === name);
