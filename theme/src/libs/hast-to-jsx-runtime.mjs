@@ -9,6 +9,7 @@ import { PostLinkCard } from "../components/post-link-card";
  */
 const components = { PostLinkCard };
 
+/** Options for `toJsxRuntime()` . */
 const options = {
   Fragment,
   jsx,
@@ -42,6 +43,11 @@ const patchHTMLAST = (ast) => {
   return ast;
 };
 
+/**
+ * Convert HTML AST to React components.
+ * @param {Object} hast - HTML AST.
+ * @returns {Object} React components.
+ */
 export const hastToReactComponents = (hast) => {
   const patchedHast = patchHTMLAST(hast);
   return toJsxRuntime(patchedHast, options);
