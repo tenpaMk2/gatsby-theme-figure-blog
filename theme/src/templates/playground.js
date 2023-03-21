@@ -27,7 +27,7 @@ const Card = ({ isPortrait, children }) => (
   </a>
 );
 
-const PlaygroundTemplate = () => (
+export default () => (
   <div className="overflow-auto bg-slate-100">
     <h1 className="text-4xl font-bold">Playground</h1>
     <h2 className="text-2xl">Basics.</h2>
@@ -192,5 +192,3 @@ const PlaygroundTemplate = () => (
 );
 
 export const Head = () => <body className="bg-red-500" />;
-
-export default PlaygroundTemplate;

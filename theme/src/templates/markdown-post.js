@@ -4,17 +4,12 @@ import { Seo } from "../components/seo";
 import { PostLayout } from "../components/post-layout";
 import { validateDate } from "../libs/validation";
 
-const MarkdownPostTemplate = ({
-  data: { current, next, previous },
-  location,
-}) => {
+export default ({ data: { current, next, previous }, location }) => {
   validateDate(current.dateFormal, current.id);
 
   const props = { current, location, next, previous };
   return <PostLayout {...props} />;
 };
-
-export default MarkdownPostTemplate;
 
 export const Head = ({
   data: {

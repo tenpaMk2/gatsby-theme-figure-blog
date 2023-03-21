@@ -3,11 +3,9 @@ import { graphql } from "gatsby";
 import { Seo } from "../components/seo";
 import { PostLayout } from "../components/post-layout";
 
-const MarkdownPageTemplate = ({ data: { markdownPage }, location }) => {
+export default ({ data: { markdownPage }, location }) => {
   return <PostLayout current={markdownPage} location={location} />;
 };
-
-export default MarkdownPageTemplate;
 
 export const Head = ({
   data: {

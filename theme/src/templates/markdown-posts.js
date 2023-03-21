@@ -4,7 +4,7 @@ import { Seo } from "../components/seo";
 import { PostsLayout } from "../components/posts-layout";
 import { validateDate } from "../libs/validation";
 
-const MarkdownPosts = ({
+export default ({
   data: {
     allMarkdownPost: {
       nodes,
@@ -31,8 +31,6 @@ const MarkdownPosts = ({
   };
   return <PostsLayout {...props} />;
 };
-
-export default MarkdownPosts;
 
 // `location` : See [Gatsby doc](https://www.gatsbyjs.com/docs/location-data-from-props/#getting-the-absolute-url-of-a-page)
 export const Head = ({ location: { pathname } }) => <Seo {...{ pathname }} />;

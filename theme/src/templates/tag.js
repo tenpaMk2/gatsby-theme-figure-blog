@@ -4,7 +4,7 @@ import { CardsLayout } from "../components/cards-layout";
 import { validateDate } from "../libs/validation";
 import { Seo } from "../components/seo";
 
-const TagTemplate = ({
+export default ({
   data: {
     allMarkdownPost: {
       nodes: posts,
@@ -24,8 +24,6 @@ const TagTemplate = ({
   const props = { posts, pageTitle, pagesStartPath, currentPage, pageCount };
   return <CardsLayout {...props} />;
 };
-
-export default TagTemplate;
 
 export const Head = ({ location: { pathname } }) => (
   <Seo {...{ pathname, title: `Tag` }} />
