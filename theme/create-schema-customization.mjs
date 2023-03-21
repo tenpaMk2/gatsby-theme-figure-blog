@@ -17,6 +17,12 @@ const intMax = 2147483647;
  * @param {Object} context - `context` of the argument of resolver.
  */
 const customizeHast = async (hast, context) => {
+  const {
+    siteMetadata: { siteUrl },
+  } = await context.nodeModel.findOne({
+    type: `Site`,
+  });
+
   // Store processing-targets.
   // We can't use async function ( `context.nodeModel.findOne()` ) in the `visitor()` of `visitParents()`
   // because `visitor()` must be non async function.
@@ -31,10 +37,11 @@ const customizeHast = async (hast, context) => {
     // Process only if the link is alone and placed at top level.
 
     const href = node.children[0].properties.href;
-    const dummyOrigin = `https://example.com`; // TODO: Use `location` . See [website](https://nocache.org/p/check-if-an-url-is-internal-or-external-in-javascript-typescript) .
-    const url = new URL(href, dummyOrigin);
 
-    if (url.origin !== dummyOrigin) {
+    const origin = new URL(siteUrl).origin;
+    const url = new URL(href, origin);
+
+    if (url.origin !== origin) {
       return;
     }
     // Process only if this link is internal.
