@@ -1,3 +1,7 @@
+---
+heroImage: "../posts/images/sample-landscape.jpg"
+---
+
 This is about me page❗
 
 You can write this page by markdown.
