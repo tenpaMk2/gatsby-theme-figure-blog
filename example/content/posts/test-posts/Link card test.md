@@ -4,7 +4,11 @@ tags:
   - Test
 ---
 
+Link card test.
+
 [Portrait test](/test-posts/hero-image-portrait-1/)
+
+<!-- more -->
 
 [Landscape test](/test-posts/hero-image-landscape-1/)
 
@@ -12,10 +16,12 @@ tags:
 
 [No image test](/test-posts/iframe-test/)
 
-> [ブロック引用](/test-posts/hero-image-landscape-1/)
+> [block quote](/test-posts/hero-image-landscape-1/)
 
 Paragraph
 [Can you see me?](/test-posts/hero-image-portrait-1/)
 Paragraph
 
 ![image link](../images/sample-landscape.jpg)
+
+[about](/about/)

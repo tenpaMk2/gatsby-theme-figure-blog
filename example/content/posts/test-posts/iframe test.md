@@ -7,6 +7,10 @@ tags:
   - YouTube
 ---
 
+`<iframe>` test.
+
+<!-- more -->
+
 ## YouTube
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/Rk1MYMPDx3s" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
@@ -21,9 +25,3 @@ tags:
 > 2. In the top right-hand corner of the tweet, click the caret (∨) and select “Embed tweet”.
 > 3. Take the code you’re given and copy it into your markdown page.
 >    - Note: when copying the embed code, copy **only** the blockquote section and not the script.
-
-## Post card
-
-🚧WIP🚧
-
-[About](/about/)
