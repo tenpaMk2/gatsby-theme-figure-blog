@@ -1,5 +1,5 @@
-const { createElement, Fragment } = require("react");
-const { renderToStaticMarkup } = require("react-dom/server");
+import { createElement, Fragment } from "react";
+import { renderToStaticMarkup } from "react-dom/server";
 
 /**
  * The acceptable CSS properties for RSS feed.
@@ -119,7 +119,7 @@ const urlToFullUrl = (url, baseUrl) => new URL(url, baseUrl).href;
  * @param  {string} baseUrl - The base URL. It must end with `/` if it contains directories.
  * @returns {string} The text for `<content:encoded>` for RSS.
  */
-const excerptASTToContentEncoded = (ast, baseUrl) => {
+export const excerptASTToContentEncoded = (ast, baseUrl) => {
   const recursive = (leaf) => {
     if (
       leaf.properties?.className?.includes(`gatsby-resp-image-background-image`)
@@ -231,7 +231,7 @@ const decideWrapper = (tagName) => {
  * @param  {Object} ast - The AST of MarkdownRemark node.
  * @returns {string} The description for RSS.
  */
-const excerptASTToDescription = (ast) => {
+export const excerptASTToDescription = (ast) => {
   const recursive = (leaf) => {
     if ([`ul`, `li`, `pre`, `table`].includes(leaf.tagName)) {
       return null;
@@ -257,9 +257,4 @@ const excerptASTToDescription = (ast) => {
       .replace(/(\r\n|\n|\r)/gm, ` `)
       .replace(/  +/g, ` `) || `No description.`
   );
-};
-
-module.exports = {
-  excerptASTToContentEncoded,
-  excerptASTToDescription,
 };

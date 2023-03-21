@@ -1,9 +1,9 @@
-const visitParents = require("unist-util-visit-parents");
-const { getOptions } = require("./utils/default-options");
-const {
+import visitParents from "unist-util-visit-parents";
+import { getOptions } from "./utils/default-options.mjs";
+import {
   excerptASTToDescription,
   excerptASTToContentEncoded,
-} = require("./utils/rss");
+} from "./utils/rss.mjs";
 
 /**
  * Max int value of GraphQL.
@@ -96,7 +96,7 @@ const markdownRemarkResolverPassThrough =
 /**
  * @type {import('gatsby').GatsbyNode['createSchemaCustomization']}
  */
-module.exports = ({ actions }, themeOptions) => {
+export const createSchemaCustomization = ({ actions }, themeOptions) => {
   const { createFieldExtension, createTypes } = actions;
   const { locale, rssNeedFullContent, rssPruneLength, rssTruncate } =
     getOptions(themeOptions);

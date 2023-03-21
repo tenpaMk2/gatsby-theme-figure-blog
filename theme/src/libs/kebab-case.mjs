@@ -36,7 +36,7 @@
  * @param  {string} str - string.
  * @returns {string} converted result.
  */
-const kebabCase = (str) => {
+export const kebabCase = (str) => {
   if (!str?.replace) throw new Error(`Must have a \`replace\` method.`);
   if (!str?.toLowerCase) throw new Error(`Must have a \`toLowerCase\` method.`);
 
@@ -46,8 +46,4 @@ const kebabCase = (str) => {
     .replace(/^-+|-+$/g, ``)
     .replace(/-{2,}/g, `-`)
     .toLowerCase();
-};
-
-module.exports = {
-  kebabCase,
 };

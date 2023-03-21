@@ -1,14 +1,17 @@
-const { kebabCase } = require("./src/libs/kebab-case");
-const { slugify } = require("./src/libs/slugify");
-const { getOptions } = require("./utils/default-options");
-const { parse, sep } = require("path");
+import { createRequire } from "module";
+import { parse, sep } from "path";
+import { kebabCase } from "./src/libs/kebab-case.mjs";
+import { slugify } from "./src/libs/slugify.mjs";
+import { getOptions } from "./utils/default-options.mjs";
 
-exports.createSchemaCustomization = require(`./create-schema-customization`);
+export { createSchemaCustomization } from "./create-schema-customization.mjs";
+
+const require = createRequire(import.meta.url);
 
 /**
  * @type {import('gatsby').GatsbyNode['sourceNodes']}
  */
-exports.sourceNodes = (
+export const sourceNodes = (
   { actions, createContentDigest, getNodesByType, reporter },
   themeOptions
 ) => {
@@ -68,7 +71,10 @@ exports.sourceNodes = (
 /**
  * @type {import('gatsby').GatsbyNode['createPages']}
  */
-exports.createPages = async ({ graphql, actions, reporter }, themeOptions) => {
+export const createPages = async (
+  { graphql, actions, reporter },
+  themeOptions
+) => {
   const { createPage } = actions;
 
   const {
@@ -481,7 +487,7 @@ const createMarkdownPostNode = (
 /**
  * @type {import('gatsby').GatsbyNode['onCreateNode']}
  */
-exports.onCreateNode = (args, themeOptions) => {
+export const onCreateNode = (args, themeOptions) => {
   const { getNode, node, reporter } = args;
 
   if (node.internal.type !== `MarkdownRemark`) return;

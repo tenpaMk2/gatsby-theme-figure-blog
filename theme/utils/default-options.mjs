@@ -8,7 +8,7 @@
  * @param  {Object} themeOptions - theme options.
  * @returns {Object} Default options overriden by valid user options.
  */
-const getOptions = (themeOptions) => {
+export const getOptions = (themeOptions) => {
   const archivesPath = themeOptions.archivesPath || `archives`;
   const basePath =
     themeOptions.basePath || (themeOptions.basePath === `` ? `` : `base`);
@@ -57,8 +57,4 @@ const getOptions = (themeOptions) => {
     rssTruncate,
     tagsPath,
   };
-};
-
-module.exports = {
-  getOptions,
 };

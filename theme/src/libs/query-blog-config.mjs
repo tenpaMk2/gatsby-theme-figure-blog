@@ -1,4 +1,4 @@
-const { useStaticQuery, graphql } = require("gatsby");
+import { useStaticQuery, graphql } from "gatsby";
 
 /**
  * This querys the blog config .

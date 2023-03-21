@@ -1,4 +1,4 @@
-module.exports = (themeOptions) => ({
+export default (themeOptions) => ({
   plugins: [
     {
       resolve: `gatsby-plugin-image`,

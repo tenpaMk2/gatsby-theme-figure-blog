@@ -25,11 +25,7 @@
  * @param  {string} str - string.
  * @returns {string} The string ending in a single `/` .
  */
-const addTrailingSlash = (str) => {
+export const addTrailingSlash = (str) => {
   if (typeof str !== `string`) throw new TypeError(`str must be string.`);
   return `${str}/`.replace(/\/+$/, `/`);
-};
-
-module.exports = {
-  addTrailingSlash,
 };

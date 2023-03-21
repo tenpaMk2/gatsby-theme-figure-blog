@@ -1,4 +1,4 @@
-const { kebabCase } = require("./kebab-case");
+import { kebabCase } from "./kebab-case.mjs";
 
 /**
  * This is my custom `slugify()` .
@@ -30,12 +30,8 @@ const { kebabCase } = require("./kebab-case");
  * @param  {...string} dirs - directory names.
  * @returns {string} URL that begins and ends with `/` .
  */
-const slugify = (...dirs) => {
+export const slugify = (...dirs) => {
   const validDirs = dirs.filter((dir) => dir?.toString);
   const url = validDirs.map((dir) => kebabCase(dir.toString())).join(`/`);
   return `/${url}/`.replace(/\/\/+/g, `/`);
-};
-
-module.exports = {
-  slugify,
 };

@@ -6,7 +6,7 @@
  * @param  {string} date - a date string.
  * @param  {string} id - the ID of the post node.
  */
-const validateDate = (date, id) => {
+export const validateDate = (date, id) => {
   if (!date) {
     console.warn(`No date!! ID: '${id}' .`);
   }
@@ -34,7 +34,7 @@ const validateDate = (date, id) => {
  * @param  {string} excerpt - a HTML excerpt.
  * @param  {string} id - the ID of the post node.
  */
-const validateExcerpt = (excerpt, id) => {
+export const validateExcerpt = (excerpt, id) => {
   if (!excerpt) {
     console.warn(`No excerpt!! ID: '${id}' .`);
   }
@@ -58,7 +58,7 @@ const validateHeroImage = (heroImage, id) => {
  * @param  {string} html - a HTML.
  * @param  {string} id - the ID of the post node.
  */
-const validateHtml = (html, id) => {
+export const validateHtml = (html, id) => {
   if (!html) {
     console.warn(`No html!! ID: '${id}' .`);
   }
@@ -70,7 +70,7 @@ const validateHtml = (html, id) => {
  * @param  {string} slug - a slug.
  * @param  {string} id - the ID of the post node.
  */
-const validateSlug = (slug, id) => {
+export const validateSlug = (slug, id) => {
   if (!slug) {
     throw new Error(`No slug!! ID: '${id}' .`);
   }
@@ -82,7 +82,7 @@ const validateSlug = (slug, id) => {
  * @param  {{name: string, slug: string}[]} tags - a tags.
  * @param  {string} id - the ID of the post node.
  */
-const validateTags = (tags, id) => {
+export const validateTags = (tags, id) => {
   if (!tags?.length) {
     console.warn(`No tags!! ID: '${id}' .`);
   }
@@ -94,18 +94,8 @@ const validateTags = (tags, id) => {
  * @param  {string} title - a title.
  * @param  {string} id - the ID of the post node.
  */
-const validateTitle = (title, id) => {
+export const validateTitle = (title, id) => {
   if (!title) {
     console.warn(`No title!! ID: '${id}' .`);
   }
-};
-
-module.exports = {
-  validateDate,
-  validateExcerpt,
-  validateHeroImage,
-  validateHtml,
-  validateSlug,
-  validateTags,
-  validateTitle,
 };
