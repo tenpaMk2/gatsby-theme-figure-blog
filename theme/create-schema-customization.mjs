@@ -8,7 +8,7 @@ import { customizeHast } from "./utils/hast.mjs";
 /**
  * Max int value of GraphQL.
  */
-const intMax = 2147483647;
+const intMax = 2 ** 31 - 1;
 
 /**
  * Return resolver of MarkdownRemark nodes.
