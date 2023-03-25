@@ -381,6 +381,35 @@ export const createPages = async (
 };
 
 /**
+ * Decide slug.
+ * @param {string} relativePath
+ * @param {Object} options
+ * @param {string[]} options.basePaths
+ * @param {string} options.slug
+ * @returns {string}
+ */
+const decideSlug = (relativePath, { basePaths = [], slug = `` }) => {
+  const { dir, name } = parse(relativePath);
+  return (
+    slug ||
+    (name === `index`
+      ? slugify(...basePaths, ...dir.split(sep))
+      : slugify(...basePaths, ...dir.split(sep), name))
+  );
+};
+
+/**
+ * Decide title.
+ * @param {string} relativePath
+ * @param {string} title
+ * @returns {string}
+ */
+const decideTitle = (relativePath, title) => {
+  const { name } = parse(relativePath);
+  return title || name;
+};
+
+/**
  * Create a Markdown page node.
  *
  * @param {import('gatsby').CreateNodeArgs<Record<string, unknown>>} args
@@ -394,16 +423,20 @@ const createMarkdownPageNode = (
   const { createNode, createParentChildLink } = actions;
 
   const { basePath } = getOptions(themeOptions);
+  const { relativePath } = getNode(node.parent);
 
-  const { name } = getNode(node.parent);
+  const slug = decideSlug(relativePath, {
+    basePaths: [basePath],
+    slug: node.frontmatter?.slug,
+  });
 
-  const slug = slugify(basePath, name);
+  const title = decideTitle(relativePath, node.frontmatter?.title);
 
   const fieldData = {
     canonicalUrl: node.frontmatter?.canonicalUrl || ``,
     heroImage: node.frontmatter?.heroImage,
     slug,
-    title: node.frontmatter.title || name,
+    title,
   };
 
   const id = createNodeId(`${node.id} >>> MarkdownPage`);
@@ -441,14 +474,13 @@ const createMarkdownPostNode = (
   const { basePath, postPath } = getOptions(themeOptions);
 
   const { relativePath } = getNode(node.parent);
-  const { dir, name } = parse(relativePath);
-  const frontmatterSlug = node.frontmatter?.slug;
 
-  const slug =
-    frontmatterSlug ||
-    (name === `index`
-      ? slugify(basePath, postPath, ...dir.split(sep))
-      : slugify(basePath, postPath, ...dir.split(sep), name));
+  const slug = decideSlug(relativePath, {
+    basePaths: [basePath, postPath],
+    slug: node.frontmatter?.slug,
+  });
+
+  const title = decideTitle(relativePath, node.frontmatter?.title);
 
   const modifiedTags =
     node.frontmatter.tags?.map((tag) => ({
@@ -462,7 +494,7 @@ const createMarkdownPostNode = (
     heroImage: node.frontmatter?.heroImage,
     slug,
     tags: modifiedTags,
-    title: node.frontmatter.title || name,
+    title,
   };
 
   const id = createNodeId(`${node.id} >>> MarkdownPost`);
