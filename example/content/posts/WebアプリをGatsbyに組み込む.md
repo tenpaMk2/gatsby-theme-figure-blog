@@ -36,6 +36,17 @@ example/static/
 ↑の例だと `excalibur-dino-runner` にアクセスしたければ、
 `http://localhost:9000/excalibur-dino-runner/` でアクセスできる。
 
-なお、当然だがWebアプリ内のファイル類は相対パスでつながっている必要がある。
+当然だがWebアプリ内のファイル類は相対パスでつながっている必要がある。
 Excalibur.jsの例だと、 `index.html` からロードするjsファイルが
 ルートパスになってたので注意。
+
+Webアプリによっては、 `gatsby develop` では動作できないようだ。
+Excalibur.jsのゲームはだめだった。
+`gatsby build` して `gatsby serve` すれば動作する。
+まぁ、アプリのデバッグは別でやってるだろうから、 `gatsby develop` にこだわる必要はないかな。
+
+どうしてもやりたい場合は、GatsbyのPage APIで空っぽのページを作っておいて、
+`<iframe>` でhtmlを読み込めば良いって情報もあった。こっちは試してない。
+
+**Page APIで作ったページのURLと、 `static` ディレクトリに置いたWebアプリのURLが被らないように注意** 。
+もし被ってても `gatsby build` するときにエラーは出ないっぽい...なぜ😭。
