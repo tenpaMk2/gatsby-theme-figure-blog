@@ -1,87 +1,14 @@
-import visitParents from "unist-util-visit-parents";
 import { getOptions } from "./utils/default-options.mjs";
 import {
   excerptASTToDescription,
   excerptASTToContentEncoded,
 } from "./utils/rss.mjs";
+import { customizeHast } from "./utils/hast.mjs";
 
 /**
  * Max int value of GraphQL.
  */
 const intMax = 2147483647;
-
-/**
- * Customize hast.
- * See also [hast-to-jsx-runtime](./src/libs/hast-to-jsx-runtime.js) .
- * @param {Object} hast - HTML AST. See [syntax-tree](https://github.com/syntax-tree) .
- * @param {Object} context - `context` of the argument of resolver.
- */
-const customizeHast = async (hast, context) => {
-  const {
-    siteMetadata: { siteUrl },
-  } = await context.nodeModel.findOne({
-    type: `Site`,
-  });
-
-  // Store processing-targets.
-  // We can't use async function ( `context.nodeModel.findOne()` ) in the `visitor()` of `visitParents()`
-  // because `visitor()` must be non async function.
-  // See [unist issues](https://github.com/syntax-tree/unist-util-visit-parents/issues/8#issuecomment-1413405543) .
-  const targets = [];
-  visitParents(hast, "element", (node, ancestor) => {
-    if (ancestor.length !== 1) return;
-    if (ancestor[0].type !== `root`) return;
-    if (node.tagName !== `p`) return;
-    if (node.children.length !== 1) return;
-    if (node.children[0].tagName !== `a`) return;
-    // Process only if the link is alone and placed at top level.
-
-    const href = node.children[0].properties.href;
-
-    const origin = new URL(siteUrl).origin;
-    const url = new URL(href, origin);
-
-    if (url.origin !== origin) {
-      return;
-    }
-    // Process only if this link is internal.
-
-    if (!/^\//.test(href)) {
-      return;
-    }
-    // Process only if this link is root relative URL.
-
-    targets.push({ node, href });
-  });
-
-  // Process the targets.
-  const promises = targets.map(async ({ node, href }) => {
-    // `href` is percent encoded.
-    const slug = decodeURI(href);
-
-    const postNode = await context.nodeModel.findOne({
-      type: `MarkdownPost`,
-      query: {
-        filter: { slug: { eq: slug } },
-      },
-    });
-    const pageNode = await context.nodeModel.findOne({
-      type: `MarkdownPage`,
-      query: {
-        filter: { slug: { eq: slug } },
-      },
-    });
-
-    if (!postNode && !pageNode) return;
-    // Process only if post or page node exist.
-
-    node.tagName = `PostLinkCard`; // Sync this name with definitions in `src/libs/hast-to-jsx-runtime.js` .
-    node.properties = { slug };
-    node.children = [];
-  });
-
-  return Promise.all(promises);
-};
 
 /**
  * Return resolver of MarkdownRemark nodes.
