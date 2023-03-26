@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import { Seo } from "@tenpamk2/gatsby-theme-figure-blog/src/components/seo";
 import { Layout } from "@tenpamk2/gatsby-theme-figure-blog/src/components/layout";
 
