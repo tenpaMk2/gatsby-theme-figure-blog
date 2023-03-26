@@ -1,6 +1,8 @@
 # @tenpamk2/gatsby-theme-figure-blog
 
-The simple blogging theme that is suitable for photographs.
+![example-1](./images/example-1.png)
+
+The simple blogging theme that is suitable for figure photographs.
 
 ## Demo
 
@@ -10,6 +12,8 @@ The simple blogging theme that is suitable for photographs.
 
 - Make your photos look as large as possible.
 - Responsive
+- Hero image support
+  - If it's portrait, focus (crop) on the top side because the figure's face is usually there❗
 - Pure Markdown not MDX
 - [Special hooks](#special-hooks)
 - Code highlighting by [prism.js](https://prismjs.com/)
