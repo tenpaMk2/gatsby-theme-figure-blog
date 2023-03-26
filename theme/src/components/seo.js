@@ -2,6 +2,7 @@ import React from "react";
 import { useStaticQuery, graphql } from "gatsby";
 import { addTrailingSlash } from "../libs/add-trailing-slash";
 import noImage from "../images/no-image.png";
+import { queryBlogConfig } from "../libs/query-blog-config.mjs";
 
 const Seo = ({
   applicationName,
@@ -33,12 +34,13 @@ const Seo = ({
             social {
               twitter
             }
-            locale
           }
         }
       }
     `
   );
+
+  const { locale } = queryBlogConfig();
 
   const url = new URL(siteMetadata.siteUrl);
   url.pathname = pathname || ``;
@@ -47,7 +49,7 @@ const Seo = ({
   imageUrl.pathname = imagePath || noImage;
 
   const seo = {
-    htmlLang: siteMetadata.locale,
+    htmlLang: locale,
     title: title ? `${title} | ${siteMetadata.title}` : siteMetadata.title,
     applicationName: applicationName || ``,
     author: siteMetadata.author?.name || ``,
@@ -55,7 +57,7 @@ const Seo = ({
     url: addTrailingSlash(`${url.origin}${url.pathname}`),
     imageUrl: addTrailingSlash(`${imageUrl.origin}${imageUrl.pathname}`),
     ogType: url.pathname === `/` ? `website` : `article`,
-    ogLocale: siteMetadata.locale || ``,
+    ogLocale: locale,
     twitter: siteMetadata.social?.twitter || ``,
     canonicalUrl:
       canonicalUrl || addTrailingSlash(`${url.origin}${url.pathname}`),
