@@ -4,7 +4,7 @@ import { SidebarItemLayout } from "./sidebar-item-layout";
 import { Twitter } from "./svgs/twitter";
 import { Instagram } from "./svgs/instagram";
 import { GitHub } from "./svgs/github";
-import { BioIcon } from "./svgs/bio-icon";
+import { BioIcon } from "./bio-icon";
 
 const IconLink = ({ label, href, children }) => (
   <a

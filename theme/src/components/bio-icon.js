@@ -1,5 +1,5 @@
 import React from "react";
-import svg from "../../images/bio.svg";
+import svg from "../images/bio.svg";
 
 /**
  * Bio icon that is SVG image surrounded white circle.
