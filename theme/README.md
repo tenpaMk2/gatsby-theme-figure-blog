@@ -16,6 +16,7 @@ The simple blogging theme that is suitable for photographs.
 - Dark Mode only
 - Tags, archives page support
 - Cards layout support in tags and archives page
+- pagination
 - Debug and playground page support
 
 ## Special hooks
