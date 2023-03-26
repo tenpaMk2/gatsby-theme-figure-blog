@@ -44,9 +44,40 @@ export const Bio = () => {
 
   const name = siteMetadata?.author?.name || `NO NAME`;
   const summary = siteMetadata?.author?.summary || ``;
-  const twitter = siteMetadata?.social?.twitter || ``;
-  const instagram = siteMetadata?.social?.instagram || ``;
-  const github = siteMetadata?.social?.github || ``;
+
+  const twitterIcon = siteMetadata?.social?.twitter ? (
+    <IconLink
+      label="Twitter"
+      href={`https://twitter.com/${siteMetadata.social.twitter}/`}
+    >
+      <Twitter />
+    </IconLink>
+  ) : null;
+
+  const instagramIcon = siteMetadata?.social?.instagram ? (
+    <IconLink
+      label="Instagram"
+      href={`https://www.instagram.com/${siteMetadata.social.instagram}/`}
+    >
+      <Instagram />
+    </IconLink>
+  ) : null;
+
+  const githubIcon = siteMetadata?.social?.github ? (
+    <IconLink
+      label="GitHub"
+      href={`https://github.com/${siteMetadata.social.github}/`}
+    >
+      <GitHub />
+    </IconLink>
+  ) : null;
+
+  const socials = [twitterIcon, instagramIcon, githubIcon].filter(
+    (social) => social
+  );
+  const socialWrapper = socials.length ? (
+    <div className="flex flex-wrap justify-center gap-2">{socials}</div>
+  ) : null;
 
   return (
     <SidebarItemLayout title="Bio">
@@ -56,20 +87,7 @@ export const Bio = () => {
           <h2 className="text-center text-2xl font-bold">{name}</h2>
         </div>
         <p className="">{summary}</p>
-        <div className="flex flex-wrap justify-center gap-2">
-          <IconLink label="Twitter" href={`https://twitter.com/${twitter}/`}>
-            <Twitter />
-          </IconLink>
-          <IconLink
-            label="Instagram"
-            href={`https://www.instagram.com/${instagram}/`}
-          >
-            <Instagram />
-          </IconLink>
-          <IconLink label="GitHub" href={`https://github.com/${github}/`}>
-            <GitHub />
-          </IconLink>
-        </div>
+        {socialWrapper}
       </div>
     </SidebarItemLayout>
   );
