@@ -1,4 +1,4 @@
-import visitParents from "unist-util-visit-parents";
+import { visitParents } from "unist-util-visit-parents";
 
 /**
  * Workaround for [issue #34338](https://github.com/gatsbyjs/gatsby/issues/34338)
@@ -124,7 +124,7 @@ const findLeftRight = (gatsbyImageNodes, { isLeft = true }) => {
 
   let leftRight;
 
-  gatsbyImageNodes.forEach(gatsbyImageNode => {
+  gatsbyImageNodes.forEach((gatsbyImageNode) => {
     visitParents(gatsbyImageNode, "element", (node, ancestors) => {
       if (!regex.test(node.properties?.title)) return;
       if (node.tagName !== `img`) return;
@@ -140,7 +140,7 @@ const findLeftRight = (gatsbyImageNodes, { isLeft = true }) => {
         };
       });
     });
-  })
+  });
 
   return leftRight;
 };
