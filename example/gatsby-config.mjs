@@ -12,7 +12,6 @@ export default {
       instagram: `tenpamk2_figure`,
       github: `tenpaMk2`,
     },
-    locale: `ja-JP`, // See [Facebook localization doc](https://developers.facebook.com/docs/javascript/internationalization#locales).
     menuLinks: [
       {
         name: "Home",
