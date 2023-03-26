@@ -47,6 +47,7 @@ export const Bio = () => {
 
   const twitterIcon = siteMetadata?.social?.twitter ? (
     <IconLink
+      key="twitter"
       label="Twitter"
       href={`https://twitter.com/${siteMetadata.social.twitter}/`}
     >
@@ -56,6 +57,7 @@ export const Bio = () => {
 
   const instagramIcon = siteMetadata?.social?.instagram ? (
     <IconLink
+      key="instagram"
       label="Instagram"
       href={`https://www.instagram.com/${siteMetadata.social.instagram}/`}
     >
@@ -65,6 +67,7 @@ export const Bio = () => {
 
   const githubIcon = siteMetadata?.social?.github ? (
     <IconLink
+      key="github"
       label="GitHub"
       href={`https://github.com/${siteMetadata.social.github}/`}
     >
