@@ -91,7 +91,6 @@ export const createPages = async (
     tagsPath,
   } = getOptions(themeOptions);
 
-  // Get all markdown blog posts sorted by date
   const result = await graphql(`
     {
       allMarkdownPage {
@@ -176,7 +175,7 @@ export const createPages = async (
   });
 
   /**
-   * Create main page with pagination.
+   * Create main pages.
    */
   const pagesTotal = result.data.pageInfoPassthrough.pageInfo.pageCount;
 
@@ -198,7 +197,7 @@ export const createPages = async (
   });
 
   /**
-   * Create tag page with pagination.
+   * Create tag pages.
    */
   const tagInfos = result.data.postsInfo.tagInfos || [];
   tagInfos.forEach(({ name, slug, count }) => {
@@ -229,7 +228,7 @@ export const createPages = async (
   });
 
   /**
-   * Create root archive page with pagination.
+   * Create root archive pages.
    */
   const archivesPagesTotal = Math.ceil(
     result.data.allMarkdownPost.edges.length / cardsPerPage
@@ -260,7 +259,7 @@ export const createPages = async (
   });
 
   /**
-   * Create year archive page with pagination.
+   * Create year archive pages.
    */
   const yearInfos = result.data.postsInfo.yearInfos || [];
 
@@ -295,7 +294,7 @@ export const createPages = async (
   });
 
   /**
-   * Create month-and-year archive page with pagination.
+   * Create month-and-year archive pages.
    */
   const yearMonthInfos = result.data.postsInfo.yearMonthInfos || [];
 
