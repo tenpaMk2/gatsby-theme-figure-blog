@@ -1,7 +1,7 @@
 {
   "name": "example",
   "version": "1.0.0",
-  "author": "tenpaMk2 <wavyroom@gmail.com> (@tenpaMk2)",
+  "author": "tenpaMk2 <wavyroom@gmail.com> (https://github.com/tenpaMk2)",
   "license": "MIT",
   "scripts": {
     "clean": "gatsby clean",

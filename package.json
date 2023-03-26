@@ -2,7 +2,7 @@
   "private": true,
   "name": "gatsby-theme-figure-blog",
   "description": "Mono repo for `gatsby-theme-figure-blog` .",
-  "author": "tenpaMk2 <wavyroom@gmail.com> (@tenpaMk2)",
+  "author": "tenpaMk2 <wavyroom@gmail.com> (https://github.com/tenpaMk2)",
   "license": "MIT",
   "scripts": {
     "build": "yarn workspace example build"
