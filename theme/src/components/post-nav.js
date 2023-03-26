@@ -1,5 +1,5 @@
 import { Link } from "gatsby";
-import * as React from "react";
+import React from "react";
 
 const PostNavLink = ({ slug, isNext, title }) => {
   const navMessage = isNext ? `« Next` : `Previous »`;

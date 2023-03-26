@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import { graphql, Link, useStaticQuery } from "gatsby";
 import { SearchBar } from "./search-bar";
 import { Hamburger } from "./svgs/hamburger";

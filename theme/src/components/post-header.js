@@ -1,6 +1,6 @@
 import { Link } from "gatsby";
 import { GatsbyImage, getImage, StaticImage } from "gatsby-plugin-image";
-import * as React from "react";
+import React from "react";
 import { queryBlogConfig } from "../libs/query-blog-config";
 import { slugify } from "../libs/slugify";
 import { Border } from "./border";

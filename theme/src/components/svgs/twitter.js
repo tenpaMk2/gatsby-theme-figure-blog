@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 
 /**
  * The Twitter SVG image taken from [SVG repo](https://www.svgrepo.com/svg/501411/twitter-boxed) .

@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 
 export const SidebarItemLayout = ({ children, title }) => (
   <div className="flex min-w-0 flex-wrap content-start gap-4">

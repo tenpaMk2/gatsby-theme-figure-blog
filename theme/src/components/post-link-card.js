@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import { graphql, Link, useStaticQuery } from "gatsby";
 import { GatsbyImage, getImage, StaticImage } from "gatsby-plugin-image";
 import { PostTitle } from "./post-title";

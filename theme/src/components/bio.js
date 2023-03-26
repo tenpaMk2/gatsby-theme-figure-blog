@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import { graphql, useStaticQuery } from "gatsby";
 import { SidebarItemLayout } from "./sidebar-item-layout";
 import { Twitter } from "./svgs/twitter";

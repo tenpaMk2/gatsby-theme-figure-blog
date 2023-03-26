@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import { Layout } from "./layout";
 import { PostCard } from "./post-card";
 import { PagesNav } from "./pages-nav";

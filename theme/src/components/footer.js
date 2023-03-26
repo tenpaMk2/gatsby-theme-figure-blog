@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 
 export const Footer = () => (
   <footer className="p-2 text-center text-gray-400">

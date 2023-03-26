@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import { Header } from "./header";
 import { CloseCircle } from "./svgs/close-circle";
 import { NavLinks } from "./nav-links";

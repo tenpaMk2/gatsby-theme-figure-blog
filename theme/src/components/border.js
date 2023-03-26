@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 
 /**
  * This component works as border when used as flex-items and `align-items: stretch` .

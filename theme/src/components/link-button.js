@@ -1,5 +1,5 @@
 import { Link } from "gatsby";
-import * as React from "react";
+import React from "react";
 import { ButtonBase } from "./button-base";
 
 export const LinkButton = ({ to, children }) => (

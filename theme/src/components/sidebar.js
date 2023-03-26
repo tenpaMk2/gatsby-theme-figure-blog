@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import { TagCloud } from "./tag-cloud";
 import { Bio } from "./bio";
 import { ArchiveList } from "./archive-list";

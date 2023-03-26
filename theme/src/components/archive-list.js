@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import { graphql, Link, useStaticQuery } from "gatsby";
 import { queryBlogConfig } from "../libs/query-blog-config";
 import { slugify } from "../libs/slugify";

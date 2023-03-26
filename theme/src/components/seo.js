@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import { useStaticQuery, graphql } from "gatsby";
 import { addTrailingSlash } from "../libs/add-trailing-slash";
 import noImage from "../images/no-image.png";

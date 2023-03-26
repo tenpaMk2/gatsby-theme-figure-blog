@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import { slugify } from "../libs/slugify";
 import { LinkButton } from "./link-button";
 import { ButtonBase } from "./button-base";

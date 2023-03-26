@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 
 /**
  * The Magnifying glass SVG image taken from [SVG repo](https://www.svgrepo.com/svg/479944/magnifying-glass) .

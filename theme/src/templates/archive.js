@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import { graphql } from "gatsby";
 import { CardsLayout } from "../components/cards-layout";
 import { validateDate } from "../libs/validation";

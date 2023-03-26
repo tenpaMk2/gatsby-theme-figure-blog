@@ -1,6 +1,6 @@
 import { Link } from "gatsby";
 import { GatsbyImage, getImage, StaticImage } from "gatsby-plugin-image";
-import * as React from "react";
+import React from "react";
 import { Border } from "./border";
 import { Clock } from "./clock";
 import { PostTitle } from "./post-title";
