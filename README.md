@@ -1,10 +1,8 @@
 # gatsby-theme-figure-blog workspace
 
-The workspace for `gatsby-theme-figure-blog` .
+The monorepo for developing `gatsby-theme-figure-blog` .
 If you want to use `gatsby-theme-figure-blog` ,
 see [theme/README.md](./theme/README.md)
-
-🚧WIP🚧
 
 ## Layout
 
@@ -26,4 +24,12 @@ npm -w example run clean
 npm -w example run develop
 ```
 
-Access <http://192.168.11.3:8000/> or <http://192.168.11.3:8000/___graphql>.
+Access <http://localhost:8000/> or <http://localhost:8000/___graphql> .
+
+## Reference theme
+
+| Theme                                                                                                             | Author    |
+| :---------------------------------------------------------------------------------------------------------------- | :-------- |
+| [gatsby-theme-minimal-blog](https://github.com/LekoArts/gatsby-themes/tree/main/themes/gatsby-theme-minimal-blog) | LekoArts  |
+| [gatsby-theme-crudzoo](https://github.com/Hidekazoo/gatsby-theme-crudzoo/)                                        | Hidekazoo |
+| [gatsby-starter-minimal](https://github.com/gatsbyjs/gatsby-starter-minimal)                                      | gatsbyjs  |
