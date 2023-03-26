@@ -108,36 +108,39 @@ const isGatbyImageNode = (node) =>
   node.properties?.className?.includes(`gatsby-resp-image-wrapper`);
 
 /**
- * A helper function to search left or right image information.
+ * A helper function to find left or right image information.
  * @param {Object} gatsbyImageNode - A hast node of gatsby image.
  * @param {Object} options
- * @param {boolean} options.isLeft - If true, search left image node. Otherwise, search right image node.
- * @returns {Object} - A properties of left or right image.
- * @returns {string} return.src - The src attribute of the image.
- * @returns {string} return.srcSet - The srcSet attribute of the source.
- * @returns {string} return.alt - The alt attribute of the image.
- * @returns {string} return.title - The title attribute of the image.
+ * @param {boolean} options.isLeft - If true, find left image node. Otherwise, find right image node.
+ * @returns {Object} - Attributes of left or right image.
+ * @returns {string} return.src - The src attribute of the `<img>` .
+ * @returns {string} return.srcSet - The srcSet attribute of the `<source>` .
+ * @returns {string} return.alt - The alt attribute of the `<img>` .
+ * @returns {string} return.title - The title attribute of the `<img>` .
  * @returns {undefined} return - If the image node is not found.
  */
-const searchLeftRight = (gatsbyImageNode, { isLeft = true }) => {
+const findLeftRight = (gatsbyImageNodes, { isLeft = true }) => {
   const regex = isLeft ? /^left/ : /^right/;
 
   let leftRight;
-  visitParents(gatsbyImageNode, "element", (node, ancestors) => {
-    if (!regex.test(node.properties?.title)) return;
-    if (node.tagName !== `img`) return;
 
-    const siblings = ancestors.slice(-1)[0].children;
-    siblings?.forEach((sibling) => {
-      if (sibling.properties?.type !== `image/webp`) return;
-      leftRight = {
-        src: node.properties.src,
-        srcSet: sibling.properties.srcSet,
-        alt: node.properties.alt,
-        title: node.properties.title,
-      };
+  gatsbyImageNodes.forEach(gatsbyImageNode => {
+    visitParents(gatsbyImageNode, "element", (node, ancestors) => {
+      if (!regex.test(node.properties?.title)) return;
+      if (node.tagName !== `img`) return;
+
+      const siblings = ancestors.slice(-1)[0].children;
+      siblings?.forEach((sibling) => {
+        if (sibling.properties?.type !== `image/webp`) return;
+        leftRight = {
+          src: node.properties.src,
+          srcSet: sibling.properties.srcSet,
+          alt: node.properties.alt,
+          title: node.properties.title,
+        };
+      });
     });
-  });
+  })
 
   return leftRight;
 };
@@ -171,11 +174,8 @@ const generateImageCompareSlider = async (hast) => {
     // Get the gatsby image nodes.
     const imageNodes = node.children.filter((node) => isGatbyImageNode(node));
 
-    let left, right;
-    imageNodes.forEach((imageNode) => {
-      left = searchLeftRight(imageNode, { isLeft: true });
-      right = searchLeftRight(imageNode, { isLeft: false });
-    });
+    const left = findLeftRight(imageNodes, { isLeft: true });
+    const right = findLeftRight(imageNodes, { isLeft: false });
 
     if (left && right) {
       targets.push({ node, preNodes, left, right, postNodes });
