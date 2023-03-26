@@ -1,5 +1,5 @@
 import { createRequire } from "module";
-import { parse, sep } from "path";
+import { parse } from "path";
 import { kebabCase } from "./src/libs/kebab-case.mjs";
 import { slugify } from "./src/libs/slugify.mjs";
 import { getOptions } from "./utils/default-options.mjs";
@@ -393,8 +393,8 @@ const decideSlug = (relativePath, { basePaths = [], slug = `` }) => {
   return (
     slug ||
     (name === `index`
-      ? slugify(...basePaths, ...dir.split(sep))
-      : slugify(...basePaths, ...dir.split(sep), name))
+      ? slugify(...basePaths, ...dir.split(`/`))
+      : slugify(...basePaths, ...dir.split(`/`), name))
   );
 };
 
