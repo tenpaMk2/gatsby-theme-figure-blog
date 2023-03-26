@@ -46,7 +46,8 @@
   "homepage": "https://tenpamk2-blog.netlify.app/",
   "repository": {
     "type": "git",
-    "url": "https://github.com/tenpaMk2/gatsby-theme-figure-blog.git"
+    "url": "https://github.com/tenpaMk2/gatsby-theme-figure-blog.git",
+    "directory": "theme/"
   },
   "devDependencies": {
     "prettier": "^2.8.3",
