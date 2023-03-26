@@ -186,7 +186,7 @@ const generateImageCompareSlider = async (hast) => {
   const promises = targets.map(
     async ({ node, preNodes, left, right, postNodes }) => {
       node.type = `element`;
-      node.tagName = `p`;
+      node.tagName = `div`;
       node.properties = {};
       node.children = [
         ...preNodes,
