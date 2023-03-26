@@ -11,7 +11,7 @@ The simple blogging theme that is suitable for photographs.
 - Make your photos look as large as possible.
 - Responsive
 - Pure Markdown not MDX
-- [Special hook](#special-hooks)
+- [Special hooks](#special-hooks)
 - Code highlighting by [prism.js](https://prismjs.com/)
 - Dark Mode only
 - Tags, archives page support
