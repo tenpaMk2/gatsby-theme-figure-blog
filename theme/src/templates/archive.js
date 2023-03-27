@@ -26,7 +26,7 @@ export default ({
 };
 
 export const Head = ({ location: { pathname } }) => (
-  <Seo {...{ pathname, title: `Tag` }} />
+  <Seo {...{ pathname, title: `Archive` }} />
 );
 
 export const pageQuery = graphql`
