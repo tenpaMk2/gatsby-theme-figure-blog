@@ -106,8 +106,6 @@ const Seo = ({
 
       <meta name="gatsby-theme" content="@tenpamk2/gatsby-theme-figure-blog" />
 
-      <link rel="icon" sizes="16x16" href="/favicon.ico" />
-
       {tag.canonicalUrl}
 
       {children}
