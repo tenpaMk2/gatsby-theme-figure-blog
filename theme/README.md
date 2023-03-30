@@ -23,6 +23,82 @@ The simple blogging theme that is suitable for figure photographs.
 - pagination
 - Debug and playground page support
 
+## Not supported
+
+### RSS Feed
+
+This theme does not generate RSS feed.
+Use [gatsby-plugin-feed](https://www.gatsbyjs.com/plugins/gatsby-plugin-feed/) .
+
+This theme provides posts information ( `MarkdownPost` nodes ) by GraphQL.
+It has helpful fields for RSS ( `rssContentEncoded` and `rssDescription` ).
+They can be used in `gatsby-plugin-feed` options as follows.
+
+```js
+{
+  // See [gatsby-plugin-feed doc](https://www.gatsbyjs.com/plugins/gatsby-plugin-feed/) .
+  resolve: `gatsby-plugin-feed`,
+  options: {
+    query: `
+      {
+        site {
+          siteMetadata {
+            # All fields are pass through as \`feedOptions\` .
+            title # This is overwritten by \`title\` of \`feeds\` .
+            description
+            siteUrl
+            site_url: siteUrl
+          }
+        }
+      }
+    `,
+    feeds: [
+      {
+        serialize: ({ query: { site, allMarkdownPost } }) =>
+          allMarkdownPost.nodes.map(
+            ({ date, rssContentEncoded, rssDescription, slug, title }) => ({
+              date,
+              title,
+              description: rssDescription,
+              url: new URL(slug, site.siteMetadata.siteUrl).href, // Unlike Gatsby, URL must be percent-encoded in RSS.
+              custom_elements: [{ "content:encoded": rssContentEncoded }],
+            })
+          ),
+        query: `
+          {
+            allMarkdownPost(limit: 20, sort: {date: DESC}) {
+              nodes {
+                date
+                rssContentEncoded
+                rssDescription
+                slug
+                title
+              }
+            }
+          }
+        `,
+        output: "/rss.xml",
+        title: "Your site's RSS feed | All",
+      },
+    ],
+  },
+},
+```
+
+### Favicons
+
+This theme does not generate favicons and insert `<link rel="icon">` tags.
+Use [gatsby-plugin-manifest](https://www.gatsbyjs.com/plugins/gatsby-plugin-manifest/) .
+
+### Google analytics
+
+This theme does not embed gtag.
+Use [gatsby-plugin-google-gtag](https://www.gatsbyjs.com/plugins/gatsby-plugin-google-gtag/) .
+
+### Comment section in posts
+
+This theme does not have comment section.
+
 ## Special hooks
 
 Some Markdown under special conditions are converted to special components.
