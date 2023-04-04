@@ -323,7 +323,9 @@ export const createSchemaCustomization = ({ actions }, themeOptions) => {
             }
           );
 
-          return yearInfos;
+          return yearInfos.sort(
+            ({ yearNumber: a }, { yearNumber: b }) => b - a
+          );
         },
       };
     },
@@ -368,7 +370,12 @@ export const createSchemaCustomization = ({ actions }, themeOptions) => {
             return { ...info, count };
           });
 
-          return yearMonthInfos;
+          return yearMonthInfos.sort(
+            (
+              { yearNumber: ay, monthNumber: am },
+              { yearNumber: by, monthNumber: bm }
+            ) => by * 100 + bm - (ay * 100 + am)
+          );
         },
       };
     },
