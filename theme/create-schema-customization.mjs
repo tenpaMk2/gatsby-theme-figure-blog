@@ -280,7 +280,9 @@ export const createSchemaCustomization = ({ actions }, themeOptions) => {
             return { name, count, slug };
           });
 
-          return tagInfos;
+          return tagInfos.sort(({ name: a }, { name: b }) =>
+            a.toLowerCase() < b.toLowerCase() ? -1 : 1
+          );
         },
       };
     },
