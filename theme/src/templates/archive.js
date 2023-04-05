@@ -56,7 +56,7 @@ export const pageQuery = graphql`
           @include(if: $needDateYear)
         heroImage {
           childImageSharp {
-            gatsbyImageData(height: 384)
+            gatsbyImageData
           }
         }
         id
