@@ -23,7 +23,7 @@ export const Header = () => {
 
   return (
     // I don't use `gatsby-background-image` because it's not maintained.
-    <header className="flex min-h-[18rem] w-full flex-wrap overflow-x-auto bg-[url('/header.webp')] bg-cover bg-center px-4 pb-12 pt-4 shadow-[inset_0_84px_53px_-53px_rgba(0,0,0,0.5),inset_0_-60px_23px_-23px_rgba(31,41,55,1)]">
+    <header className="flex min-h-[18rem] w-full flex-wrap overflow-x-auto bg-[url('/header.webp')] bg-cover bg-center px-4 pb-12 pt-4 shadow-[inset_0_84px_53px_-53px_rgb(0_0_0_/_.5),inset_0_-60px_23px_-23px_rgb(31_41_55)]">
       <div className="flex min-w-0 basis-full flex-row-reverse items-start justify-between gap-2 text-base text-white md:text-xl">
         <SearchBar />
 

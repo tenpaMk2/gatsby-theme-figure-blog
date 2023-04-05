@@ -9,23 +9,23 @@ module.exports = {
     extend: {
       dropShadow: {
         title: [
-          "0 1px 1px rgba(255,255,255,0.8)",
-          "0 2px 3px rgba(0, 0, 0, 0.5)",
-          "0 0px 20px rgba(0, 0, 0, 1)",
+          `0 1px 1px rgb(100% 100% 100% / .8)`,
+          `0 2px 3px rgb(0% 0% 0% / .5)`,
+          `0 0px 20px rgb(0% 0% 0% / 1)`,
         ],
       },
       typography: {
         DEFAULT: {
           css: {
             ".gatsby-resp-image-wrapper": {
-              "box-shadow": "0 0 1rem rgba(0, 0, 0, 0.5)",
-              "border-radius": "0.5rem",
-              overflow: "hidden",
+              boxShadow: `0 0 1rem rgb(0% 0% 0% / .5)`,
+              borderRadius: `0.5rem`,
+              overflow: `hidden`,
             },
             blockquote: {
-              backgroundColor: `rgba(128, 128, 128, 0.2)`,
-              "border-left-color": `rgb(3, 105, 161)`, // sky-700
-              "border-radius": `0.375rem`,
+              backgroundColor: `rgb(50% 50% 50% / .2)`,
+              borderLeftColor: `rgb(3 105 161)`, // sky-700
+              borderRadius: `0.375rem`,
               padding: `1px 1rem`,
               quotes: null,
             },
@@ -42,7 +42,7 @@ module.exports = {
               content: null,
             },
             hr: {
-              "border-color": `rgb(100, 116, 139)`, // slate-500
+              borderColor: `rgb(100 116 139)`, // slate-500
             },
             table: {
               display: `block`,
@@ -56,13 +56,13 @@ module.exports = {
               padding: `0.25rem 1rem`,
             },
             "thead > tr": {
-              backgroundColor: `rgb(100%, 100%, 100%, 0.1)`,
+              backgroundColor: `rgb(100% 100% 100% / .1)`,
             },
             "tbody > tr:nth-child(odd)": {
-              backgroundColor: `rgb(0%, 0%, 0%, 0.10)`,
+              backgroundColor: `rgb(0% 0% 0% .1)`,
             },
             "tbody > tr:nth-child(even)": {
-              backgroundColor: `rgb(0%, 0%, 0%, 0.20)`,
+              backgroundColor: `rgb(0% 0% 0% .2)`,
             },
             "ul > li::marker": {
               color: `var(--tw-prose-links)`,
