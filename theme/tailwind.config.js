@@ -45,8 +45,24 @@ module.exports = {
               "border-color": `rgb(100, 116, 139)`, // slate-500
             },
             table: {
-              width: `auto`,
-              "font-size": `1rem`,
+              display: `block`,
+              width: `max-content`,
+              maxWidth: `100%`,
+              fontSize: `1rem`,
+              borderRadius: `0.5rem`,
+              overflow: `auto`,
+            },
+            "th, td": {
+              padding: `0.25rem 1rem`,
+            },
+            "thead > tr": {
+              backgroundColor: `rgb(100%, 100%, 100%, 0.1)`,
+            },
+            "tbody > tr:nth-child(odd)": {
+              backgroundColor: `rgb(0%, 0%, 0%, 0.10)`,
+            },
+            "tbody > tr:nth-child(even)": {
+              backgroundColor: `rgb(0%, 0%, 0%, 0.20)`,
             },
             "ul > li::marker": {
               color: `var(--tw-prose-links)`,
