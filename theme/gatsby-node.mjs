@@ -201,15 +201,15 @@ export const createPages = async (
    */
   const tagInfos = result.data.postsInfo.tagInfos || [];
   tagInfos.forEach(({ name, slug, count }) => {
-    const pagesTotal = Math.ceil(count / cardsPerPage);
     const pagesStartPath = slugify(basePath, tagsPath, slug);
 
+    const pagesTotal = Math.ceil(count / cardsPerPage);
     [...new Array(pagesTotal)].forEach((_, i) => {
       createPage({
         path:
           i === 0
             ? pagesStartPath
-            : slugify(basePath, tagsPath, slug, pagesPath, i + 1),
+            : pagesStartPath.slice(0, -1) + slugify(pagesPath, i + 1),
         component: require.resolve(`./src/templates/tag.js`),
         context: {
           formatStringMonthAndDay,
@@ -240,11 +240,11 @@ export const createPages = async (
       path:
         i === 0
           ? archivesPagesStartPath
-          : slugify(basePath, archivesPath, pagesPath, i + 1),
+          : archivesPagesStartPath.slice(0, -1) + slugify(pagesPath, i + 1),
       component: require.resolve(`./src/templates/archive.js`),
       context: {
-        dateGreaterThanEqual: `0000-01`,
-        dateLessThan: `9999-13`,
+        dateGreaterThanEqual: new Date(0, 0).toISOString(),
+        dateLessThan: new Date(2999, 13).toISOString(),
         formatStringMonthAndDay,
         formatStringTime,
         formatStringYear,
@@ -264,21 +264,20 @@ export const createPages = async (
   const yearInfos = result.data.postsInfo.yearInfos || [];
 
   yearInfos.forEach(({ count, yearNumber, yearString }) => {
-    const pagesTotal = Math.ceil(count / cardsPerPage);
     const yearPadded = yearNumber.toString().padStart(4, `0`);
-    const nextPadded = (yearNumber + 1).toString().padStart(4, `0`);
     const pagesStartPath = slugify(basePath, archivesPath, yearPadded);
 
+    const pagesTotal = Math.ceil(count / cardsPerPage);
     [...new Array(pagesTotal)].forEach((_, i) => {
       createPage({
         path:
           i === 0
             ? pagesStartPath
-            : slugify(basePath, archivesPath, yearPadded, pagesPath, i + 1),
+            : pagesStartPath.slice(0, -1) + slugify(pagesPath, i + 1),
         component: require.resolve(`./src/templates/archive.js`),
         context: {
-          dateGreaterThanEqual: yearPadded,
-          dateLessThan: nextPadded,
+          dateGreaterThanEqual: new Date(yearNumber, 0).toISOString(),
+          dateLessThan: new Date(yearNumber + 1, 0).toISOString(),
           formatStringMonthAndDay,
           formatStringTime,
           formatStringYear,
@@ -300,12 +299,9 @@ export const createPages = async (
 
   yearMonthInfos.forEach(
     ({ count, monthNumber, monthString, yearNumber, yearString }) => {
-      const pagesTotal = Math.ceil(count / cardsPerPage);
       const yearPadded = yearNumber.toString().padStart(4, `0`);
       const monthPadded = (monthNumber + 1).toString().padStart(2, `0`);
-      const nextPadded = `${yearPadded}-${(monthNumber + 2)
-        .toString()
-        .padStart(2, `0`)}`;
+
       const pagesStartPath = slugify(
         basePath,
         archivesPath,
@@ -313,23 +309,20 @@ export const createPages = async (
         monthPadded
       );
 
+      const pagesTotal = Math.ceil(count / cardsPerPage);
       [...new Array(pagesTotal)].forEach((_, i) => {
         createPage({
           path:
             i === 0
               ? pagesStartPath
-              : slugify(
-                  basePath,
-                  archivesPath,
-                  yearPadded,
-                  monthPadded,
-                  pagesPath,
-                  i + 1
-                ),
+              : pagesStartPath.slice(0, -1) + slugify(pagesPath, i + 1),
           component: require.resolve(`./src/templates/archive.js`),
           context: {
-            dateGreaterThanEqual: `${yearPadded}-${monthPadded}`,
-            dateLessThan: nextPadded,
+            dateGreaterThanEqual: new Date(
+              yearNumber,
+              monthNumber
+            ).toISOString(),
+            dateLessThan: new Date(yearNumber, monthNumber + 1).toISOString(),
             formatStringMonthAndDay,
             formatStringTime,
             formatStringYear,
@@ -489,7 +482,7 @@ const createMarkdownPostNode = (
 
   const fieldData = {
     canonicalUrl: node.frontmatter?.canonicalUrl || ``,
-    date: node.frontmatter?.date || "2999-01-01 00:00",
+    date: node.frontmatter?.date || new Date(2999, 1, 1).toISOString(),
     heroImage: node.frontmatter?.heroImage,
     slug,
     tags: modifiedTags,
