@@ -18,9 +18,6 @@ export const getOptions = (themeOptions) => ({
     cardsPerPage: 12,
     debugPath: `debug`,
     externalLinks: [],
-    formatStringMonthAndDay: `MM/DD`,
-    formatStringTime: `HH:mm:ss`,
-    formatStringYear: `YYYY`,
     intlYear: { year: `numeric` },
     intlMonthAndDate: {
       month: `short`,
