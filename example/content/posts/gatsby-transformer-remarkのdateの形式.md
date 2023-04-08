@@ -22,11 +22,11 @@ gatsby-transformer-remark の readme には残念ながら記載なし。
 
 [simplified version of ISO 8601](https://tc39.es/ecma262/#sec-date-time-string-format)
 というのが正式な規格らしい。
-よく見る `YYYY-MM-DDTHH:mm:ss.sssZ` ってやつ。
+よく見る `YYYY-MM-DDTHH:mm:ss.SSSZ` ってやつ。
 
 これ以外に、実装依存で別の形式も受け付けるとのこと。
 
-`YYYY-MM-DDTHH:mm:ss.sssZ` は直感的じゃないのと、入力が手間なのであまり使いたくない。
+`YYYY-MM-DDTHH:mm:ss.SSSZ` は直感的じゃないのと、入力が手間なのであまり使いたくない。
 `YYYY-MM-DD HH:mm` でも Gatsby は受け付けてくれるっぽいので、これを採用。
 
 `YYYY-MM-DD` は GoogleIME で『きょう』で変換すれば出るし、
