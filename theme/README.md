@@ -8,12 +8,23 @@ The simple blogging theme that is suitable for figure photographs.
 
 🚧WIP🚧
 
+## Installation
+
+```sh
+npm install @tenpamk2/gatsby-theme-figure-blog
+```
+
+### Install as a starter
+
+🚧WIP🚧
+
 ## Features
 
 - Make your photos look as large as possible.
 - Responsive
 - Hero image support
   - If it's portrait, focus (crop) on the top side because the figure's face is usually there❗
+- Generate post title from filename.
 - Pure Markdown not MDX
 - [Special hooks](#special-hooks)
 - Code highlighting by [prism.js](https://prismjs.com/)
@@ -105,7 +116,7 @@ Some Markdown under special conditions are converted to special components.
 
 ### Post link cards of internal links
 
-Convert top-level internal link in your Markdown to post-link-card.
+Convert an internal link to a post-link-card.
 The card has hero-image of linked post (or page), so looks so good❗
 
 For example, when you write the following Markdown,
@@ -116,21 +127,22 @@ Link card test.
 [Portrait test](/test-posts/hero-image-portrait-1/)
 ```
 
-you will get post-link-card like the below.
+you will get the following post-link-card.
 
 ![post-link-card-example](./images/post-link-card.png);
 
-This hook works under the following conditions
+This hook works under the following conditions.
 
-- The link must be at the top level.
-  - For example, the links in the blockquote does not converted.
-- The link must be alone in a paragraph.
-  - For example, the links surrounded some texts does not converted.
+- The link is internal-link, not external-link.
+- The link is at the top level.
+  - For example, the link in the blockquote does not converted.
+- The link is the only element in the paragraph.
+  - For example, the link on the next line of text will not be converted.
 - The link is not an image link.
 
 ### Image compare slider
 
-Convert 2 images that have special `title` to image-compare-slider
+Convert 2 images to image-compare-slider
 by [react-compare-slider](https://github.com/nerdyman/react-compare-slider) .
 This is very helpful when you want to show interactive compare slider for your site visitors❗
 
@@ -141,26 +153,16 @@ For example, when you write the following Markdown,
 ![Focus on Chloe](../images/compare-right.jpg "right")
 ```
 
-you will get image-compare-slider like the below.
+you will get the following image-compare-slider.
 
 ![image-compare-slider](./images/image-compare-slider.png);
 
-This hook works under the following conditions
+This hook works under the following conditions.
 
-- The paragraph that includes `left` and `right` images must be at the top level.
 - The title of images starts with `left` or `right` .
-- `left` and `right` images exist and are in same paragraph.
-  - This means that you cannot insert blank lines between 2 images in Markdown.
-
-## Installation
-
-```sh
-npm install @tenpamk2/gatsby-theme-figure-blog
-```
-
-### Install as a starter
-
-🚧WIP🚧
+- Both images are at the top level.
+- Both images are in the same paragraph.
+  - This means that you cannot insert blank lines between both images in Markdown.
 
 ## Usage
 
@@ -182,30 +184,65 @@ npm install @tenpamk2/gatsby-theme-figure-blog
 
 ### Theme options
 
-| Key                              | Default Value             | Description                                                                                                   |
-| :------------------------------- | :------------------------ | :------------------------------------------------------------------------------------------------------------ |
-| `archivesPath`                   | `'archives'`              | URL for the archives pages.                                                                                   |
-| `basePath`                       | `'base'`                  | Root url for the theme.                                                                                       |
-| `cardsPerPage`                   | `12`                      | The number of cards in 1 page.                                                                                |
-| `debugPath`                      | `'debug'`                 | URL for the debug page.                                                                                       |
-| `externalLinks`                  | `[]`                      | External link lists info for sidebar.                                                                         |
-| `externalLinks[].name`           | -                         | External link text.                                                                                           |
-| `externalLinks[].url`            | -                         | External link.                                                                                                |
-| `formatStringMonthAndDay`        | `'MM/DD'`                 | `formatString` for month and day.                                                                             |
-| `formatStringTime`               | `'HH:mm:ss'`              | `formatString` for time.                                                                                      |
-| `formatStringYear`               | `'YYYY'`                  | `formatString` for year.                                                                                      |
-| `locale`                         | `'en-US'`                 | Locale.See [MDN](https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale) . |
-| `pagesPath`                      | `'pages'`                 | URL for the pagination after 2nd pages.                                                                       |
-| `playgroundPath`                 | `'playground'`            | URL for the playground page.                                                                                  |
-| `postPath`                       | `'post'`                  | URL for the post page.                                                                                        |
-| `postsPerPage`                   | `6`                       | The number of posts in 1 page at main page.                                                                   |
-| `rssNeedFullContent`             | `false`                   | Contain full content into the field of `MarkdownPost.rssContentEncoded` for RSS.                              |
-| `rssPruneLength`                 | `128`                     | The prune length of the field of `MarkdownPost.rssDescription` for RSS.                                       |
-| `rssTruncate`                    | `false`                   | Truncate texts of the field of `MarkdownPost.rssContentEncoded` and `MarkdownPost.rssDescription` for RSS.    |
-| `tagsPath`                       | `'tags'`                  | URL for the tags page.                                                                                        |
-| `options***`                     | -                         | Plugin options. Do not set unless you understand what you are doing.                                          |
-| `optionsGatsbyRemarkImages`      | (See `gatsby-config.js` ) | `gatsby-remark-images` options. You can change image quality , `max-width` or etcetc.                         |
-| `optionsGatsbyTransformerRemark` | (See `gatsby-config.js` ) | `gatsby-transformer-remark` options. You can change `excerpt_separator` .                                     |
+| Key                              | Default Value                                                                                                      | Description                                                                                                                                             |
+| :------------------------------- | :----------------------------------------------------------------------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `archivesPath`                   | `'archives'`                                                                                                       | URL for the archives pages.                                                                                                                             |
+| `basePath`                       | `'base'`                                                                                                           | Root url for the theme.                                                                                                                                 |
+| `cardsPerPage`                   | `12`                                                                                                               | The number of cards in 1 page.                                                                                                                          |
+| `debugPath`                      | `'debug'`                                                                                                          | URL for the debug page.                                                                                                                                 |
+| `externalLinks`                  | `[]`                                                                                                               | External link lists info for sidebar.                                                                                                                   |
+| `externalLinks[].name`           | -                                                                                                                  | External link text.                                                                                                                                     |
+| `externalLinks[].url`            | -                                                                                                                  | External link.                                                                                                                                          |
+| `intlYear`                       | `{ year: 'numeric' }`                                                                                              | [Intl.DateTimeFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat) options for year.           |
+| `intlYearAndMonth`               | `{ year: 'numeric', month: 'short' }`                                                                              | [Intl.DateTimeFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat) options for year and month. |
+| `intlMonth`                      | `{ month: 'short' }`                                                                                               | [Intl.DateTimeFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat) options for month.          |
+| `intlMonthAndDate`               | `{ month: 'short', day: 'numeric'}`                                                                                | [Intl.DateTimeFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat) options for month and date. |
+| `intlTime`                       | `{ timeStyle: 'short', hour12: false}`                                                                             | [Intl.DateTimeFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat) options for time.           |
+| `locale`                         | `'en-US'`                                                                                                          | Locale.See [MDN](https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale) .                                           |
+| `pagesPath`                      | `'pages'`                                                                                                          | URL for the pagination after 2nd pages.                                                                                                                 |
+| `playgroundPath`                 | `'playground'`                                                                                                     | URL for the playground page.                                                                                                                            |
+| `postPath`                       | `'post'`                                                                                                           | URL for the post page.                                                                                                                                  |
+| `postsPerPage`                   | `6`                                                                                                                | The number of posts in 1 page at main page.                                                                                                             |
+| `rssNeedFullContent`             | `false`                                                                                                            | Contain full content into the field of `MarkdownPost.rssContentEncoded` for RSS.                                                                        |
+| `rssPruneLength`                 | `128`                                                                                                              | The prune length of the field of `MarkdownPost.rssDescription` for RSS.                                                                                 |
+| `rssTruncate`                    | `false`                                                                                                            | Truncate texts of the field of `MarkdownPost.rssContentEncoded` and `MarkdownPost.rssDescription` for RSS.                                              |
+| `tagsPath`                       | `'tags'`                                                                                                           | URL for the tags page.                                                                                                                                  |
+| `options***`                     | -                                                                                                                  | Plugin options. Do not set unless you understand what you are doing.                                                                                    |
+| `optionsGatsbyRemarkImages`      | (See [gatsby-config.mjs](https://github.com/tenpaMk2/gatsby-theme-figure-blog/blob/main/theme/gatsby-config.mjs) ) | `gatsby-remark-images` options. You can change image quality , `max-width` or etcetc.                                                                   |
+| `optionsGatsbyTransformerRemark` | (See [gatsby-config.mjs](https://github.com/tenpaMk2/gatsby-theme-figure-blog/blob/main/theme/gatsby-config.mjs) ) | `gatsby-transformer-remark` options. You can change `excerpt_separator` .                                                                               |
+
+### MarkdownPost and MarkdownPage
+
+You can create 2 types page from Markdown.
+
+MarkdownPost page is for a post page.
+You can create it by placing your markdown in the following directory.
+
+- `content/posts/post-title.md`
+  - URL: `/post-title/`
+- `content/posts/your/post/title/index.md`
+  - URL: `/your/post/title/`
+
+MarkdownPage page is for a static page.
+You can create it by placing your markdown in the following directory.
+
+- `content/pages/page-title.md`
+  - URL: `/page-title/`
+- `content/pages/your/page/title/index.md`
+  - URL: `/your/page/title/`
+
+### Frontmatter
+
+All keys of frontmatter are optional.
+
+| Key            | MarkdownPost | MarkdownPage | Description                                                               |
+| :------------- | :----------: | :----------: | :------------------------------------------------------------------------ |
+| `slug`         |      O       |      O       | Root relative URL of the page. If omitted, it is determined by file path. |
+| `title`        |      O       |      O       | Page title. If omitted, it is determined by filename.                     |
+| `canonicalUrl` |      O       |      O       | Canonical URL (absolute URL). If omitted, it is determined by `slug` .    |
+| `heroImage`    |      O       |      O       | Relative path to hero image. If omitted, default no-image image is used.  |
+| `tags`         |      O       |      -       | **Array** of tags.                                                        |
+| `date`         |      O       |      -       | Date. YAML date format is recommended such as `2023-04-01 23:30:00+9` .   |
 
 ### Excample usage
 
@@ -220,7 +257,7 @@ Place your image at `static/header.webp` .
 Place your image at `src/@tenpamk2/gatsby-theme-figure-blog/images/bio.svg` .
 Or, shadow `bio-icon.js` by placing it at `src/@tenpamk2/gatsby-theme-figure-blog/components/bio-icon.js` .
 
-### Change placeholder image
+### Change placeholder image(no-image image)
 
 Place your image at `src/@tenpamk2/gatsby-theme-figure-blog/images/no-image.png` .
 
