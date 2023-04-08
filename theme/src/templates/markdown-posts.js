@@ -43,7 +43,7 @@ export const pageQuery = graphql`
         date(formatString: "YYYY-MM-DDTHH:mm:ss.SSSZ")
         heroImage {
           childImageSharp {
-            gatsbyImageData
+            gatsbyImageData(layout: FULL_WIDTH)
           }
         }
         id
