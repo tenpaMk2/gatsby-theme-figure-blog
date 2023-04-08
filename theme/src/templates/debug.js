@@ -304,9 +304,9 @@ export const pageQuery = graphql`
       }
       cardsPerPage
       debugPath
-      formatStringMonthAndDay
-      formatStringTime
-      formatStringYear
+      intlYear
+      intlMonthAndDate
+      intlTime
       locale
       pagesPath
       playgroundPath
