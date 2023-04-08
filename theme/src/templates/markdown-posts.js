@@ -48,7 +48,7 @@ export const pageQuery = graphql`
     allMarkdownPost(sort: { date: DESC }, limit: $limit, skip: $skip) {
       nodes {
         customHast: customExcerptHast
-        dateFormal: date(formatString: "YYYY-MM-DDTHH:mm:ss.sssZ")
+        dateFormal: date(formatString: "YYYY-MM-DDTHH:mm:ss.SSSZ")
         dateMonthAndDay: date(formatString: $formatStringMonthAndDay)
         dateTime: date(formatString: $formatStringTime)
           @include(if: $needDateTime)

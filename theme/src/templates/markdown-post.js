@@ -31,7 +31,7 @@ export const postQuery = graphql`
     current: markdownPost(id: { eq: $id }) {
       canonicalUrl
       customHast
-      dateFormal: date(formatString: "YYYY-MM-DDTHH:mm:ss.sssZ")
+      dateFormal: date(formatString: "YYYY-MM-DDTHH:mm:ss.SSSZ")
       dateMonthAndDay: date(formatString: $formatStringMonthAndDay)
       dateTime: date(formatString: $formatStringTime)
         @include(if: $needDateTime)
