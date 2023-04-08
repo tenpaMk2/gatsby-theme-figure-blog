@@ -14,7 +14,7 @@ export const PostLinkCard = ({ slug }) => {
           nodes {
             heroImage {
               childImageSharp {
-                gatsbyImageData
+                gatsbyImageData(layout: FULL_WIDTH)
               }
             }
             slug
@@ -25,7 +25,7 @@ export const PostLinkCard = ({ slug }) => {
           nodes {
             heroImage {
               childImageSharp {
-                gatsbyImageData
+                gatsbyImageData(layout: FULL_WIDTH)
               }
             }
             slug
@@ -44,7 +44,6 @@ export const PostLinkCard = ({ slug }) => {
   const imageTag = image ? (
     <GatsbyImage
       image={image}
-      layout="fullWidth"
       alt="The linked post image"
       style={{ maxWidth: `${image.width < image.height ? 90 : 180}px` }}
       className="isolate basis-full" // `isolate` is needed to work around [iOS bug](https://gotohayato.com/content/556/) .
