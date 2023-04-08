@@ -60,22 +60,18 @@ export const PostLinkCard = ({ slug }) => {
 
   const title = linked?.title ?? `No title post`;
   return (
-    <section className="my-4">
+    <div className="my-4">
       <Link
         to={slug}
         className="group block overflow-hidden rounded-lg border-2 border-sky-400 bg-sky-500 no-underline hover:bg-sky-400"
       >
-        <article
-          className="flex group-hover:bg-sky-400"
-          itemScope
-          itemType="http://schema.org/Article"
-        >
+        <div className="flex group-hover:bg-sky-400">
           {imageTag}
           <div className="flex p-4">
-            <PostTitle>{title}</PostTitle>
+            <PostTitle isArticleHeader={false}>{title}</PostTitle>
           </div>
-        </article>
+        </div>
       </Link>
-    </section>
+    </div>
   );
 };

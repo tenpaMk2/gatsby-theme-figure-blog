@@ -18,9 +18,9 @@ export const PostHeader = ({
   const { basePath, tagsPath } = queryBlogConfig();
 
   const h1 = isPostPage ? (
-    <PostTitle>{title}</PostTitle>
+    <PostTitle isArticleHeader={true}>{title}</PostTitle>
   ) : (
-    <PostTitle>
+    <PostTitle isArticleHeader={true}>
       <Link to={slug} className="no-underline">
         {title}
       </Link>

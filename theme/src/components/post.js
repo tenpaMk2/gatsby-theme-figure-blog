@@ -39,12 +39,12 @@ export const Post = ({
       />
       <Border />
       <div className="flex flex-col gap-4">
-        <section
+        <div
           itemProp="articleBody"
           className="prose prose-invert max-w-full basis-full"
         >
           {react}
-        </section>
+        </div>
         {needReadMore ? (
           <p>
             <Link

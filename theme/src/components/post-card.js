@@ -42,7 +42,7 @@ export const PostCard = ({ date, slug, title, heroImage }) => {
             {/* Need the wrapper div because `content-center` has an unexpected behavior when overflow. */}
             {/* See [StackOverflow](https://stackoverflow.com/questions/34184535/change-justify-content-value-when-flex-items-overflow-container) . */}
             <div className="my-auto">
-              <PostTitle>{title}</PostTitle>
+              <PostTitle isArticleHeader={true}>{title}</PostTitle>
             </div>
           </div>
         </header>

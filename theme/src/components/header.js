@@ -37,11 +37,11 @@ export const Header = () => {
           <NavLinks />
         </nav>
       </div>
-      <h1 className="drop-shadow-title flex min-w-0 grow basis-full items-start justify-center font-sans text-2xl font-light text-white md:text-6xl">
+      <div className="drop-shadow-title flex min-w-0 grow basis-full items-start justify-center font-sans text-2xl font-light text-white md:text-6xl">
         <Link to="/" className="min-w-0">
           {title}
         </Link>
-      </h1>
+      </div>
     </header>
   );
 };
