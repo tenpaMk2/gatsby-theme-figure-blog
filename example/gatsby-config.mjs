@@ -1,6 +1,6 @@
 export default {
   siteMetadata: {
-    title: `a b c d e f g h i j k l m n`,
+    title: `Gatsby figure blog theme`,
     description: `フィギュア、ドール、プログラミング、バイク、音楽についてしゃべる`,
     siteUrl: `https://tenpamk2-blog.netlify.app`, // Must not end with a `/` . See [Gatsby doc](https://www.gatsbyjs.com/docs/location-data-from-props/#getting-the-absolute-url-of-a-page)
     author: {
