@@ -33,6 +33,9 @@ export const Clock = ({ date }) => {
     <time
       dateTime={d.toISOString()}
       className="flex flex-none flex-col justify-center text-center"
+      itemScope
+      itemType="https://schema.org/Date"
+      itemProp="dateCreated datePublished"
     >
       {year}
       {monthAndDate}
