@@ -91,6 +91,9 @@ export const createPages = async (
     basePath,
     cardsPerPage,
     debugPath,
+    intlYear,
+    intlYearAndMonth,
+    locale,
     pagesPath,
     playgroundPath,
     postsPerPage,
@@ -137,14 +140,11 @@ export const createPages = async (
         yearInfos {
           count
           yearNumber
-          yearString
         }        
         yearMonthInfos {
           count
           monthNumber
-          monthString
           yearNumber
-          yearString
         }
       }
     }
@@ -249,7 +249,7 @@ export const createPages = async (
    */
   const yearInfos = result.data.postsInfo.yearInfos || [];
 
-  yearInfos.forEach(({ count, yearNumber, yearString }) => {
+  yearInfos.forEach(({ count, yearNumber }) => {
     const yearPadded = yearNumber.toString().padStart(4, `0`);
     const pagesStartPath = slugify(basePath, archivesPath, yearPadded);
 
@@ -274,7 +274,9 @@ export const createPages = async (
           dateLessThan,
           limit: cardsPerPage,
           pagesStartPath,
-          pageTitle: yearString,
+          pageTitle: new Intl.DateTimeFormat(locale, intlYear).format(
+            new Date(yearNumber, 0)
+          ),
           skip: i * cardsPerPage,
         },
       });
@@ -286,49 +288,49 @@ export const createPages = async (
    */
   const yearMonthInfos = result.data.postsInfo.yearMonthInfos || [];
 
-  yearMonthInfos.forEach(
-    ({ count, monthNumber, monthString, yearNumber, yearString }) => {
-      const yearPadded = yearNumber.toString().padStart(4, `0`);
-      const monthPadded = (monthNumber + 1).toString().padStart(2, `0`);
+  yearMonthInfos.forEach(({ count, monthNumber, yearNumber }) => {
+    const yearPadded = yearNumber.toString().padStart(4, `0`);
+    const monthPadded = (monthNumber + 1).toString().padStart(2, `0`);
 
-      const pagesStartPath = slugify(
-        basePath,
-        archivesPath,
-        yearPadded,
-        monthPadded
-      );
+    const pagesStartPath = slugify(
+      basePath,
+      archivesPath,
+      yearPadded,
+      monthPadded
+    );
 
-      const pagesTotal = Math.ceil(count / cardsPerPage);
-      [...new Array(pagesTotal)].forEach((_, i) => {
-        const dateGreaterThanEqual = new Date(
-          yearNumber,
-          monthNumber
-        ).toISOString();
+    const pagesTotal = Math.ceil(count / cardsPerPage);
+    [...new Array(pagesTotal)].forEach((_, i) => {
+      const dateGreaterThanEqual = new Date(
+        yearNumber,
+        monthNumber
+      ).toISOString();
 
-        const upperDate = new Date(yearNumber, monthNumber + 1);
-        const dateLessThan =
-          new Date(maxPostDateISO) < upperDate
-            ? maxGraphQLDateISO
-            : upperDate.toISOString();
+      const upperDate = new Date(yearNumber, monthNumber + 1);
+      const dateLessThan =
+        new Date(maxPostDateISO) < upperDate
+          ? maxGraphQLDateISO
+          : upperDate.toISOString();
 
-        createPage({
-          path:
-            i === 0
-              ? pagesStartPath
-              : pagesStartPath.slice(0, -1) + slugify(pagesPath, i + 1),
-          component: require.resolve(`./src/templates/archive.js`),
-          context: {
-            dateGreaterThanEqual,
-            dateLessThan,
-            limit: cardsPerPage,
-            pagesStartPath,
-            pageTitle: `${yearString} ${monthString}`,
-            skip: i * cardsPerPage,
-          },
-        });
+      createPage({
+        path:
+          i === 0
+            ? pagesStartPath
+            : pagesStartPath.slice(0, -1) + slugify(pagesPath, i + 1),
+        component: require.resolve(`./src/templates/archive.js`),
+        context: {
+          dateGreaterThanEqual,
+          dateLessThan,
+          limit: cardsPerPage,
+          pagesStartPath,
+          pageTitle: new Intl.DateTimeFormat(locale, intlYearAndMonth).format(
+            new Date(yearNumber, monthNumber)
+          ),
+          skip: i * cardsPerPage,
+        },
       });
-    }
-  );
+    });
+  });
 
   /**
    * Create each static markdown page.

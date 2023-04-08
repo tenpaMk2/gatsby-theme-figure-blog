@@ -19,6 +19,8 @@ export const queryBlogConfig = () => {
             url
           }
           intlYear
+          intlYearAndMonth
+          intlMonth
           intlMonthAndDate
           intlTime
           locale

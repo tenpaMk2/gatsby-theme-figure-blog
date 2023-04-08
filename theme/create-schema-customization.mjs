@@ -90,6 +90,8 @@ export const createSchemaCustomization = ({ actions }, themeOptions) => {
       debugPath: String!
       externalLinks: [ExternalLink]!
       intlYear: JSON!
+      intlYearAndMonth: JSON!
+      intlMonth: JSON!
       intlMonthAndDate: JSON!
       intlTime: JSON!
       locale: String!
@@ -123,15 +125,12 @@ export const createSchemaCustomization = ({ actions }, themeOptions) => {
     type YearInfo {
       count: Int!
       yearNumber: Int!
-      yearString: String!
     }
 
     type YearMonthInfo {
       count: Int!
       monthNumber: Int!
-      monthString: String!
       yearNumber: Int!
-      yearString: String!
     }
   `;
   createTypes(typeDefs);
@@ -308,20 +307,15 @@ export const createSchemaCustomization = ({ actions }, themeOptions) => {
             yearMonthInfos.map((info) => [info.yearNumber, info])
           );
 
-          const yearInfos = [...uniqueMap.values()].map(
-            ({ yearNumber, yearString }) => {
-              // Sum the monthly counts.
-              const infos = yearMonthInfos.filter(
-                ({ yearNumber: y }) => y === yearNumber
-              );
-              const count = infos.reduce(
-                (total, { count }) => total + count,
-                0
-              );
+          const yearInfos = [...uniqueMap.values()].map(({ yearNumber }) => {
+            // Sum the monthly counts.
+            const infos = yearMonthInfos.filter(
+              ({ yearNumber: y }) => y === yearNumber
+            );
+            const count = infos.reduce((total, { count }) => total + count, 0);
 
-              return { yearNumber, yearString, count };
-            }
-          );
+            return { yearNumber, count };
+          });
 
           return yearInfos.sort(
             ({ yearNumber: a }, { yearNumber: b }) => b - a
@@ -345,17 +339,15 @@ export const createSchemaCustomization = ({ actions }, themeOptions) => {
           const allDateInfos = [...postsIterator].map(({ date }) => {
             const d = new Date(date);
             const yearNumber = d.getFullYear();
-            const yearString = d.toLocaleString(locale, { year: `numeric` });
             const monthNumber = d.getMonth();
-            const monthString = d.toLocaleString(locale, { month: `short` });
 
-            return { yearNumber, yearString, monthNumber, monthString };
+            return { yearNumber, monthNumber };
           });
 
           // Remove duplicates.
           const uniqueMap = new Map(
             allDateInfos.map((info) => [
-              `${info.yearString} ${info.monthString}`,
+              `${info.yearNumber} ${info.monthNumber}`,
               info,
             ])
           );

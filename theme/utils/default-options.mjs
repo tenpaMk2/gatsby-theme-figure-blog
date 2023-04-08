@@ -19,6 +19,8 @@ export const getOptions = (themeOptions) => ({
     debugPath: `debug`,
     externalLinks: [],
     intlYear: { year: `numeric` },
+    intlYearAndMonth: { year: `numeric`, month: `short` },
+    intlMonth: { month: `short` },
     intlMonthAndDate: {
       month: `short`,
       day: `numeric`,

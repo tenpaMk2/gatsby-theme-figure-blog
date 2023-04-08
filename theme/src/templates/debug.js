@@ -141,14 +141,11 @@ export default ({
 
   const yearRows = yearInfos
     .sort((a, b) => (a.yearNumber < b.yearNumber ? -1 : 1))
-    .map(({ count, yearNumber, yearString }) => (
-      <Row key={yearNumber} items={[yearNumber, yearString, count]} />
+    .map(({ count, yearNumber }) => (
+      <Row key={yearNumber} items={[yearNumber, count]} />
     ));
   const yearInfosTable = (
-    <Table
-      title="Year infos"
-      headers={["`yearNumber`", "`yearString`", "`count`"]}
-    >
+    <Table title="Year infos" headers={["`yearNumber`", "`count`"]}>
       {yearRows}
     </Table>
   );
@@ -164,22 +161,16 @@ export default ({
         ? -1
         : 1
     )
-    .map(({ count, monthNumber, monthString, yearNumber, yearString }) => (
+    .map(({ count, monthNumber, yearNumber }) => (
       <Row
-        key={`${yearNumber}${monthNumber}`}
-        items={[yearNumber, yearString, monthNumber, monthString, count]}
+        key={`${yearNumber} ${monthNumber}`}
+        items={[yearNumber, monthNumber, count]}
       />
     ));
   const yearMonthInfosTable = (
     <Table
       title="Year month infos"
-      headers={[
-        "`yearNumber`",
-        "`yearString`",
-        "`monthNumber`",
-        "`monthString`",
-        "`count`",
-      ]}
+      headers={["`yearNumber`", "`monthNumber`", "`count`"]}
     >
       {yearMonthRows}
     </Table>
@@ -305,6 +296,8 @@ export const pageQuery = graphql`
       cardsPerPage
       debugPath
       intlYear
+      intlYearAndMonth
+      intlMonth
       intlMonthAndDate
       intlTime
       locale
@@ -327,14 +320,11 @@ export const pageQuery = graphql`
       yearInfos {
         count
         yearNumber
-        yearString
       }
       yearMonthInfos {
         count
         monthNumber
-        monthString
         yearNumber
-        yearString
       }
     }
     allMarkdownPost {
