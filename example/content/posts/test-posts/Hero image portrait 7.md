@@ -1,5 +1,5 @@
 ---
-date: "2023-02-24 14:11"
+date: 2023-02-24 14:11:00+9
 heroImage: "../images/sample-portrait-long.webp"
 tags:
   - フィギュア

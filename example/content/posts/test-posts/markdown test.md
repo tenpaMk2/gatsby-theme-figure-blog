@@ -164,6 +164,8 @@ _em_ .
 | left align | center align | right align |
 | :--------- | :----------: | ----------: |
 | left       |    center    |       right |
+| left       |    center    |       right |
+| left       |    center    |       right |
 ```
 
 ↓ .
@@ -171,6 +173,24 @@ _em_ .
 | left align | center align | right align |
 | :--------- | :----------: | ----------: |
 | left       |    center    |       right |
+| left       |    center    |       right |
+| left       |    center    |       right |
+
+```markdown
+| Column1 | Column2 | Column3 | Column4 | Column5 | Column6 | Column7 | Column8 | Column9 | Column10 | Column11 | Column12 | Column13 |
+| :------ | :-----: | ------: | :------ | :------ | :------ | :------ | :------ | :------ | :------- | :------- | :------- | :------- |
+| left    | center  |   right | left    | left    | left    | left    | left    | left    | left     | left     | left     | left     |
+| left    | center  |   right | left    | left    | left    | left    | left    | left    | left     | left     | left     | left     |
+| left    | center  |   right | left    | left    | left    | left    | left    | left    | left     | left     | left     | left     |
+```
+
+↓ .
+
+| Column1 | Column2 | Column3 | Column4 | Column5 | Column6 | Column7 | Column8 | Column9 | Column10 | Column11 | Column12 | Column13 |
+| :------ | :-----: | ------: | :------ | :------ | :------ | :------ | :------ | :------ | :------- | :------- | :------- | :------- |
+| left    | center  |   right | left    | left    | left    | left    | left    | left    | left     | left     | left     | left     |
+| left    | center  |   right | left    | left    | left    | left    | left    | left    | left     | left     | left     | left     |
+| left    | center  |   right | left    | left    | left    | left    | left    | left    | left     | left     | left     | left     |
 
 ## Code Block
 
