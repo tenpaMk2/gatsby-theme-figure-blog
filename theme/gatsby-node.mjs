@@ -9,6 +9,13 @@ export { createSchemaCustomization } from "./create-schema-customization.mjs";
 const require = createRequire(import.meta.url);
 
 /**
+ * Max date in ISO format for posts.
+ * The reason why the value of milliseconds is `998` is
+ * `9999-12-31T23:59:59.999Z` is the max value and used by `lt` filter in GraphQL.
+ */
+const maxDateISO = new Date(`9999-12-31T23:59:59.998Z`).toISOString();
+
+/**
  * @type {import('gatsby').GatsbyNode['sourceNodes']}
  */
 export const sourceNodes = (
@@ -235,6 +242,10 @@ export const createPages = async (
   );
   const archivesPagesStartPath = slugify(basePath, archivesPath);
 
+  const dateGreaterThanEqual = new Date(0, 0).toISOString();
+  const dateLessThan = new Date(
+    new Date(maxDateISO).getTime() + 1
+  ).toISOString();
   [...new Array(archivesPagesTotal)].forEach((_, i) => {
     createPage({
       path:
@@ -243,8 +254,8 @@ export const createPages = async (
           : archivesPagesStartPath.slice(0, -1) + slugify(pagesPath, i + 1),
       component: require.resolve(`./src/templates/archive.js`),
       context: {
-        dateGreaterThanEqual: new Date(0, 0).toISOString(),
-        dateLessThan: new Date(2999, 13).toISOString(),
+        dateGreaterThanEqual,
+        dateLessThan,
         formatStringMonthAndDay,
         formatStringTime,
         formatStringYear,
@@ -482,7 +493,7 @@ const createMarkdownPostNode = (
 
   const fieldData = {
     canonicalUrl: node.frontmatter?.canonicalUrl || ``,
-    date: node.frontmatter?.date || new Date(2999, 1, 1).toISOString(),
+    date: node.frontmatter?.date || maxDateISO,
     heroImage: node.frontmatter?.heroImage,
     slug,
     tags: modifiedTags,
