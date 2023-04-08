@@ -13,7 +13,9 @@ const require = createRequire(import.meta.url);
  * The reason why the value of milliseconds is `998` is
  * `9999-12-31T23:59:59.999Z` is the max value and used by `lt` filter in GraphQL.
  */
-const maxDateISO = new Date(`9999-12-31T23:59:59.998Z`).toISOString();
+const maxPostDateISO = new Date(`9999-12-31T23:59:59.998Z`).toISOString();
+
+const maxGraphQLDateISO = new Date(`9999-12-31T23:59:59.999Z`).toISOString();
 
 /**
  * @type {import('gatsby').GatsbyNode['sourceNodes']}
@@ -224,10 +226,6 @@ export const createPages = async (
   );
   const archivesPagesStartPath = slugify(basePath, archivesPath);
 
-  const dateGreaterThanEqual = new Date(0, 0).toISOString();
-  const dateLessThan = new Date(
-    new Date(maxDateISO).getTime() + 1
-  ).toISOString();
   [...new Array(archivesPagesTotal)].forEach((_, i) => {
     createPage({
       path:
@@ -236,8 +234,8 @@ export const createPages = async (
           : archivesPagesStartPath.slice(0, -1) + slugify(pagesPath, i + 1),
       component: require.resolve(`./src/templates/archive.js`),
       context: {
-        dateGreaterThanEqual,
-        dateLessThan,
+        dateGreaterThanEqual: new Date(0, 0).toISOString(),
+        dateLessThan: maxGraphQLDateISO,
         limit: cardsPerPage,
         pagesStartPath: archivesPagesStartPath,
         pageTitle: `Archives`,
@@ -257,6 +255,14 @@ export const createPages = async (
 
     const pagesTotal = Math.ceil(count / cardsPerPage);
     [...new Array(pagesTotal)].forEach((_, i) => {
+      const dateGreaterThanEqual = new Date(yearNumber, 0).toISOString();
+
+      const upperDate = new Date(yearNumber + 1, 0);
+      const dateLessThan =
+        new Date(maxPostDateISO) < upperDate
+          ? maxGraphQLDateISO
+          : upperDate.toISOString();
+
       createPage({
         path:
           i === 0
@@ -264,8 +270,8 @@ export const createPages = async (
             : pagesStartPath.slice(0, -1) + slugify(pagesPath, i + 1),
         component: require.resolve(`./src/templates/archive.js`),
         context: {
-          dateGreaterThanEqual: new Date(yearNumber, 0).toISOString(),
-          dateLessThan: new Date(yearNumber + 1, 0).toISOString(),
+          dateGreaterThanEqual,
+          dateLessThan,
           limit: cardsPerPage,
           pagesStartPath,
           pageTitle: yearString,
@@ -294,6 +300,17 @@ export const createPages = async (
 
       const pagesTotal = Math.ceil(count / cardsPerPage);
       [...new Array(pagesTotal)].forEach((_, i) => {
+        const dateGreaterThanEqual = new Date(
+          yearNumber,
+          monthNumber
+        ).toISOString();
+
+        const upperDate = new Date(yearNumber, monthNumber + 1);
+        const dateLessThan =
+          new Date(maxPostDateISO) < upperDate
+            ? maxGraphQLDateISO
+            : upperDate.toISOString();
+
         createPage({
           path:
             i === 0
@@ -301,11 +318,8 @@ export const createPages = async (
               : pagesStartPath.slice(0, -1) + slugify(pagesPath, i + 1),
           component: require.resolve(`./src/templates/archive.js`),
           context: {
-            dateGreaterThanEqual: new Date(
-              yearNumber,
-              monthNumber
-            ).toISOString(),
-            dateLessThan: new Date(yearNumber, monthNumber + 1).toISOString(),
+            dateGreaterThanEqual,
+            dateLessThan,
             limit: cardsPerPage,
             pagesStartPath,
             pageTitle: `${yearString} ${monthString}`,
@@ -460,7 +474,7 @@ const createMarkdownPostNode = (
 
   const fieldData = {
     canonicalUrl: node.frontmatter?.canonicalUrl || ``,
-    date: node.frontmatter?.date || maxDateISO,
+    date: node.frontmatter?.date || maxPostDateISO,
     heroImage: node.frontmatter?.heroImage,
     slug,
     tags: modifiedTags,
