@@ -89,9 +89,9 @@ export const createSchemaCustomization = ({ actions }, themeOptions) => {
       cardsPerPage: Int!
       debugPath: String!
       externalLinks: [ExternalLink]!
-      formatStringMonthAndDay: String!
-      formatStringTime: String!
-      formatStringYear: String!
+      intlYear: JSON!
+      intlMonthAndDate: JSON!
+      intlTime: JSON!
       locale: String!
       pagesPath: String!
       playgroundPath: String!

@@ -8,10 +8,7 @@ import { hastToReactComponents } from "../libs/hast-to-jsx-runtime";
 
 export const Post = ({
   customHast,
-  dateFormal,
-  dateMonthAndDay,
-  dateTime,
-  dateYear,
+  date,
   heroImage,
   isPostPage,
   location,
@@ -32,10 +29,7 @@ export const Post = ({
     >
       <PostHeader
         {...{
-          dateFormal,
-          dateMonthAndDay,
-          dateTime,
-          dateYear,
+          date,
           heroImage,
           isPostPage,
           slug,

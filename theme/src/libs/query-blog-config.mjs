@@ -18,9 +18,9 @@ export const queryBlogConfig = () => {
             name
             url
           }
-          formatStringMonthAndDay
-          formatStringTime
-          formatStringYear
+          intlYear
+          intlMonthAndDate
+          intlTime
           locale
           pagesPath
           playgroundPath

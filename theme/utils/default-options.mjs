@@ -20,6 +20,15 @@ export const getOptions = (themeOptions) => ({
   formatStringMonthAndDay: themeOptions.formatStringMonthAndDay || `MM/DD`,
   formatStringTime: themeOptions.formatStringTime ?? `HH:mm:ss`,
   formatStringYear: themeOptions.formatStringYear ?? `YYYY`,
+  intlYear: themeOptions.intlYear || { year: `numeric` },
+  intlMonthAndDate: themeOptions.intlMonthAndDate || {
+    month: `short`,
+    day: `numeric`,
+  },
+  intlTime: themeOptions.intlTime || {
+    timeStyle: `short`,
+    hour12: false,
+  },
   locale: themeOptions.locale || `en-US`,
   pagesPath: themeOptions.pagesPath ?? `pages`,
   playgroundPath: themeOptions.playgroundPath || `playground`,

@@ -17,8 +17,8 @@ export default ({
     console.warn(`No posts!!`);
   }
 
-  posts.forEach(({ dateFormal, id }) => {
-    validateDate(dateFormal, id);
+  posts.forEach(({ date, id }) => {
+    validateDate(date, id);
   });
 
   const props = { posts, pageTitle, pagesStartPath, currentPage, pageCount };
@@ -33,12 +33,7 @@ export const pageQuery = graphql`
   query (
     $dateGreaterThanEqual: Date
     $dateLessThan: Date
-    $formatStringMonthAndDay: String
-    $formatStringTime: String
-    $formatStringYear: String
     $limit: Int!
-    $needDateTime: Boolean!
-    $needDateYear: Boolean!
     $skip: Int!
   ) {
     allMarkdownPost(
@@ -48,12 +43,7 @@ export const pageQuery = graphql`
       sort: { date: DESC }
     ) {
       nodes {
-        dateFormal: date(formatString: "YYYY-MM-DDTHH:mm:ss.SSSZ")
-        dateMonthAndDay: date(formatString: $formatStringMonthAndDay)
-        dateTime: date(formatString: $formatStringTime)
-          @include(if: $needDateTime)
-        dateYear: date(formatString: $formatStringYear)
-          @include(if: $needDateYear)
+        date(formatString: "YYYY-MM-DDTHH:mm:ss.SSSZ")
         heroImage {
           childImageSharp {
             gatsbyImageData

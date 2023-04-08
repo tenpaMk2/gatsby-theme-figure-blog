@@ -5,15 +5,7 @@ import { Border } from "./border";
 import { Clock } from "./clock";
 import { PostTitle } from "./post-title";
 
-export const PostCard = ({
-  dateFormal,
-  dateMonthAndDay,
-  dateTime,
-  dateYear,
-  slug,
-  title,
-  heroImage,
-}) => {
+export const PostCard = ({ date, slug, title, heroImage }) => {
   const image = getImage(heroImage);
   const isPortrait = image?.width < image?.height;
   const imageTag = image ? (
@@ -44,7 +36,7 @@ export const PostCard = ({
             isPortrait ? `flex-col` : `flex-row`
           }`}
         >
-          <Clock {...{ dateFormal, dateMonthAndDay, dateTime, dateYear }} />
+          <Clock {...{ date }} />
           <Border />
           <div className="flex content-center overflow-auto">
             {/* Need the wrapper div because `content-center` has an unexpected behavior when overflow. */}

@@ -8,10 +8,7 @@ import { Clock } from "./clock";
 import { PostTitle } from "./post-title";
 
 export const PostHeader = ({
-  dateFormal,
-  dateMonthAndDay,
-  dateTime,
-  dateYear,
+  date,
   heroImage,
   isPostPage,
   slug,
@@ -66,9 +63,9 @@ export const PostHeader = ({
     <header className="flex flex-col gap-4">
       <div className="flex w-full grow flex-wrap gap-4">
         <div className="flex basis-full flex-wrap gap-2">
-          {dateFormal ? (
+          {date ? (
             <>
-              <Clock {...{ dateFormal, dateMonthAndDay, dateTime, dateYear }} />
+              <Clock {...{ date }} />
               <Border />
             </>
           ) : null}
