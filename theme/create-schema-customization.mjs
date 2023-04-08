@@ -366,7 +366,7 @@ export const createSchemaCustomization = ({ actions }, themeOptions) => {
             (
               { yearNumber: ay, monthNumber: am },
               { yearNumber: by, monthNumber: bm }
-            ) => by * 100 + bm - (ay * 100 + am)
+            ) => ay * 100 + am - (by * 100 + bm)
           );
         },
       };
