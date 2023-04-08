@@ -59,10 +59,10 @@ module.exports = {
               backgroundColor: `rgb(100% 100% 100% / .1)`,
             },
             "tbody > tr:nth-child(odd)": {
-              backgroundColor: `rgb(0% 0% 0% .1)`,
+              backgroundColor: `rgb(0% 0% 0% / .1)`,
             },
             "tbody > tr:nth-child(even)": {
-              backgroundColor: `rgb(0% 0% 0% .2)`,
+              backgroundColor: `rgb(0% 0% 0% / .2)`,
             },
             "ul > li::marker": {
               color: `var(--tw-prose-links)`,
