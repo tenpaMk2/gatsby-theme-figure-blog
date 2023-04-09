@@ -2,6 +2,7 @@ import React from "react";
 import { graphql } from "gatsby";
 import { Seo } from "../components/seo";
 import { PostLayout } from "../components/post-layout";
+import { getImage } from "gatsby-plugin-image";
 
 export default ({ data: { markdownPage }, location }) => {
   return <PostLayout current={markdownPage} location={location} />;
@@ -9,31 +10,30 @@ export default ({ data: { markdownPage }, location }) => {
 
 export const Head = ({
   data: {
-    markdownPage: {
-      canonicalUrl,
-      heroImageAlt,
-      seoImage: {
-        childImageSharp: { gatsbyImageData: seoImage },
-      },
-      title,
-    },
+    markdownPage: { canonicalUrl, heroImageAlt, seoImage, title },
   },
   location: { pathname },
-}) => (
-  <Seo
-    {...{
-      canonicalUrl,
-      image: {
-        src: seoImage.images.fallback.src,
-        width: seoImage.width,
-        height: seoImage.height,
-        alt: heroImageAlt,
-      },
-      pathname,
-      title,
-    }}
-  />
-);
+}) => {
+  const image = getImage(seoImage);
+
+  return (
+    <Seo
+      {...{
+        canonicalUrl,
+        image: image
+          ? {
+              src: image.images.fallback.src,
+              width: image.width,
+              height: image.height,
+              alt: heroImageAlt,
+            }
+          : undefined,
+        pathname,
+        title,
+      }}
+    />
+  );
+};
 
 export const postQuery = graphql`
   query ($id: String!) {

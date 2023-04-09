@@ -3,6 +3,7 @@ import { graphql } from "gatsby";
 import { Seo } from "../components/seo";
 import { PostLayout } from "../components/post-layout";
 import { validateDate } from "../libs/validation";
+import { getImage } from "gatsby-plugin-image";
 
 export default ({ data: { current, next, previous }, location }) => {
   validateDate(current.date, current.id);
@@ -13,31 +14,30 @@ export default ({ data: { current, next, previous }, location }) => {
 
 export const Head = ({
   data: {
-    current: {
-      canonicalUrl,
-      heroImageAlt,
-      seoImage: {
-        childImageSharp: { gatsbyImageData: seoImage },
-      },
-      title,
-    },
+    current: { canonicalUrl, heroImageAlt, seoImage, title },
   },
   location: { pathname },
-}) => (
-  <Seo
-    {...{
-      canonicalUrl,
-      image: {
-        src: seoImage.images.fallback.src,
-        width: seoImage.width,
-        height: seoImage.height,
-        alt: heroImageAlt,
-      },
-      pathname,
-      title,
-    }}
-  />
-);
+}) => {
+  const image = getImage(seoImage);
+
+  return (
+    <Seo
+      {...{
+        canonicalUrl,
+        image: image
+          ? {
+              src: image.images.fallback.src,
+              width: image.width,
+              height: image.height,
+              alt: heroImageAlt,
+            }
+          : undefined,
+        pathname,
+        title,
+      }}
+    />
+  );
+};
 
 export const postQuery = graphql`
   query ($id: String!, $nextPostId: String, $previousPostId: String) {

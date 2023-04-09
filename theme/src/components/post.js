@@ -10,6 +10,7 @@ export const Post = ({
   customHast,
   date,
   heroImage,
+  heroImageAlt,
   isPostPage,
   location,
   needReadMore,
@@ -31,6 +32,7 @@ export const Post = ({
         {...{
           date,
           heroImage,
+          heroImageAlt,
           isPostPage,
           slug,
           tags,
