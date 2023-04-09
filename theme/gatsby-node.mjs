@@ -95,7 +95,6 @@ export const createPages = async (
     intlYearAndMonth,
     locale,
     pagesPath,
-    playgroundPath,
     postsPerPage,
     tagsPath,
   } = getOptions(themeOptions);
@@ -352,16 +351,6 @@ export const createPages = async (
     createPage({
       path: slugify(basePath, debugPath),
       component: require.resolve(`./src/templates/debug.js`),
-    });
-  }
-
-  /**
-   * Create a playground page.
-   */
-  if (process.env.NODE_ENV !== `production`) {
-    createPage({
-      path: slugify(basePath, playgroundPath),
-      component: require.resolve(`./src/templates/playground.js`),
     });
   }
 };

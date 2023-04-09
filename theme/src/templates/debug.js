@@ -307,7 +307,6 @@ export const pageQuery = graphql`
       intlTime
       locale
       pagesPath
-      playgroundPath
       postPath
       postsPerPage
       rssNeedFullContent

@@ -31,7 +31,6 @@ export const getOptions = (themeOptions) => ({
     },
     locale: `en-US`,
     pagesPath: `pages`,
-    playgroundPath: `playground`,
     postPath: `post`,
     postsPerPage: 6,
     rssNeedFullContent: false,

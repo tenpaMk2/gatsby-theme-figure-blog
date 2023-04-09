@@ -25,7 +25,6 @@ export const queryBlogConfig = () => {
           intlTime
           locale
           pagesPath
-          playgroundPath
           postPath
           postsPerPage
           rssNeedFullContent

@@ -96,7 +96,6 @@ export const createSchemaCustomization = ({ actions }, themeOptions) => {
       intlTime: JSON!
       locale: String!
       pagesPath: String!
-      playgroundPath: String!
       postPath: String!
       postsPerPage: Int!
       rssNeedFullContent: Boolean!
