@@ -10,6 +10,7 @@ import { PostTitle } from "./post-title";
 export const PostHeader = ({
   date,
   heroImage,
+  heroImageAlt,
   isPostPage,
   slug,
   tags,
@@ -47,7 +48,7 @@ export const PostHeader = ({
   const imageComponent = image ? (
     <GatsbyImage
       image={image}
-      alt="Hero image"
+      alt={heroImageAlt}
       objectPosition="50% 0%"
       className="isolate aspect-video basis-full rounded" // `isolate` is needed to work around [iOS bug](https://gotohayato.com/content/556/) .
     />

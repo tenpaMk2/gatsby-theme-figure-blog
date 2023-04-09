@@ -46,6 +46,7 @@ export const pageQuery = graphql`
             gatsbyImageData(layout: FULL_WIDTH)
           }
         }
+        heroImageAlt
         id
         needReadMore
         slug

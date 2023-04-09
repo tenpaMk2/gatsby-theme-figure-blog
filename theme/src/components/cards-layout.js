@@ -10,17 +10,20 @@ export const CardsLayout = ({
   currentPage,
   pageCount,
 }) => {
-  const postCards = posts.map(({ date, slug, title, heroImage }) => (
-    <PostCard
-      key={slug}
-      {...{
-        date,
-        slug,
-        title,
-        heroImage,
-      }}
-    />
-  ));
+  const postCards = posts.map(
+    ({ date, slug, title, heroImage, heroImageAlt }) => (
+      <PostCard
+        key={slug}
+        {...{
+          date,
+          slug,
+          title,
+          heroImage,
+          heroImageAlt,
+        }}
+      />
+    )
+  );
 
   return (
     <Layout>

@@ -11,6 +11,7 @@ export const Head = ({
   data: {
     markdownPage: {
       canonicalUrl,
+      heroImageAlt,
       seoImage: {
         childImageSharp: { gatsbyImageData: seoImage },
       },
@@ -26,7 +27,7 @@ export const Head = ({
         src: seoImage.images.fallback.src,
         width: seoImage.width,
         height: seoImage.height,
-        alt: `TODO: temp`,
+        alt: heroImageAlt,
       },
       pathname,
       title,
@@ -44,6 +45,7 @@ export const postQuery = graphql`
           gatsbyImageData(layout: FULL_WIDTH)
         }
       }
+      heroImageAlt
       id
       seoImage: heroImage {
         childImageSharp {

@@ -39,6 +39,7 @@ export const createSchemaCustomization = ({ actions }, themeOptions) => {
     interface FigureBlogMarkdown {
       canonicalUrl: String
       heroImage: File
+      heroImageAlt: String
       html: String!
       id: ID!
       slug: String!
@@ -56,6 +57,7 @@ export const createSchemaCustomization = ({ actions }, themeOptions) => {
       # About \`@fileByRelativePath\` , see [Gatsby issue](https://github.com/gatsbyjs/gatsby/issues/18271) .
       # \`@fileByRelativePath\` works properly only if it has a \`File\` node as its ancestor.
       heroImage: File @fileByRelativePath
+      heroImageAlt: String
 
       html: String! @markdownRemarkResolverPassThrough(fieldName: "html")
       htmlAst: JSON! @markdownRemarkResolverPassThrough(fieldName: "htmlAst")
@@ -71,6 +73,7 @@ export const createSchemaCustomization = ({ actions }, themeOptions) => {
       canonicalUrl: String
       customHast: JSON! @customHast
       heroImage: File @fileByRelativePath
+      heroImageAlt: String
       html: String! @markdownRemarkResolverPassThrough(fieldName: "html")
       htmlAst: JSON! @markdownRemarkResolverPassThrough(fieldName: "htmlAst")
       slug: String!

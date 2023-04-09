@@ -44,6 +44,7 @@ export const pageQuery = graphql`
             gatsbyImageData(layout: FULL_WIDTH)
           }
         }
+        heroImageAlt
         slug
         title
       }

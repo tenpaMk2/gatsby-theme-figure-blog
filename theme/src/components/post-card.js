@@ -5,11 +5,11 @@ import { Border } from "./border";
 import { Clock } from "./clock";
 import { PostTitle } from "./post-title";
 
-export const PostCard = ({ date, slug, title, heroImage }) => {
+export const PostCard = ({ date, slug, title, heroImage, heroImageAlt }) => {
   const image = getImage(heroImage);
   const isPortrait = image?.width < image?.height;
   const imageTag = image ? (
-    <GatsbyImage image={image} alt="Hero image" className="basis-[56.25%]" />
+    <GatsbyImage image={image} alt={heroImageAlt} className="basis-[56.25%]" />
   ) : (
     <StaticImage
       src="../images/no-image.png"

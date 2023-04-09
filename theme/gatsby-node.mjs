@@ -410,6 +410,7 @@ const createMarkdownPageNode = (
   const fieldData = {
     canonicalUrl: node.frontmatter?.canonicalUrl || ``,
     heroImage: node.frontmatter?.heroImage,
+    heroImageAlt: node.frontmatter?.heroImageAlt,
     slug,
     title,
   };
@@ -467,6 +468,7 @@ const createMarkdownPostNode = (
     canonicalUrl: node.frontmatter?.canonicalUrl || ``,
     date: node.frontmatter?.date || maxPostDateISO,
     heroImage: node.frontmatter?.heroImage,
+    heroImageAlt: node.frontmatter?.heroImageAlt,
     slug,
     tags: modifiedTags,
     title,
