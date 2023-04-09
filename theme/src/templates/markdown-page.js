@@ -9,9 +9,10 @@ export default ({ data: { markdownPage }, location }) => {
 
 export const Head = ({
   data: {
-    markdownPage: { canonicalUrl, slug, title },
+    markdownPage: { canonicalUrl, title },
   },
-}) => <Seo {...{ canonicalUrl, pathname: slug, title }} />;
+  location: { pathname },
+}) => <Seo {...{ canonicalUrl, pathname, title }} />;
 
 export const postQuery = graphql`
   query ($id: String!) {

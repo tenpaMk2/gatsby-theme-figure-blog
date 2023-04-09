@@ -13,9 +13,10 @@ export default ({ data: { current, next, previous }, location }) => {
 
 export const Head = ({
   data: {
-    current: { canonicalUrl, slug, title },
+    current: { canonicalUrl, title },
   },
-}) => <Seo {...{ canonicalUrl, pathname: slug, title }} />;
+  location: { pathname },
+}) => <Seo {...{ canonicalUrl, pathname, title }} />;
 
 export const postQuery = graphql`
   query ($id: String!, $nextPostId: String, $previousPostId: String) {
