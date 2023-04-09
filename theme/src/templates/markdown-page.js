@@ -9,10 +9,30 @@ export default ({ data: { markdownPage }, location }) => {
 
 export const Head = ({
   data: {
-    markdownPage: { canonicalUrl, title },
+    markdownPage: {
+      canonicalUrl,
+      seoImage: {
+        childImageSharp: { gatsbyImageData: seoImage },
+      },
+      title,
+    },
   },
   location: { pathname },
-}) => <Seo {...{ canonicalUrl, pathname, title }} />;
+}) => (
+  <Seo
+    {...{
+      canonicalUrl,
+      image: {
+        src: seoImage.images.fallback.src,
+        width: seoImage.width,
+        height: seoImage.height,
+        alt: `TODO: temp`,
+      },
+      pathname,
+      title,
+    }}
+  />
+);
 
 export const postQuery = graphql`
   query ($id: String!) {
@@ -25,6 +45,11 @@ export const postQuery = graphql`
         }
       }
       id
+      seoImage: heroImage {
+        childImageSharp {
+          gatsbyImageData
+        }
+      }
       slug
       title
     }

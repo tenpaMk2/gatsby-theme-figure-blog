@@ -13,10 +13,30 @@ export default ({ data: { current, next, previous }, location }) => {
 
 export const Head = ({
   data: {
-    current: { canonicalUrl, title },
+    current: {
+      canonicalUrl,
+      seoImage: {
+        childImageSharp: { gatsbyImageData: seoImage },
+      },
+      title,
+    },
   },
   location: { pathname },
-}) => <Seo {...{ canonicalUrl, pathname, title }} />;
+}) => (
+  <Seo
+    {...{
+      canonicalUrl,
+      image: {
+        src: seoImage.images.fallback.src,
+        width: seoImage.width,
+        height: seoImage.height,
+        alt: `TODO: temp`,
+      },
+      pathname,
+      title,
+    }}
+  />
+);
 
 export const postQuery = graphql`
   query ($id: String!, $nextPostId: String, $previousPostId: String) {
@@ -30,6 +50,11 @@ export const postQuery = graphql`
         }
       }
       id
+      seoImage: heroImage {
+        childImageSharp {
+          gatsbyImageData
+        }
+      }
       slug
       tags {
         name
