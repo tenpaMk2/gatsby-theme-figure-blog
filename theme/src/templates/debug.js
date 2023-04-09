@@ -1,5 +1,6 @@
 import React from "react";
 import { graphql, Link } from "gatsby";
+import { Seo } from "../components/seo";
 
 const Row = ({ items }) => (
   <tr className="border-b border-slate-500 bg-slate-900 text-gray-400">
@@ -274,6 +275,10 @@ export default ({
     </div>
   );
 };
+
+export const Head = ({ location: { pathname } }) => (
+  <Seo {...{ pathname, title: `Debug` }} />
+);
 
 export const pageQuery = graphql`
   query {
