@@ -10,7 +10,17 @@ const Seo = ({
   applicationName = ``,
   canonicalUrl = ``,
   description = ``,
-  imagePath = noImage,
+  image: {
+    src: imageSrc,
+    width: imageWidth,
+    height: imageHeight,
+    alt: imageAlt,
+  } = {
+    src: noImage,
+    width: 800,
+    height: 450,
+    alt: `no image`,
+  },
   pathname,
   title = ``,
   children,
@@ -62,7 +72,10 @@ const Seo = ({
       author: siteMetadata.author.name,
       description: siteMetadata.description,
       url: url.href,
-      imageUrl: new URL(imagePath, siteMetadata.siteUrl).href,
+      imageUrl: new URL(imageSrc, siteMetadata.siteUrl).href,
+      imageWidth,
+      imageHeight,
+      imageAlt,
       ogType: `article`,
       ogLocale: locale,
       twitter: ``,
@@ -103,7 +116,9 @@ const Seo = ({
       <meta property="og:title" content={seo.title} />
       <meta property="og:description" content={seo.description} />
       <meta property="og:image" content={seo.imageUrl} />
-      <meta property="og:image:alt" content={seo.description} />
+      <meta property="og:image:alt" content={seo.imageAlt} />
+      <meta property="og:image:height" content={seo.imageHeight} />
+      <meta property="og:image:width" content={seo.imageWidth} />
       <meta property="og:type" content={seo.ogType} />
       <meta property="og:locale" content={seo.ogLocale} />
 
