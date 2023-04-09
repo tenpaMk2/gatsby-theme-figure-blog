@@ -1,6 +1,7 @@
 ---
 date: 2023-02-26 00:08:00+9
 heroImage: "../images/sample-portrait.jpg"
+heroImageAlt: "sample portrait"
 tags:
   - フィギュア
 ---

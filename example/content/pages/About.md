@@ -1,5 +1,6 @@
 ---
 heroImage: "../posts/images/sample-landscape.jpg"
+heroImageAlt: "sample landscape"
 ---
 
 This is about me page❗

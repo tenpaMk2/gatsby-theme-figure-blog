@@ -1,5 +1,6 @@
 ---
 heroImage: "../images/compare-left.jpg"
+heroImageAlt: "compare left"
 tags:
   - プログラミング
   - Gatsby
