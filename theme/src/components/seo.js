@@ -1,16 +1,18 @@
 import React from "react";
 import { useStaticQuery, graphql } from "gatsby";
-import { addTrailingSlash } from "../libs/add-trailing-slash";
 import noImage from "../images/no-image.png";
 import { queryBlogConfig } from "../libs/query-blog-config.mjs";
 
+const addTrailingSlash = (pathname) =>
+  /\/$/.test(pathname) ? pathname : `${pathname}/`;
+
 const Seo = ({
-  applicationName,
-  canonicalUrl,
-  description,
-  imagePath,
+  applicationName = ``,
+  canonicalUrl = ``,
+  description = ``,
+  imagePath = noImage,
   pathname,
-  title,
+  title = ``,
   children,
 }) => {
   if (pathname === undefined) {
@@ -42,25 +44,31 @@ const Seo = ({
 
   const { locale } = queryBlogConfig();
 
-  const url = new URL(siteMetadata.siteUrl);
-  url.pathname = pathname || ``;
+  const url = new URL(addTrailingSlash(pathname), siteMetadata.siteUrl);
 
-  const imageUrl = new URL(siteMetadata.siteUrl);
-  imageUrl.pathname = imagePath || noImage;
+  const seoOverride = {};
+  if (title) seoOverride.title = `${title} | ${siteMetadata.title}`;
+  if (description) seoOverride.description = description;
+  if (siteMetadata.social?.twitter)
+    seoOverride.twitter = siteMetadata.social.twitter;
+  if (canonicalUrl) seoOverride.canonicalUrl = canonicalUrl;
+  if (url.pathname === `/`) seoOverride.ogType = `website`;
 
   const seo = {
-    htmlLang: locale,
-    title: title ? `${title} | ${siteMetadata.title}` : siteMetadata.title,
-    applicationName: applicationName || ``,
-    author: siteMetadata.author?.name || ``,
-    description: description || siteMetadata.description,
-    url: addTrailingSlash(`${url.origin}${url.pathname}`),
-    imageUrl: addTrailingSlash(`${imageUrl.origin}${imageUrl.pathname}`),
-    ogType: url.pathname === `/` ? `website` : `article`,
-    ogLocale: locale,
-    twitter: siteMetadata.social?.twitter || ``,
-    canonicalUrl:
-      canonicalUrl || addTrailingSlash(`${url.origin}${url.pathname}`),
+    ...{
+      htmlLang: locale,
+      title: siteMetadata.title,
+      applicationName,
+      author: siteMetadata.author.name,
+      description: siteMetadata.description,
+      url: url.href,
+      imageUrl: new URL(imagePath, siteMetadata.siteUrl).href,
+      ogType: `article`,
+      ogLocale: locale,
+      twitter: ``,
+      canonicalUrl: url.href,
+    },
+    ...seoOverride,
   };
 
   const tag = {
