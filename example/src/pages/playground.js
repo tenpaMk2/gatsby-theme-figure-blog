@@ -27,7 +27,7 @@ const Card = ({ isPortrait, children }) => (
   </a>
 );
 
-export default () => (
+const Playground = () => (
   <div className="overflow-auto bg-slate-100">
     <h1 className="text-4xl font-bold">Playground</h1>
     <h2 className="text-2xl">Basics.</h2>
@@ -145,22 +145,22 @@ export default () => (
         className="peer block h-8 w-8 opacity-30"
         id="burger"
       />
-      <label for="burger">
+      <label htmlFor="burger">
         <p>Click me!! 1</p>
       </label>
-      <label for="burger">
+      <label htmlFor="burger">
         <p>Click me!! 2</p>
       </label>
 
       <ul className="absolute hidden w-1/3 min-w-[320px] bg-sky-200 peer-checked:block">
         <li>
-          <a href="#">Home</a>
+          <a href="/">Home</a>
         </li>
         <li>
-          <a href="#">Aboutooooooooooooooooo</a>
+          <a href="/">Aboutooooooooooooooooo</a>
         </li>
         <li>
-          <a href="#">Apps</a>
+          <a href="/">Apps</a>
         </li>
       </ul>
     </nav>
@@ -190,5 +190,7 @@ export default () => (
     <br />
   </div>
 );
+
+export default Playground;
 
 export const Head = () => <body className="bg-red-500" />;
