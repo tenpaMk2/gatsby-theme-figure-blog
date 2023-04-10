@@ -5,10 +5,6 @@ export default (themeOptions) => ({
       options: { ...{}, ...themeOptions.optionsGatsbyPluginImage },
     },
     {
-      resolve: `gatsby-plugin-postcss`,
-      options: { ...{}, ...themeOptions.optionsGatsbyPluginPostCss },
-    },
-    {
       resolve: `gatsby-plugin-sharp`,
       options: { ...{}, ...themeOptions.optionsGatsbyPluginSharp },
     },

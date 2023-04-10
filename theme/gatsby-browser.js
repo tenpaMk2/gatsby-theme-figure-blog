@@ -1,5 +1,7 @@
-// For Tailwind CSS. See [Tailwind CSS](https://tailwindcss.com/docs/guides/gatsby) .
-import "./src/styles/global.css";
+// Never import `src/styles/global.css` from here (gatsby-theme)!!
+// Import it from the project that uses this theme instead.
 
-// Style for prismjs. See [gatsby-remark-prismjs](https://www.gatsbyjs.com/plugins/gatsby-remark-prismjs/) .
+// Default style for prismjs.
+// If you want to change, import what you like from `gatsby-browser.js` in the project that uses this theme.
+// See [gatsby-remark-prismjs](https://www.gatsbyjs.com/plugins/gatsby-remark-prismjs/) .
 import "prismjs/themes/prism-tomorrow.css";

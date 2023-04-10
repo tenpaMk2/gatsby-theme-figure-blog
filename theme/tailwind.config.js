@@ -3,7 +3,6 @@ const path = require(`path`);
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
-    `./src/**/*.{js,jsx,mjs,ts,tsx}`,
     // See [Tailwind CSS | Working with third-party tools](https://tailwindcss.com/docs/content-configuration#working-with-third-party-libraries) .
     path.join(
       path.dirname(require.resolve(`@tenpamk2/gatsby-theme-figure-blog`)),
