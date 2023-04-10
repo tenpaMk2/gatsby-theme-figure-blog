@@ -1,9 +1,14 @@
+const path = require(`path`);
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
-    `${__dirname}/src/components/**/*.{js,jsx,mjs,ts,tsx}`,
-    `${__dirname}/src/pages/**/*.{js,jsx,mjs,ts,tsx}`,
-    `${__dirname}/src/templates/**/*.{js,jsx,mjs,ts,tsx}`,
+    `./src/**/*.{js,jsx,mjs,ts,tsx}`,
+    // See [Tailwind CSS | Working with third-party tools](https://tailwindcss.com/docs/content-configuration#working-with-third-party-libraries) .
+    path.join(
+      path.dirname(require.resolve(`@tenpamk2/gatsby-theme-figure-blog`)),
+      "**/*.{js,jsx,mjs,ts,tsx}"
+    ),
   ],
   theme: {
     extend: {
