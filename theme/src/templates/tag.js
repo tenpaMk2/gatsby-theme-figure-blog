@@ -45,6 +45,7 @@ export const pageQuery = graphql`
           }
         }
         heroImageAlt
+        id
         slug
         title
       }
