@@ -119,7 +119,7 @@ const urlToFullUrl = (url, baseUrl) => new URL(url, baseUrl).href;
  * @param  {string} baseUrl - The base URL. It must end with `/` if it contains directories.
  * @returns {string} The text for `<content:encoded>` for RSS.
  */
-export const excerptASTToContentEncoded = (ast, baseUrl) => {
+export const hastToContentEncoded = (ast, baseUrl) => {
   const recursive = (leaf) => {
     if (
       leaf.properties?.className?.includes(`gatsby-resp-image-background-image`)
@@ -201,60 +201,4 @@ export const excerptASTToContentEncoded = (ast, baseUrl) => {
   };
 
   return renderToStaticMarkup(recursive(ast));
-};
-
-/**
- * Decide wrapper text.
- *
- * @param  {string} tagName - Tag name.
- * @returns {[string, string]} Wrapper texts.
- */
-const decideWrapper = (tagName) => {
-  if (tagName === `code`) return ["`", "`"];
-  if (tagName === `blockquote`) return [`「`, `」`];
-
-  return [``, ``];
-};
-
-/**
- * Convert AST of remark excerpt to description for RSS.
- *
- * Ignore text inside the following tags.
- *
- * - `<ul>`
- * - `<li>`
- * - `<pre>`
- * - `<table>`
- *
- * (Unlike the `excerpt` of remark, texts in `<code>` are not ignored.)
- *
- * @param  {Object} ast - The AST of MarkdownRemark node.
- * @returns {string} The description for RSS.
- */
-export const excerptASTToDescription = (ast) => {
-  const recursive = (leaf) => {
-    if ([`ul`, `li`, `pre`, `table`].includes(leaf.tagName)) {
-      return null;
-    }
-
-    if (leaf.type === `comment`) {
-      return null;
-    }
-
-    const childrenText = leaf.children
-      ? leaf.children.map((child) => recursive(child)).join(``)
-      : leaf.value;
-
-    const [wrapperStart, wrapperEnd] = decideWrapper(leaf.tagName);
-
-    return `${wrapperStart}${childrenText}${wrapperEnd}`;
-  };
-
-  // Convert line breaks to spaces.
-  // Convert consecutive spaces to single space.
-  return (
-    recursive(ast)
-      .replace(/(\r\n|\n|\r)/gm, ` `)
-      .replace(/  +/g, ` `) || `No description.`
-  );
 };

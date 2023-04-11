@@ -1,8 +1,6 @@
+import { toText as hastToText } from "hast-util-to-text";
 import { getOptions } from "./utils/default-options.mjs";
-import {
-  excerptASTToDescription,
-  excerptASTToContentEncoded,
-} from "./utils/rss.mjs";
+import { hastToContentEncoded } from "./utils/rss.mjs";
 import { customizeHast } from "./utils/hast.mjs";
 
 /**
@@ -62,7 +60,7 @@ export const createSchemaCustomization = ({ actions }, themeOptions) => {
       html: String! @markdownRemarkResolverPassThrough(fieldName: "html")
       htmlAst: JSON! @markdownRemarkResolverPassThrough(fieldName: "htmlAst")
       needReadMore: Boolean! @needReadMore
-      rssDescription(pruneLength: Int = ${rssPruneLength}, truncate: Boolean = ${rssTruncate}): String! @rssDescription
+      rssDescription(pruneLength: Int = ${rssPruneLength}, truncate: Boolean = ${rssTruncate}): String! @excerptText
       rssContentEncoded(needFullContent: Boolean = ${rssNeedFullContent}, pruneLength: Int = ${rssPruneLength}, truncate: Boolean = ${rssTruncate}): String! @rssContentEncoded
       slug: String!
       tags: [PostTag]!
@@ -175,14 +173,14 @@ export const createSchemaCustomization = ({ actions }, themeOptions) => {
   });
 
   createFieldExtension({
-    name: `rssDescription`,
+    name: `excerptText`,
     extend() {
       return {
         async resolve(source, args, context, info) {
           const resolver = markdownRemarkResolverPassThrough(`excerptAst`);
           const hast = await resolver(source, args, context, info);
 
-          return excerptASTToDescription(hast);
+          return hastToText(hast);
         },
       };
     },
@@ -214,7 +212,7 @@ export const createSchemaCustomization = ({ actions }, themeOptions) => {
             type: `Site`,
           });
 
-          return excerptASTToContentEncoded(hast, siteUrl);
+          return hastToContentEncoded(hast, siteUrl);
         },
       };
     },
