@@ -228,6 +228,27 @@ export default ({
     </Table>
   );
 
+  const description = (
+    <div className="flex min-w-0 flex-auto flex-col gap-2">
+      <h2 className="text-2xl">{"Post: description"}</h2>
+      <div className="flex min-w-0 flex-wrap items-start gap-4">
+        {nodes.map(({ description, slug }) => (
+          <div
+            key={slug}
+            className="flex min-w-0 flex-col gap-2 rounded border bg-slate-700 p-2"
+          >
+            <h2>
+              <Link to={slug} className="text-xl font-bold underline">
+                {slug}
+              </Link>
+            </h2>
+            <div>{description}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+
   const rss = (
     <>
       <div className="flex min-w-0 flex-auto flex-col gap-2">
@@ -277,6 +298,7 @@ export default ({
       {yearMonthInfosTable}
       {figureBlogConfigTable}
       {externalLinksTable}
+      {description}
       {rss}
     </div>
   );
@@ -342,6 +364,7 @@ export const pageQuery = graphql`
     allMarkdownPost {
       nodes {
         date
+        description
         rssContentEncoded
         rssDescription
         slug
