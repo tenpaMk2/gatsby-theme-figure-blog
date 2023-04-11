@@ -116,6 +116,8 @@ export default {
       resolve: `@tenpamk2/gatsby-theme-figure-blog`,
       options: {
         basePath: ``,
+        descriptionPrunedLength: 128,
+        descriptionTruncate: true,
         externalLinks: [
           {
             name: `Asahiwa.jp(よつばとフィギュア)`,
