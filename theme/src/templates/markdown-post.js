@@ -14,7 +14,7 @@ export default ({ data: { current, next, previous }, location }) => {
 
 export const Head = ({
   data: {
-    current: { canonicalUrl, heroImageAlt, seoImage, title },
+    current: { canonicalUrl, description, heroImageAlt, seoImage, title },
   },
   location: { pathname },
 }) => {
@@ -24,6 +24,7 @@ export const Head = ({
     <Seo
       {...{
         canonicalUrl,
+        description,
         image: image
           ? {
               src: image.images.fallback.src,
@@ -45,6 +46,7 @@ export const postQuery = graphql`
       canonicalUrl
       customHast
       date(formatString: "YYYY-MM-DDTHH:mm:ss.SSSZ")
+      description
       heroImage {
         childImageSharp {
           gatsbyImageData(layout: FULL_WIDTH)

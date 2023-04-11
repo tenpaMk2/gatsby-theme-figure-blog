@@ -10,7 +10,7 @@ export default ({ data: { markdownPage }, location }) => {
 
 export const Head = ({
   data: {
-    markdownPage: { canonicalUrl, heroImageAlt, seoImage, title },
+    markdownPage: { canonicalUrl, description, heroImageAlt, seoImage, title },
   },
   location: { pathname },
 }) => {
@@ -20,6 +20,7 @@ export const Head = ({
     <Seo
       {...{
         canonicalUrl,
+        description,
         image: image
           ? {
               src: image.images.fallback.src,
