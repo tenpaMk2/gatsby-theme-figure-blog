@@ -30,12 +30,19 @@ const markdownRemarkResolverPassThrough =
  */
 export const createSchemaCustomization = ({ actions }, themeOptions) => {
   const { createFieldExtension, createTypes } = actions;
-  const { locale, rssNeedFullContent, rssPruneLength, rssTruncate } =
-    getOptions(themeOptions);
+  const {
+    descriptionPruneLength,
+    descriptionTruncate,
+    locale,
+    rssNeedFullContent,
+    rssPruneLength,
+    rssTruncate,
+  } = getOptions(themeOptions);
 
   const typeDefs = `
     interface FigureBlogMarkdown {
       canonicalUrl: String
+      description: String!
       heroImage: File
       heroImageAlt: String
       html: String!
@@ -49,6 +56,7 @@ export const createSchemaCustomization = ({ actions }, themeOptions) => {
       customHast: JSON! @customHast
       customExcerptHast: JSON! @customExcerptHast
       date: Date! @dateformat
+      description(pruneLength: Int = ${descriptionPruneLength}, truncate: Boolean = ${descriptionTruncate}): String! @excerptText
       excerpt(pruneLength: Int = ${intMax}, truncate: Boolean = true, format: MarkdownExcerptFormats = HTML): String! @markdownRemarkResolverPassThrough(fieldName: "excerpt")
       excerptAst(pruneLength: Int = ${intMax}, truncate: Boolean = true): JSON! @markdownRemarkResolverPassThrough(fieldName: "excerptAst")
 
@@ -70,6 +78,7 @@ export const createSchemaCustomization = ({ actions }, themeOptions) => {
     type MarkdownPage implements FigureBlogMarkdown & Node {
       canonicalUrl: String
       customHast: JSON! @customHast
+      description(pruneLength: Int = ${descriptionPruneLength}, truncate: Boolean = ${descriptionTruncate}): String! @excerptText
       heroImage: File @fileByRelativePath
       heroImageAlt: String
       html: String! @markdownRemarkResolverPassThrough(fieldName: "html")

@@ -300,6 +300,8 @@ export const pageQuery = graphql`
       }
       cardsPerPage
       debugPath
+      descriptionPrunedLength
+      descriptionTruncate
       intlYear
       intlYearAndMonth
       intlMonth

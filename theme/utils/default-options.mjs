@@ -17,6 +17,8 @@ export const getOptions = (themeOptions) => ({
     basePath: `base`,
     cardsPerPage: 12,
     debugPath: `debug`,
+    descriptionPrunedLength: 128,
+    descriptionTruncate: false,
     externalLinks: [],
     intlYear: { year: `numeric` },
     intlYearAndMonth: { year: `numeric`, month: `short` },

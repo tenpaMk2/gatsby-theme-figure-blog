@@ -14,6 +14,8 @@ export const queryBlogConfig = () => {
           basePath
           cardsPerPage
           debugPath
+          descriptionPrunedLength
+          descriptionTruncate
           externalLinks {
             name
             url
