@@ -183,18 +183,24 @@ export default ({
     )
     .map(({ name }) => name);
 
-  const figureBlogConfigRows = figureBlogConfigFields.map((field) => (
-    <Row
-      key={field}
-      items={[
-        field,
-        figureBlogConfig.hasOwnProperty(field) ? `Yes` : `FORGOT`,
-        typeof figureBlogConfig[field] === `object`
-          ? `**See other tables.**`
-          : JSON.stringify(figureBlogConfig[field]),
-      ]}
-    />
-  ));
+  const figureBlogConfigRows = figureBlogConfigFields.map((field) => {
+    // Ignore `options***` options.
+    if (/^options/.test(field)) return;
+
+    return (
+      <Row
+        key={field}
+        items={[
+          field,
+          figureBlogConfig.hasOwnProperty(field) ? `Yes` : `FORGOT`,
+          typeof figureBlogConfig[field] === `object`
+            ? `**See other tables.**`
+            : JSON.stringify(figureBlogConfig[field]),
+        ]}
+      />
+    );
+  });
+
   const figureBlogConfigTable = (
     <Table
       title="Figure blog config"
