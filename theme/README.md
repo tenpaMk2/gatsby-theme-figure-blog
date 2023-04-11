@@ -1,6 +1,6 @@
 # @tenpamk2/gatsby-theme-figure-blog
 
-![example-1](./images/example-1.png)
+![example-1](https://raw.githubusercontent.com/tenpaMk2/gatsby-theme-figure-blog/main/theme/images/example-1.png)
 
 The simple blogging theme that is suitable for figure photographs.
 
@@ -129,7 +129,7 @@ Link card test.
 
 you will get the following post-link-card.
 
-![post-link-card-example](./images/post-link-card.png);
+![post-link-card-example](https://raw.githubusercontent.com/tenpaMk2/gatsby-theme-figure-blog/main/theme/images/post-link-card.png);
 
 This hook works under the following conditions.
 
@@ -155,7 +155,7 @@ For example, when you write the following Markdown,
 
 you will get the following image-compare-slider.
 
-![image-compare-slider](./images/image-compare-slider.png);
+![image-compare-slider](https://raw.githubusercontent.com/tenpaMk2/gatsby-theme-figure-blog/main/theme/images/image-compare-slider.png);
 
 This hook works under the following conditions.
 
