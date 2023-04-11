@@ -260,6 +260,15 @@ Or, shadow `bio-icon.js` by placing it at `src/@tenpamk2/gatsby-theme-figure-blo
 
 Place your image at `src/@tenpamk2/gatsby-theme-figure-blog/images/no-image.png` .
 
+### Change code syntax highlight theme
+
+Import your favorite prismjs theme in `gatsby-browser.js` .
+
+```js
+// See [gatsby-remark-prismjs](https://www.gatsbyjs.com/plugins/gatsby-remark-prismjs/) .
+import "prismjs/themes/prism-tomorrow.css";
+```
+
 ## Credits
 
 |            Item             | Link                                                                           |
