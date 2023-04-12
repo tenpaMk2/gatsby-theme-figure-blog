@@ -259,6 +259,31 @@ Or, shadow `bio-icon.js` by placing it at `src/@tenpamk2/gatsby-theme-figure-blo
 ### Change placeholder image(no-image image)
 
 Place your image at `src/@tenpamk2/gatsby-theme-figure-blog/images/no-image.png` .
+Resolution should be 800 x 450.
+
+If you want to use other resolution,
+shadow the `seo.js` and change the resolution for OGP.
+
+```js
+import noImage from "../images/no-image.png";
+const Seo = ({
+  // ...
+  image: {
+    src: imageSrc,
+    width: imageWidth,
+    height: imageHeight,
+    alt: imageAlt,
+  } = {
+    src: noImage,
+    width: 800,
+    height: 450,
+    alt: `no image`,
+  },
+  // ...
+}) => {
+ // ...
+}
+```
 
 ### Change code syntax highlight theme
 
