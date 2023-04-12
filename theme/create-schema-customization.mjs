@@ -98,6 +98,8 @@ export const createSchemaCustomization = ({ actions }, themeOptions) => {
       basePath: String!
       cardsPerPage: Int!
       debugPath: String!
+      descriptionPrunedLength: Int!
+      descriptionTruncate: Boolean!
       externalLinks: [ExternalLink]!
       intlYear: JSON!
       intlYearAndMonth: JSON!
