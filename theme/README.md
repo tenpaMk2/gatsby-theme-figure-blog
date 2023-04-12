@@ -6,7 +6,7 @@ The simple blogging theme that is suitable for figure photographs.
 
 ## Demo
 
-🚧WIP🚧
+[View demo!!](https://gatsby-starter-figure-blog.netlify.app/)
 
 ## Installation
 
@@ -16,7 +16,11 @@ npm install @tenpamk2/gatsby-theme-figure-blog
 
 ### Install as a starter
 
-🚧WIP🚧
+```sh
+npx gatsby new gatsby-starter-figure-blog https://github.com/tenpaMk2/gatsby-starter-figure-blog
+```
+
+[View the starter's code.](https://github.com/tenpaMk2/gatsby-starter-figure-blog)
 
 ## Features
 
