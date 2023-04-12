@@ -357,6 +357,13 @@ Import your favorite prismjs theme in `gatsby-browser.js` .
 import "prismjs/themes/prism-tomorrow.css";
 ```
 
+### Change Markdown style
+
+This theme uses [@tailwindcss/typography](https://tailwindcss.com/docs/typography-plugin) for Markdown styling.
+
+If you wanto change the style, override `typography` option in your `tailwind.config.js` .
+See [`tailwind.config.js` of this theme](https://github.com/tenpaMk2/gatsby-theme-figure-blog/blob/main/theme/tailwind.config.js)
+
 ## Credits
 
 |            Item             | Link                                                                           |
