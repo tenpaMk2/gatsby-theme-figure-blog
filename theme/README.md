@@ -8,20 +8,6 @@ The simple blogging theme that is suitable for figure photographs.
 
 [View demo!!](https://gatsby-starter-figure-blog.netlify.app/)
 
-## Installation
-
-```sh
-npm install @tenpamk2/gatsby-theme-figure-blog
-```
-
-### Install as a starter
-
-```sh
-npx gatsby new gatsby-starter-figure-blog https://github.com/tenpaMk2/gatsby-starter-figure-blog
-```
-
-[View the starter's code.](https://github.com/tenpaMk2/gatsby-starter-figure-blog)
-
 ## Features
 
 - Make your photos look as large as possible.
@@ -36,7 +22,78 @@ npx gatsby new gatsby-starter-figure-blog https://github.com/tenpaMk2/gatsby-sta
 - Tags, archives page support
 - Cards layout support in tags and archives page
 - pagination
-- Debug and playground page support
+- Debug page support
+- Tailwind CSS support
+
+## Installation
+
+```sh
+npm install @tenpamk2/gatsby-theme-figure-blog
+```
+
+This theme use Tailwind CSS, so you need to set up plugin options and create the some file.
+You don't need to install each package since this theme specifies them as dependencies.
+
+Enable PostCSS plugin.
+
+```js
+  plugins: [
+    "gatsby-plugin-postcss",
+  ]
+```
+
+Create `postcss.config.js` in the top directory of your project.
+
+```js
+module.exports = {
+  plugins: {
+    tailwindcss: {},
+    autoprefixer: {},
+  },
+};
+```
+
+Create `tailwind.config.js` in the top directory of your project.
+Change the `content` options as you like.
+
+```js
+const defaultOptions = require(`@tenpamk2/gatsby-theme-figure-blog/tailwind.config.js`);
+
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  ...defaultOptions,
+  ...{
+    content: [
+      ...defaultOptions.content,
+      `./src/**/*.{js,jsx,mjs,ts,tsx}` // Change this as you like.
+    ],
+  },
+};
+```
+
+Create `src/styles/global.css` .
+
+```css
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+```
+
+Add `import` in `gatsby-browser.js` .
+
+```js
+import "./src/styles/global.css";
+```
+
+It's over❗
+
+### Install as a starter
+
+```sh
+npx gatsby new gatsby-starter-figure-blog https://github.com/tenpaMk2/gatsby-starter-figure-blog
+```
+
+[View the starter's code.](https://github.com/tenpaMk2/gatsby-starter-figure-blog)
 
 ## Not supported
 
