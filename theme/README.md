@@ -304,6 +304,7 @@ All keys of frontmatter are optional.
 | `title`        |      O       |      O       | Page title. If omitted, it is determined by filename.                     |
 | `canonicalUrl` |      O       |      O       | Canonical URL (absolute URL). If omitted, it is determined by `slug` .    |
 | `heroImage`    |      O       |      O       | Relative path to hero image. If omitted, default no-image image is used.  |
+| `heroImageAlt` |      O       |      O       | Alt text for hero image.                                                  |
 | `tags`         |      O       |      -       | **Array** of tags.                                                        |
 | `date`         |      O       |      -       | Date. YAML date format is recommended such as `2023-04-01 23:30:00+9` .   |
 
