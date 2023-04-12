@@ -24,6 +24,7 @@ The simple blogging theme that is suitable for figure photographs.
 - pagination
 - Debug page support
 - Tailwind CSS support
+- Partial locale support by `Intl`
 
 ## Installation
 
