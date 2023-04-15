@@ -21,7 +21,7 @@ const maxGraphQLDateISO = new Date(`9999-12-31T23:59:59.999Z`).toISOString();
  * @type {import('gatsby').GatsbyNode['sourceNodes']}
  */
 export const sourceNodes = (
-  { actions, createContentDigest, getNodesByType, reporter },
+  { actions, createContentDigest, getNode, getNodesByType, reporter },
   themeOptions
 ) => {
   const { createNode } = actions;
@@ -74,6 +74,21 @@ export const sourceNodes = (
         `"${fileAbsolutePath}" has duplicate "${excerpt_separator}"`
       );
     }
+  });
+
+  /**
+   * Check for hero image.
+   */
+  const pages = getNodesByType(`MarkdownPage`);
+  [...posts, ...pages].forEach(({ heroImage, heroImageAlt, parent }) => {
+    const { fileAbsolutePath } = getNode(parent);
+
+    if (heroImage && heroImageAlt) return;
+    if (!heroImage && !heroImageAlt) return;
+
+    reporter.warn(
+      `"${fileAbsolutePath}" has only one of \`heroImage\` and \`heroImageAlt\` .`
+    );
   });
 };
 
