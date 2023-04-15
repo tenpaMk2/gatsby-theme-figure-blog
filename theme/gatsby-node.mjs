@@ -167,8 +167,8 @@ export const sourceNodes = (
   for (const { heroImage, heroImageAlt, parent } of [...posts, ...pages]) {
     const { fileAbsolutePath } = getNode(parent);
 
-    if (heroImage && heroImageAlt) return;
-    if (!heroImage && !heroImageAlt) return;
+    if (heroImage && heroImageAlt) continue;
+    if (!heroImage && !heroImageAlt) continue;
 
     reporter.warn(
       `"${fileAbsolutePath}" has only one of \`heroImage\` and \`heroImageAlt\` .`
@@ -191,7 +191,7 @@ export const sourceNodes = (
           `date`,
         ].includes(key)
       )
-        return;
+        continue;
 
       reporter.warn(
         `"${fileAbsolutePath}" has unknown frontmatter \`${key}\` .`

@@ -134,7 +134,7 @@ const findLeftRight = (gatsbyImageNodes, { isLeft = true }) => {
 
       const tryForEachType = (type) => {
         for (const sibling of siblings) {
-          if (sibling.properties?.type !== type) return;
+          if (sibling.properties?.type !== type) continue;
 
           const gatsbyRespImageWrapper = ancestors
             .filter((ancestor) =>
