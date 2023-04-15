@@ -182,3 +182,25 @@ GHI.
 
 ![Focus on Miyu](../images/compare-left.jpg "left")
 ![Focus on Chloe](../images/compare-right.jpg "left")
+
+## Portrait check
+
+```md
+ABC.
+ABC.
+![sample1](../images/sample-portrait.jpg "left")
+DEF.
+DEF.
+![sample2](../images/sample-portrait.jpg "right")
+GHI.
+GHI.
+```
+
+ABC.
+ABC.
+![sample1](../images/sample-portrait.jpg "left")
+DEF.
+DEF.
+![sample2](../images/sample-portrait.jpg "right")
+GHI.
+GHI.
