@@ -117,6 +117,7 @@ const isGatbyImageNode = (node) =>
  * @returns {string} return.srcSet - The srcSet attribute of the `<source>` .
  * @returns {string} return.alt - The alt attribute of the `<img>` .
  * @returns {string} return.title - The title attribute of the `<img>` .
+ * @returns {string} return.maxWidth - The max-width of the gatsby image wrapper.
  * @returns {undefined} return - If the image node is not found.
  */
 const findLeftRight = (gatsbyImageNodes, { isLeft = true }) => {
@@ -130,15 +131,36 @@ const findLeftRight = (gatsbyImageNodes, { isLeft = true }) => {
       if (node.tagName !== `img`) return;
 
       const siblings = ancestors.slice(-1)[0].children;
-      siblings?.forEach((sibling) => {
-        if (sibling.properties?.type !== `image/webp`) return;
-        leftRight = {
-          src: node.properties.src,
-          srcSet: sibling.properties.srcSet,
-          alt: node.properties.alt,
-          title: node.properties.title,
-        };
-      });
+
+      const tryForEachType = (type) => {
+        siblings?.forEach((sibling) => {
+          if (sibling.properties?.type !== type) return;
+
+          const gatsbyRespImageWrapper = ancestors
+            .filter((ancestor) =>
+              ancestor.properties.className?.includes(
+                `gatsby-resp-image-wrapper`
+              )
+            )
+            .slice(-1)[0];
+          const maxWidth = gatsbyRespImageWrapper?.properties?.style
+            ?.split(`max-width:`)
+            ?.slice(-1)?.[0]
+            ?.replaceAll(`;`, ``)
+            ?.trim();
+
+          leftRight = {
+            src: node.properties.src,
+            srcSet: sibling.properties.srcSet,
+            alt: node.properties.alt,
+            title: node.properties.title,
+            maxWidth,
+          };
+        });
+      };
+
+      tryForEachType(`image/jpeg`);
+      tryForEachType(`image/webp`); // WebP is the highest priority.
     });
   });
 

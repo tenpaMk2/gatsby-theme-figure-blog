@@ -36,5 +36,9 @@ export const ImageCompareSlider = ({ left, right }) => (
         style={imgStyle}
       />
     }
+    style={{
+      margin: `0 auto`,
+      maxWidth: left.maxWidth ?? right.maxWidth,
+    }}
   />
 );
