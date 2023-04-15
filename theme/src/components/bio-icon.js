@@ -9,6 +9,6 @@ import svg from "../images/bio.svg";
  */
 export const BioIcon = () => (
   <div className="rounded-full bg-white">
-    <img src={svg} />
+    <img alt="Bio icon" src={svg} />
   </div>
 );
