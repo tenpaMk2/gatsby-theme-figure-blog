@@ -17,17 +17,21 @@ const LinkButton = ({ slug, str, count }) => (
 
 export const ArchiveList = () => {
   const {
-    postsInfo: { yearInfos, yearMonthInfos },
+    allYearInfo: { nodes: yearInfos },
+    allYearMonthInfo: { nodes: yearMonthInfos },
   } = useStaticQuery(
     graphql`
       query {
-        postsInfo {
-          yearInfos {
+        allYearInfo(sort: { yearNumber: ASC }) {
+          nodes {
             count
             yearNumber
           }
-          yearMonthInfos {
+        }
+        allYearMonthInfo(sort: { keyForSort: ASC }) {
+          nodes {
             count
+            keyForSort
             monthNumber
             yearNumber
           }

@@ -6,12 +6,12 @@ import { SidebarItemLayout } from "./sidebar-item-layout";
 
 export const TagCloud = () => {
   const {
-    postsInfo: { tagInfos },
+    allTagInfo: { nodes: tagInfos },
   } = useStaticQuery(
     graphql`
       query {
-        postsInfo {
-          tagInfos {
+        allTagInfo(sort: { slug: ASC }) {
+          nodes {
             count
             name
             rank

@@ -121,25 +121,19 @@ export const createSchemaCustomization = ({ actions }, themeOptions) => {
       url: String!
     }
 
-    type PostsInfo implements Node {
-      tagInfos: [TagInfo!]! @tagInfos
-      yearInfos: [YearInfo!]! @yearInfos
-      yearMonthInfos: [YearMonthInfo!]! @yearMonthInfos(locale: "${locale}")
-    }
-
-    type TagInfo {
+    type TagInfo implements Node {
       count: Int!
       name: String!
       rank: Int!
       slug: String!
     }
     
-    type YearInfo {
+    type YearInfo implements Node {
       count: Int!
       yearNumber: Int!
     }
 
-    type YearMonthInfo {
+    type YearMonthInfo implements Node {
       count: Int!
       monthNumber: Int!
       yearNumber: Int!
@@ -266,127 +260,6 @@ export const createSchemaCustomization = ({ actions }, themeOptions) => {
           );
 
           return html !== excerpt;
-        },
-      };
-    },
-  });
-
-  createFieldExtension({
-    name: `tagInfos`,
-    extend() {
-      return {
-        async resolve(source, args, context, info) {
-          const { entries: postsIterator } = await context.nodeModel.findAll({
-            type: `MarkdownPost`,
-          });
-
-          const tagsOfPosts = [...postsIterator].map(({ tags }) => tags);
-          const allTags = tagsOfPosts?.flat().filter((tag) => tag);
-          const allTagNames = allTags.map(({ name }) => name);
-          const tagInfos = [...new Set(allTagNames)].map((name) => {
-            const filtered = allTags.filter(({ name: n }) => n === name);
-            const count = filtered.length;
-            const slug = filtered[0].slug;
-
-            return { name, count, slug };
-          });
-
-          tagInfos.sort(({ count: a }, { count: b }) => a - b);
-          tagInfos.forEach((obj, i) => {
-            obj.rank = i;
-          });
-
-          tagInfos.sort(({ name: a }, { name: b }) =>
-            a.toLowerCase() < b.toLowerCase() ? -1 : 1
-          );
-
-          return tagInfos;
-        },
-      };
-    },
-  });
-
-  createFieldExtension({
-    name: `yearInfos`,
-    extend() {
-      return {
-        async resolve(source, args, context, info) {
-          const type = info.schema.getType(`PostsInfo`);
-          const resolver = type.getFields()[`yearMonthInfos`].resolve;
-
-          const postsInfo = await context.nodeModel.findOne({
-            type: `PostsInfo`,
-          });
-
-          // The `yearMonthInfos` is not existing when the node was created, so the resolver is required.
-          const yearMonthInfos = await resolver(postsInfo, args, context, info);
-
-          // Remove duplicates.
-          const uniqueMap = new Map(
-            yearMonthInfos.map((info) => [info.yearNumber, info])
-          );
-
-          const yearInfos = [...uniqueMap.values()].map(({ yearNumber }) => {
-            // Sum the monthly counts.
-            const infos = yearMonthInfos.filter(
-              ({ yearNumber: y }) => y === yearNumber
-            );
-            const count = infos.reduce((total, { count }) => total + count, 0);
-
-            return { yearNumber, count };
-          });
-
-          return yearInfos.sort(
-            ({ yearNumber: a }, { yearNumber: b }) => b - a
-          );
-        },
-      };
-    },
-  });
-
-  createFieldExtension({
-    name: `yearMonthInfos`,
-    args: {
-      locale: `String!`,
-    },
-    extend({ locale }) {
-      return {
-        async resolve(source, args, context, info) {
-          const { entries: postsIterator } = await context.nodeModel.findAll({
-            type: `MarkdownPost`,
-          });
-          const allDateInfos = [...postsIterator].map(({ date }) => {
-            const d = new Date(date);
-            const yearNumber = d.getFullYear();
-            const monthNumber = d.getMonth();
-
-            return { yearNumber, monthNumber };
-          });
-
-          // Remove duplicates.
-          const uniqueMap = new Map(
-            allDateInfos.map((info) => [
-              `${info.yearNumber} ${info.monthNumber}`,
-              info,
-            ])
-          );
-
-          const yearMonthInfos = [...uniqueMap.values()].map((info) => {
-            const count = allDateInfos.filter(
-              ({ yearNumber, monthNumber }) =>
-                yearNumber === info.yearNumber &&
-                monthNumber === info.monthNumber
-            ).length;
-
-            return { ...info, count };
-          });
-
-          return yearMonthInfos.sort(
-            (
-              { yearNumber: ay, monthNumber: am },
-              { yearNumber: by, monthNumber: bm }
-            ) => ay * 100 + am - (by * 100 + bm)
-          );
         },
       };
     },

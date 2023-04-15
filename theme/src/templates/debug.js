@@ -54,37 +54,13 @@ export default ({
   data: {
     __type: { fields },
     figureBlogConfig,
-    postsInfo,
     allMarkdownPost: { nodes },
+    allTagInfo: { nodes: tagInfos },
+    allYearInfo: { nodes: yearInfos },
+    allYearMonthInfo: { nodes: yearMonthInfos },
   },
 }) => {
-  const { tagInfos, yearInfos, yearMonthInfos } = postsInfo;
-
   const tests = [
-    {
-      category: `Existence check`,
-      description: "`postsInfo` exists?",
-      isOK: toOKOrNG(!!postsInfo),
-      message: ``,
-    },
-    {
-      category: `Existence check`,
-      description: "`tagInfos` exists?",
-      isOK: toOKOrNG(!!tagInfos),
-      message: ``,
-    },
-    {
-      category: `Existence check`,
-      description: "`yearInfos` exists?",
-      isOK: toOKOrNG(!!yearInfos),
-      message: ``,
-    },
-    {
-      category: `Existence check`,
-      description: "`yearMonthInfos` exists?",
-      isOK: toOKOrNG(!!yearMonthInfos),
-      message: ``,
-    },
     {
       category: `Post check`,
       description: `Duplicate tag-slugs?`,
@@ -129,11 +105,9 @@ export default ({
     </Table>
   );
 
-  const tagRows = tagInfos
-    .sort((a, b) => (a.name < b.name ? -1 : 1))
-    .map(({ count, name, rank, slug }) => (
-      <Row key={slug} items={[name, slug, count, rank]} />
-    ));
+  const tagRows = tagInfos.map(({ count, name, rank, slug }) => (
+    <Row key={slug} items={[name, slug, count, rank]} />
+  ));
   const tagInfosTable = (
     <Table
       title="Tag infos"
@@ -143,38 +117,27 @@ export default ({
     </Table>
   );
 
-  const yearRows = yearInfos
-    .sort((a, b) => (a.yearNumber < b.yearNumber ? -1 : 1))
-    .map(({ count, yearNumber }) => (
-      <Row key={yearNumber} items={[yearNumber, count]} />
-    ));
+  const yearRows = yearInfos.map(({ count, yearNumber }) => (
+    <Row key={yearNumber} items={[yearNumber, count]} />
+  ));
   const yearInfosTable = (
     <Table title="Year infos" headers={["`yearNumber`", "`count`"]}>
       {yearRows}
     </Table>
   );
 
-  const yearMonthRows = yearMonthInfos
-    .sort((a, b) =>
-      `${a.yearNumber.toString().padStart(4, `0`)}${a.monthNumber
-        .toString()
-        .padStart(2, `0`)}` <
-      `${b.yearNumber.toString().padStart(4, `0`)}${b.monthNumber
-        .toString()
-        .padStart(2, `0`)}`
-        ? -1
-        : 1
-    )
-    .map(({ count, monthNumber, yearNumber }) => (
+  const yearMonthRows = yearMonthInfos.map(
+    ({ count, monthNumber, yearNumber, keyForSort }) => (
       <Row
-        key={`${yearNumber} ${monthNumber}`}
-        items={[yearNumber, monthNumber, count]}
+        key={keyForSort}
+        items={[yearNumber, monthNumber, count, keyForSort]}
       />
-    ));
+    )
+  );
   const yearMonthInfosTable = (
     <Table
       title="Year month infos"
-      headers={["`yearNumber`", "`monthNumber`", "`count`"]}
+      headers={["`yearNumber`", "`monthNumber`", "`count`", "`keyForSort`"]}
     >
       {yearMonthRows}
     </Table>
@@ -322,6 +285,37 @@ export const pageQuery = graphql`
         }
       }
     }
+    allMarkdownPost {
+      nodes {
+        date
+        description
+        rssContentEncoded
+        rssDescription
+        slug
+      }
+    }
+    allTagInfo(sort: { slug: ASC }) {
+      nodes {
+        count
+        name
+        rank
+        slug
+      }
+    }
+    allYearInfo(sort: { yearNumber: ASC }) {
+      nodes {
+        count
+        yearNumber
+      }
+    }
+    allYearMonthInfo(sort: { keyForSort: ASC }) {
+      nodes {
+        count
+        keyForSort
+        monthNumber
+        yearNumber
+      }
+    }
     figureBlogConfig {
       archivesPath
       basePath
@@ -346,33 +340,6 @@ export const pageQuery = graphql`
       rssPruneLength
       rssTruncate
       tagsPath
-    }
-    postsInfo {
-      id
-      tagInfos {
-        count
-        name
-        rank
-        slug
-      }
-      yearInfos {
-        count
-        yearNumber
-      }
-      yearMonthInfos {
-        count
-        monthNumber
-        yearNumber
-      }
-    }
-    allMarkdownPost {
-      nodes {
-        date
-        description
-        rssContentEncoded
-        rssDescription
-        slug
-      }
     }
   }
 `;
