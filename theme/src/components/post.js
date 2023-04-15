@@ -26,7 +26,7 @@ export const Post = ({
     <article
       className="flex min-w-0 basis-full flex-col gap-4 overflow-x-auto rounded-xl bg-slate-700 p-2 md:p-6"
       itemScope
-      itemType="http://schema.org/Article"
+      itemType="https://schema.org/BlogPosting"
     >
       <PostHeader
         {...{

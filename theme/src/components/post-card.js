@@ -1,21 +1,54 @@
-import { Link } from "gatsby";
-import { GatsbyImage, getImage, StaticImage } from "gatsby-plugin-image";
+import { graphql, Link, useStaticQuery } from "gatsby";
+import {
+  GatsbyImage,
+  getImage,
+  getSrc,
+  StaticImage,
+} from "gatsby-plugin-image";
 import React from "react";
 import { Border } from "./border";
 import { Clock } from "./clock";
 import { PostTitle } from "./post-title";
+import noImage from "../images/no-image.png";
 
 export const PostCard = ({ date, slug, title, heroImage, heroImageAlt }) => {
   const image = getImage(heroImage);
   const isPortrait = image?.width < image?.height;
   const imageTag = image ? (
-    <GatsbyImage image={image} alt={heroImageAlt} className="basis-[56.25%]" />
+    <>
+      <meta itemProp="image" content={getSrc(heroImage)} />
+      <GatsbyImage
+        image={image}
+        alt={heroImageAlt}
+        className="basis-[56.25%]"
+      />
+    </>
   ) : (
-    <StaticImage
-      src="../images/no-image.png"
-      alt="No hero image"
-      className="basis-[56.25%]"
-    />
+    <>
+      <meta itemProp="image" content={noImage} />
+      <StaticImage
+        src="../images/no-image.png"
+        alt="No hero image"
+        className="basis-[56.25%]"
+      />
+    </>
+  );
+
+  const {
+    site: { siteMetadata },
+  } = useStaticQuery(
+    graphql`
+      query {
+        site {
+          siteMetadata {
+            author {
+              name
+            }
+            siteUrl
+          }
+        }
+      }
+    `
   );
 
   return (
@@ -28,7 +61,7 @@ export const PostCard = ({ date, slug, title, heroImage, heroImageAlt }) => {
           isPortrait ? `flex-row` : `flex-col`
         }`}
         itemScope
-        itemType="http://schema.org/Article"
+        itemType="https://schema.org/BlogPosting"
       >
         {imageTag}
         <header
@@ -36,6 +69,15 @@ export const PostCard = ({ date, slug, title, heroImage, heroImageAlt }) => {
             isPortrait ? `flex-col` : `flex-row`
           }`}
         >
+          <div
+            className="hidden"
+            itemProp="author"
+            itemScope
+            itemType="https://schema.org/Person"
+          >
+            <meta itemProp="name" content={siteMetadata.author?.name} />
+            <meta itemProp="url" content={siteMetadata.siteUrl} />
+          </div>
           <Clock {...{ date }} />
           <Border />
           <div className="flex content-center overflow-auto">

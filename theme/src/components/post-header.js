@@ -1,11 +1,17 @@
-import { Link } from "gatsby";
-import { GatsbyImage, getImage, StaticImage } from "gatsby-plugin-image";
+import { Link, graphql, useStaticQuery } from "gatsby";
+import {
+  GatsbyImage,
+  getImage,
+  getSrc,
+  StaticImage,
+} from "gatsby-plugin-image";
 import React from "react";
 import { queryBlogConfig } from "../libs/query-blog-config";
 import { slugify } from "../libs/slugify";
 import { Border } from "./border";
 import { Clock } from "./clock";
 import { PostTitle } from "./post-title";
+import noImage from "../images/no-image.png";
 
 export const PostHeader = ({
   date,
@@ -46,22 +52,55 @@ export const PostHeader = ({
 
   const image = getImage(heroImage);
   const imageComponent = image ? (
-    <GatsbyImage
-      image={image}
-      alt={heroImageAlt}
-      objectPosition="50% 0%"
-      className="isolate aspect-video basis-full rounded" // `isolate` is needed to work around [iOS bug](https://gotohayato.com/content/556/) .
-    />
+    <>
+      <meta itemProp="image" content={getSrc(heroImage)} />
+      <GatsbyImage
+        image={image}
+        alt={heroImageAlt}
+        objectPosition="50% 0%"
+        className="isolate aspect-video basis-full rounded" // `isolate` is needed to work around [iOS bug](https://gotohayato.com/content/556/) .
+      />
+    </>
   ) : (
-    <StaticImage
-      src="../images/no-image.png"
-      alt="No hero image"
-      className="isolate aspect-video basis-full rounded" // `isolate` is needed to work around [iOS bug](https://gotohayato.com/content/556/) .
-    />
+    <>
+      <meta itemProp="image" content={noImage} />
+      <StaticImage
+        src="../images/no-image.png"
+        alt="No hero image"
+        className="isolate aspect-video basis-full rounded" // `isolate` is needed to work around [iOS bug](https://gotohayato.com/content/556/) .
+      />
+    </>
+  );
+
+  const {
+    site: { siteMetadata },
+  } = useStaticQuery(
+    graphql`
+      query {
+        site {
+          siteMetadata {
+            author {
+              name
+            }
+            siteUrl
+          }
+        }
+      }
+    `
   );
 
   return (
     <header className="flex flex-col gap-4">
+      <div
+        className="hidden"
+        itemProp="author"
+        itemScope
+        itemType="https://schema.org/Person"
+      >
+        <meta itemProp="name" content={siteMetadata.author?.name} />
+        <meta itemProp="url" content={siteMetadata.siteUrl} />
+      </div>
+
       <div className="flex w-full grow flex-wrap gap-4">
         <div className="flex basis-full flex-wrap gap-2">
           {date ? (
