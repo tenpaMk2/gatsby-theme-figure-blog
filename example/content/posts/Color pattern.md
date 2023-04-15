@@ -16,7 +16,7 @@ Describe the color scheme pattern.
 | Background sub 1 | slate-700 |
 | Background sub2  | slate-900 |
 |    Text main     | gray-200  |
-|     Text sub     | gray-400  |
+|     Text sub     | gray-300  |
 |      Border      | slate-500 |
 |      Accent      |  sky-500  |
 |   Accent hover   |  sky-400  |
