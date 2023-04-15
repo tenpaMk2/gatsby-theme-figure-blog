@@ -34,7 +34,7 @@ export const SearchBar = () => {
       />
       <input type="hidden" name="sitesearch" value={siteUrl} />
       <div className="flex flex-col justify-center">
-        <button type="submit" className="w-6 text-gray-400">
+        <button type="submit" aria-label="Search" className="w-6 text-gray-400">
           <MagnifyingGlass />
         </button>
       </div>
