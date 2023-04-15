@@ -90,6 +90,30 @@ export const sourceNodes = (
       `"${fileAbsolutePath}" has only one of \`heroImage\` and \`heroImageAlt\` .`
     );
   });
+
+  /**
+   * Check for unknown frontmatter.
+   */
+  markdownRemarks.forEach(({ fileAbsolutePath, frontmatter }) => {
+    Object.keys(frontmatter).forEach((key) => {
+      if (
+        [
+          `slug`,
+          `title`,
+          `canonicalUrl`,
+          `heroImage`,
+          `heroImageAlt`,
+          `tags`,
+          `date`,
+        ].includes(key)
+      )
+        return;
+
+      reporter.warn(
+        `"${fileAbsolutePath}" has unknown frontmatter \`${key}\` .`
+      );
+    });
+  });
 };
 
 /**
