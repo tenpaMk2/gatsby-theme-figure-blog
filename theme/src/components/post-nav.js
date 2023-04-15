@@ -11,8 +11,8 @@ const PostNavLink = ({ slug, isNext, title }) => {
         isNext ? `text-right` : `text-left`
       }`}
     >
-      <p className="text-xl text-white/30">{navMessage}</p>
-      <p className="text-white/60">{title}</p>
+      <p className="gray-300 text-xl">{navMessage}</p>
+      <p className="gray-200">{title}</p>
     </Link>
   );
 };
