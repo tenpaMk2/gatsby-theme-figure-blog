@@ -131,11 +131,14 @@ export default ({
 
   const tagRows = tagInfos
     .sort((a, b) => (a.name < b.name ? -1 : 1))
-    .map(({ count, name, slug }) => (
-      <Row key={slug} items={[name, slug, count]} />
+    .map(({ count, name, rank, slug }) => (
+      <Row key={slug} items={[name, slug, count, rank]} />
     ));
   const tagInfosTable = (
-    <Table title="Tag infos" headers={["`name`", "`slug`", "`count`"]}>
+    <Table
+      title="Tag infos"
+      headers={["`name`", "`slug`", "`count`", "`rank`"]}
+    >
       {tagRows}
     </Table>
   );
@@ -349,6 +352,7 @@ export const pageQuery = graphql`
       tagInfos {
         count
         name
+        rank
         slug
       }
       yearInfos {

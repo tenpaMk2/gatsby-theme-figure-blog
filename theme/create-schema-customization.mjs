@@ -130,6 +130,7 @@ export const createSchemaCustomization = ({ actions }, themeOptions) => {
     type TagInfo {
       count: Int!
       name: String!
+      rank: Int!
       slug: String!
     }
     
@@ -290,9 +291,16 @@ export const createSchemaCustomization = ({ actions }, themeOptions) => {
             return { name, count, slug };
           });
 
-          return tagInfos.sort(({ name: a }, { name: b }) =>
+          tagInfos.sort(({ count: a }, { count: b }) => a - b);
+          tagInfos.forEach((obj, i) => {
+            obj.rank = i;
+          });
+
+          tagInfos.sort(({ name: a }, { name: b }) =>
             a.toLowerCase() < b.toLowerCase() ? -1 : 1
           );
+
+          return tagInfos;
         },
       };
     },

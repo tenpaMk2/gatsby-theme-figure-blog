@@ -14,6 +14,7 @@ export const TagCloud = () => {
           tagInfos {
             count
             name
+            rank
             slug
           }
         }
@@ -21,17 +22,23 @@ export const TagCloud = () => {
     `
   );
 
-  const counts = tagInfos.map(({ count }) => count);
-  const min = Math.min(...counts);
-  const max = Math.max(...counts);
+  const ranks = tagInfos.map(({ rank }) => rank);
+  const min = Math.min(...ranks);
+  const max = Math.max(...ranks);
 
   const { basePath, tagsPath } = queryBlogConfig();
 
-  const tagLis = tagInfos.map(({ name, slug, count }) => {
-    const textSizes = [``, `text-lg`, `text-2xl`, `text-3xl`, `text-4xl`];
+  const tagLis = tagInfos.map(({ name, rank, slug }) => {
+    const textSizes = [
+      `text-base`,
+      `text-lg`,
+      `text-2xl`,
+      `text-3xl`,
+      `text-4xl`,
+    ];
     const textSize =
       textSizes[
-        Math.floor((count - min) / ((max - min + 1) / textSizes.length))
+        Math.floor((rank - min) / ((max - min + 1) / textSizes.length))
       ];
 
     return (
