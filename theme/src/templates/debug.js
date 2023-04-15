@@ -3,7 +3,7 @@ import { graphql, Link } from "gatsby";
 import { Seo } from "../components/seo";
 
 const Row = ({ items }) => (
-  <tr className="border-b border-slate-500 bg-slate-900 text-gray-400">
+  <tr className="border-b border-slate-500 bg-slate-900 text-gray-300">
     {items.map((item, i) => (
       <td key={i} className="max-w-xs px-4 py-2">
         {item?.toString()}

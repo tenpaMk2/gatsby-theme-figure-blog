@@ -41,7 +41,7 @@ export const PostNav = ({
     <div className="min-w-0 basis-full overflow-x-auto">
       <nav className="flex min-w-min justify-center gap-2">
         {next}
-        <p className="flex flex-none items-center text-gray-400">●</p>
+        <p className="flex flex-none items-center text-gray-300">●</p>
         {previous}
       </nav>
     </div>

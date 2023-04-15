@@ -12,7 +12,7 @@ export const Clock = ({ date }) => {
   const { locale, intlYear, intlMonthAndDate, intlTime } = queryBlogConfig();
 
   const year = isEmptyObject(intlYear) ? null : (
-    <span className="text-base text-gray-400 md:text-lg">
+    <span className="text-base text-gray-300 md:text-lg">
       {new Intl.DateTimeFormat(locale, intlYear).format(d)}
     </span>
   );
@@ -24,7 +24,7 @@ export const Clock = ({ date }) => {
   );
 
   const time = isEmptyObject(intlTime) ? null : (
-    <span className="text-sm text-gray-400">
+    <span className="text-sm text-gray-300">
       {new Intl.DateTimeFormat(locale, intlTime).format(d)}
     </span>
   );
