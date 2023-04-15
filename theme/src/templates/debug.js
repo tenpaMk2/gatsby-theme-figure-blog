@@ -104,7 +104,7 @@ export default ({
     },
     {
       category: `Post check`,
-      description: `Any no date posts?`,
+      description: `No date posts?`,
       isOK: toOKOrNG(
         !yearMonthInfos.some(({ yearNumber }) => 2999 <= yearNumber)
       ),
