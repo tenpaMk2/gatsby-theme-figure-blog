@@ -24,7 +24,7 @@ export const SearchBar = () => {
       action="//google.com/search"
       method="get"
       acceptCharset="UTF-8"
-      className="flex min-w-0 rounded-full bg-white px-4 text-base text-black shadow-lg"
+      className="flex min-w-0 gap-2 overflow-hidden rounded-full bg-white px-3 text-base text-black shadow-lg"
     >
       <input
         type="search"
@@ -34,7 +34,11 @@ export const SearchBar = () => {
       />
       <input type="hidden" name="sitesearch" value={siteUrl} />
       <div className="flex flex-col justify-center">
-        <button type="submit" aria-label="Search" className="w-6 text-gray-300">
+        <button
+          type="submit"
+          aria-label="Search"
+          className="w-12 p-1 text-gray-300"
+        >
           <MagnifyingGlass />
         </button>
       </div>

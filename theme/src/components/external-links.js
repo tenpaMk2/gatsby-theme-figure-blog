@@ -7,7 +7,7 @@ export const ExternalLinks = () => {
 
   const links = externalLinks.map(({ name, url }) => {
     return (
-      <li key={url}>
+      <li key={url} className="py-1">
         <a href={url} className="underline">
           {name}
         </a>
