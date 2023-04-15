@@ -198,6 +198,20 @@ export const sourceNodes = (
       );
     });
   });
+
+  /**
+   * Check for date.
+   */
+  for (const { date, title } of posts) {
+    if (/\+\d/.test(date) || /Z$/.test(date)) continue;
+
+    reporter.warn(
+      [
+        `"${title}"'s date must specify time zone (e.g. "+9") or be in ISO 8601 format`,
+        `Otherwise, Gatsby will treat the date as UTC, not local time.`,
+      ].join(` `)
+    );
+  }
 };
 
 /**
