@@ -152,19 +152,19 @@ export const sourceNodes = (
   } = sitePlugins.filter(({ name }) => name === `gatsby-transformer-remark`)[0];
 
   const markdownRemarks = getNodesByType(`MarkdownRemark`);
-  markdownRemarks.forEach(({ fileAbsolutePath, rawMarkdownBody }) => {
+  for (const { fileAbsolutePath, rawMarkdownBody } of markdownRemarks) {
     if (3 <= rawMarkdownBody.split(excerpt_separator).length) {
       reporter.warn(
         `"${fileAbsolutePath}" has duplicate "${excerpt_separator}"`
       );
     }
-  });
+  }
 
   /**
    * Check for hero image.
    */
   const pages = getNodesByType(`MarkdownPage`);
-  [...posts, ...pages].forEach(({ heroImage, heroImageAlt, parent }) => {
+  for (const { heroImage, heroImageAlt, parent } of [...posts, ...pages]) {
     const { fileAbsolutePath } = getNode(parent);
 
     if (heroImage && heroImageAlt) return;
@@ -173,13 +173,13 @@ export const sourceNodes = (
     reporter.warn(
       `"${fileAbsolutePath}" has only one of \`heroImage\` and \`heroImageAlt\` .`
     );
-  });
+  }
 
   /**
    * Check for unknown frontmatter.
    */
-  markdownRemarks.forEach(({ fileAbsolutePath, frontmatter }) => {
-    Object.keys(frontmatter).forEach((key) => {
+  for (const { frontmatter, fileAbsolutePath } of markdownRemarks) {
+    for (const key of Object.keys(frontmatter)) {
       if (
         [
           `slug`,
@@ -196,8 +196,8 @@ export const sourceNodes = (
       reporter.warn(
         `"${fileAbsolutePath}" has unknown frontmatter \`${key}\` .`
       );
-    });
-  });
+    }
+  }
 
   /**
    * Check for date.
@@ -303,7 +303,7 @@ export const createPages = async (
   /**
    * Create each post page.
    */
-  edges.forEach(({ node, next, previous }) => {
+  for (const { node, next, previous } of edges) {
     createPage({
       path: node.slug, // `node.slug` may not start with `basePath` and `postPath` .
       component: require.resolve(`./src/templates/markdown-post.js`),
@@ -313,14 +313,13 @@ export const createPages = async (
         previousPostId: previous?.id,
       },
     });
-  });
+  }
 
   /**
    * Create main pages.
    */
   const pagesTotal = result.data.pageInfoPassthrough.pageInfo.pageCount;
-
-  [...new Array(pagesTotal)].forEach((_, i) => {
+  for (let i = 0; i < pagesTotal; i++) {
     createPage({
       path: i === 0 ? slugify(basePath) : slugify(basePath, pagesPath, i + 1),
       component: require.resolve("./src/templates/markdown-posts.js"),
@@ -330,17 +329,17 @@ export const createPages = async (
         skip: i * postsPerPage,
       },
     });
-  });
+  }
 
   /**
    * Create tag pages.
    */
   const tagInfos = result.data.allTagInfo.nodes || [];
-  tagInfos.forEach(({ name, slug, count }) => {
+  for (const { name, slug, count } of tagInfos) {
     const pagesStartPath = slugify(basePath, tagsPath, slug);
 
     const pagesTotal = Math.ceil(count / cardsPerPage);
-    [...new Array(pagesTotal)].forEach((_, i) => {
+    for (let i = 0; i < pagesTotal; i++) {
       createPage({
         path:
           i === 0
@@ -355,8 +354,8 @@ export const createPages = async (
           slug,
         },
       });
-    });
-  });
+    }
+  }
 
   /**
    * Create root archive pages.
@@ -366,7 +365,7 @@ export const createPages = async (
   );
   const archivesPagesStartPath = slugify(basePath, archivesPath);
 
-  [...new Array(archivesPagesTotal)].forEach((_, i) => {
+  for (let i = 0; i < archivesPagesTotal; i++) {
     createPage({
       path:
         i === 0
@@ -382,19 +381,19 @@ export const createPages = async (
         skip: i * cardsPerPage,
       },
     });
-  });
+  }
 
   /**
    * Create year archive pages.
    */
   const yearInfos = result.data.allYearInfo.nodes || [];
 
-  yearInfos.forEach(({ count, yearNumber }) => {
+  for (const { count, yearNumber } of yearInfos) {
     const yearPadded = yearNumber.toString().padStart(4, `0`);
     const pagesStartPath = slugify(basePath, archivesPath, yearPadded);
 
     const pagesTotal = Math.ceil(count / cardsPerPage);
-    [...new Array(pagesTotal)].forEach((_, i) => {
+    for (let i = 0; i < pagesTotal; i++) {
       const dateGreaterThanEqual = new Date(yearNumber, 0).toISOString();
 
       const upperDate = new Date(yearNumber + 1, 0);
@@ -420,15 +419,15 @@ export const createPages = async (
           skip: i * cardsPerPage,
         },
       });
-    });
-  });
+    }
+  }
 
   /**
    * Create month-and-year archive pages.
    */
   const yearMonthInfos = result.data.allYearMonthInfo.nodes || [];
 
-  yearMonthInfos.forEach(({ count, monthNumber, yearNumber }) => {
+  for (const { count, monthNumber, yearNumber } of yearMonthInfos) {
     const yearPadded = yearNumber.toString().padStart(4, `0`);
     const monthPadded = (monthNumber + 1).toString().padStart(2, `0`);
 
@@ -440,7 +439,7 @@ export const createPages = async (
     );
 
     const pagesTotal = Math.ceil(count / cardsPerPage);
-    [...new Array(pagesTotal)].forEach((_, i) => {
+    for (let i = 0; i < pagesTotal; i++) {
       const dateGreaterThanEqual = new Date(
         yearNumber,
         monthNumber
@@ -469,21 +468,21 @@ export const createPages = async (
           skip: i * cardsPerPage,
         },
       });
-    });
-  });
+    }
+  }
 
   /**
    * Create each static markdown page.
    */
-  result.data.allMarkdownPage.nodes.forEach((node) =>
+  for (const { slug, id } of result.data.allMarkdownPage.nodes) {
     createPage({
-      path: node.slug,
+      path: slug,
       component: require.resolve(`./src/templates/markdown-page.js`),
       context: {
-        id: node.id,
+        id,
       },
-    })
-  );
+    });
+  }
 
   /**
    * Create a debug page.

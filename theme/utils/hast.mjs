@@ -125,7 +125,7 @@ const findLeftRight = (gatsbyImageNodes, { isLeft = true }) => {
 
   let leftRight;
 
-  gatsbyImageNodes.forEach((gatsbyImageNode) => {
+  for (const gatsbyImageNode of gatsbyImageNodes) {
     visitParents(gatsbyImageNode, "element", (node, ancestors) => {
       if (!regex.test(node.properties?.title)) return;
       if (node.tagName !== `img`) return;
@@ -133,7 +133,7 @@ const findLeftRight = (gatsbyImageNodes, { isLeft = true }) => {
       const siblings = ancestors.slice(-1)[0].children;
 
       const tryForEachType = (type) => {
-        siblings?.forEach((sibling) => {
+        for (const sibling of siblings) {
           if (sibling.properties?.type !== type) return;
 
           const gatsbyRespImageWrapper = ancestors
@@ -156,13 +156,13 @@ const findLeftRight = (gatsbyImageNodes, { isLeft = true }) => {
             title: node.properties.title,
             maxWidth,
           };
-        });
+        }
       };
 
       tryForEachType(`image/jpeg`);
       tryForEachType(`image/webp`); // WebP is the highest priority.
     });
-  });
+  }
 
   return leftRight;
 };

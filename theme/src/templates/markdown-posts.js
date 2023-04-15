@@ -18,9 +18,9 @@ export default ({
     console.warn(`No posts!!`);
   }
 
-  nodes.forEach(({ date, id }) => {
+  for (const { date, id } of nodes) {
     validateDate(date, id);
-  });
+  }
 
   const props = {
     currentPage,

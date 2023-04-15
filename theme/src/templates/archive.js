@@ -17,9 +17,9 @@ export default ({
     console.warn(`No posts!!`);
   }
 
-  posts.forEach(({ date, id }) => {
+  for (const { date, id } of posts) {
     validateDate(date, id);
-  });
+  }
 
   const props = { posts, pageTitle, pagesStartPath, currentPage, pageCount };
   return <CardsLayout {...props} />;
