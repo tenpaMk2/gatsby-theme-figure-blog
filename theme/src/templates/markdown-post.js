@@ -56,7 +56,7 @@ export const postQuery = graphql`
       id
       seoImage: heroImage {
         childImageSharp {
-          gatsbyImageData
+          gatsbyImageData(formats: JPG, breakpoints: [2048])
         }
       }
       slug
