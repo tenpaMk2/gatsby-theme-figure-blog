@@ -65,10 +65,15 @@ export const sourceNodes = (
     return { name, count, slug };
   });
 
-  tagInfos.sort(({ count: a }, { count: b }) => a - b);
+  const countToRank = [];
+  [...new Set(tagInfos.map(({ count }) => count))]
+    .sort()
+    .forEach((count, idx) => {
+      countToRank[count] = idx;
+    });
 
-  tagInfos.forEach((info, i) => {
-    info.rank = i;
+  for (const info of tagInfos) {
+    info.rank = countToRank[info.count];
 
     createNode({
       ...info,
@@ -81,7 +86,7 @@ export const sourceNodes = (
         description: `TagInfo for @tenpamk2/gatsby-theme-figure-blog`,
       },
     });
-  });
+  }
 
   /**
    * Create year month info nodes.
