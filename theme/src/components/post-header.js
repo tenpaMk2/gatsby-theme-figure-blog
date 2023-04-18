@@ -58,7 +58,7 @@ export const PostHeader = ({
         image={image}
         alt={heroImageAlt}
         objectPosition="50% 0%"
-        className="isolate aspect-video basis-full rounded" // `isolate` is needed to work around [iOS bug](https://gotohayato.com/content/556/) .
+        className="isolate aspect-video basis-full rounded shadow-[0_0_1rem_rgb(0%_0%_0%_/_.5)]" // `isolate` is needed to work around [iOS bug](https://gotohayato.com/content/556/) .
       />
     </>
   ) : (
@@ -67,7 +67,7 @@ export const PostHeader = ({
       <StaticImage
         src="../images/no-image.png"
         alt="No hero image"
-        className="isolate aspect-video basis-full rounded" // `isolate` is needed to work around [iOS bug](https://gotohayato.com/content/556/) .
+        className="isolate aspect-video basis-full rounded shadow-[0_0_1rem_rgb(0%_0%_0%_/_.5)]" // `isolate` is needed to work around [iOS bug](https://gotohayato.com/content/556/) .
       />
     </>
   );
