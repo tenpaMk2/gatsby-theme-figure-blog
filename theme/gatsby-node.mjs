@@ -314,8 +314,8 @@ export const createPages = async (
       component: require.resolve(`./src/templates/markdown-post.js`),
       context: {
         id: node.id,
-        nextPostId: next?.id,
-        previousPostId: previous?.id,
+        nextPostId: next?.id ?? ``, // Workaround for a bug that allows post to query when `id` is undefined.
+        previousPostId: previous?.id ?? ``, // Workaround for a bug that allows post to query when `id` is undefined.
       },
     });
   }
