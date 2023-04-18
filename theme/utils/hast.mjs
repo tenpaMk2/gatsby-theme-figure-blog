@@ -209,7 +209,9 @@ const generateImageCompareSlider = async (hast) => {
     async ({ node, preNodes, left, right, postNodes }) => {
       node.type = `element`;
       node.tagName = `div`;
-      node.properties = {};
+      node.properties = {
+        style: `margin: 1rem 0;`,
+      };
       node.children = [
         ...preNodes,
         {
