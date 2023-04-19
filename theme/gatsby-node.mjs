@@ -3,6 +3,7 @@ import { parse } from "path";
 import { kebabCase } from "./src/libs/kebab-case.mjs";
 import { slugify } from "./src/libs/slugify.mjs";
 import { getOptions } from "./utils/default-options.mjs";
+import { removeUndefined } from "./src/libs/removeUndefined.mjs";
 
 export { createSchemaCustomization } from "./create-schema-customization.mjs";
 
@@ -508,7 +509,7 @@ export const createPages = async (
  * @param {string} options.slug
  * @returns {string}
  */
-const decideSlug = (relativePath, { basePaths = [], slug = `` }) => {
+const decideSlug = (relativePath = ``, { basePaths = [], slug = `` }) => {
   const { dir, name } = parse(relativePath);
   return (
     slug ||
@@ -550,14 +551,23 @@ const createMarkdownPageNode = (
     slug: node.frontmatter?.slug,
   });
 
-  const title = decideTitle(relativePath, node.frontmatter?.title);
+  const title = decideTitle(relativePath, node.frontmatter.title);
+
+  const overwrite = {
+    canonicalUrl: node.frontmatter.canonicalUrl,
+    heroImage: node.frontmatter.heroImage,
+    heroImageAlt: node.frontmatter.heroImageAlt,
+  };
 
   const fieldData = {
-    canonicalUrl: node.frontmatter?.canonicalUrl || ``,
-    heroImage: node.frontmatter?.heroImage,
-    heroImageAlt: node.frontmatter?.heroImageAlt,
-    slug,
-    title,
+    ...{
+      canonicalUrl: ``,
+      heroImage: ``,
+      heroImageAlt: ``,
+      slug,
+      title,
+    },
+    ...overwrite,
   };
 
   const id = createNodeId(`${node.id} >>> MarkdownPage`);
@@ -601,22 +611,30 @@ const createMarkdownPostNode = (
     slug: node.frontmatter?.slug,
   });
 
-  const title = decideTitle(relativePath, node.frontmatter?.title);
+  const title = decideTitle(relativePath, node.frontmatter.title);
 
-  const modifiedTags =
-    node.frontmatter.tags?.map((tag) => ({
+  const overwrite = {
+    canonicalUrl: node.frontmatter.canonicalUrl,
+    date: node.frontmatter.date,
+    heroImage: node.frontmatter.heroImage,
+    heroImageAlt: node.frontmatter.heroImageAlt,
+    tags: node.frontmatter.tags?.map((tag) => ({
       name: tag,
       slug: kebabCase(tag),
-    })) || [];
+    })),
+  };
 
   const fieldData = {
-    canonicalUrl: node.frontmatter?.canonicalUrl || ``,
-    date: node.frontmatter?.date || maxPostDateISO,
-    heroImage: node.frontmatter?.heroImage,
-    heroImageAlt: node.frontmatter?.heroImageAlt,
-    slug,
-    tags: modifiedTags,
-    title,
+    ...{
+      canonicalUrl: ``,
+      date: maxPostDateISO,
+      heroImage: ``,
+      heroImageAlt: ``,
+      slug,
+      tags: [],
+      title,
+    },
+    ...removeUndefined(overwrite),
   };
 
   const id = createNodeId(`${node.id} >>> MarkdownPost`);
