@@ -10,7 +10,14 @@ export default ({ data: { markdownPage }, location }) => {
 
 export const Head = ({
   data: {
-    markdownPage: { canonicalUrl, description, heroImageAlt, seoImage, title },
+    markdownPage: {
+      canonicalUrl,
+      description,
+      heroImageAlt,
+      isNSFW,
+      seoImage,
+      title,
+    },
   },
   location: { pathname },
 }) => {
@@ -29,6 +36,7 @@ export const Head = ({
               alt: heroImageAlt,
             }
           : undefined,
+        isNSFW,
         pathname,
         title,
       }}
@@ -48,6 +56,7 @@ export const postQuery = graphql`
       }
       heroImageAlt
       id
+      isNSFW
       seoImage: heroImage {
         childImageSharp {
           gatsbyImageData

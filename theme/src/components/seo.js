@@ -21,6 +21,7 @@ const Seo = ({
     height: 450,
     alt: `no image`,
   },
+  isNSFW = false,
   pathname,
   title = ``,
   children,
@@ -76,6 +77,7 @@ const Seo = ({
       imageWidth,
       imageHeight,
       imageAlt,
+      isNSFW,
       ogType: `article`,
       ogLocale: locale,
       twitter: ``,
@@ -91,6 +93,7 @@ const Seo = ({
     canonicalUrl: seo.canonicalUrl ? (
       <link rel="canonical" href={seo.canonicalUrl} />
     ) : null,
+    rating: seo.isNSFW ? <meta name="rating" content="adult" /> : null,
   };
 
   return (
@@ -128,6 +131,9 @@ const Seo = ({
       <meta name="twitter:creator" content={seo.twitter} />
 
       <meta name="gatsby-theme" content="@tenpamk2/gatsby-theme-figure-blog" />
+
+      {/* See [Google doc](https://developers.google.com/search/docs/crawling-indexing/safesearch) . */}
+      {tag.rating}
 
       {tag.canonicalUrl}
 

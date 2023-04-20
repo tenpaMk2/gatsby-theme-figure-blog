@@ -47,6 +47,7 @@ export const createSchemaCustomization = ({ actions }, themeOptions) => {
       heroImageAlt: String
       html: String!
       id: ID!
+      isNSFW: Boolean!
       slug: String!
       title: String!
     }
@@ -67,6 +68,7 @@ export const createSchemaCustomization = ({ actions }, themeOptions) => {
 
       html: String! @markdownRemarkResolverPassThrough(fieldName: "html")
       htmlAst: JSON! @markdownRemarkResolverPassThrough(fieldName: "htmlAst")
+      isNSFW: Boolean!
       needReadMore: Boolean! @needReadMore
       rssDescription(pruneLength: Int = ${rssPruneLength}, truncate: Boolean = ${rssTruncate}): String! @excerptText
       rssContentEncoded(needFullContent: Boolean = ${rssNeedFullContent}, pruneLength: Int = ${rssPruneLength}, truncate: Boolean = ${rssTruncate}): String! @rssContentEncoded
@@ -83,6 +85,7 @@ export const createSchemaCustomization = ({ actions }, themeOptions) => {
       heroImageAlt: String
       html: String! @markdownRemarkResolverPassThrough(fieldName: "html")
       htmlAst: JSON! @markdownRemarkResolverPassThrough(fieldName: "htmlAst")
+      isNSFW: Boolean!
       slug: String!
       title: String!
     }

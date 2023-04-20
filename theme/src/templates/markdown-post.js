@@ -14,7 +14,14 @@ export default ({ data: { current, next, previous }, location }) => {
 
 export const Head = ({
   data: {
-    current: { canonicalUrl, description, heroImageAlt, seoImage, title },
+    current: {
+      canonicalUrl,
+      description,
+      heroImageAlt,
+      isNSFW,
+      seoImage,
+      title,
+    },
   },
   location: { pathname },
 }) => {
@@ -33,6 +40,7 @@ export const Head = ({
               alt: heroImageAlt,
             }
           : undefined,
+        isNSFW,
         pathname,
         title,
       }}
@@ -54,6 +62,7 @@ export const postQuery = graphql`
       }
       heroImageAlt
       id
+      isNSFW
       seoImage: heroImage {
         childImageSharp {
           gatsbyImageData(formats: JPG, breakpoints: [2048])

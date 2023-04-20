@@ -193,6 +193,7 @@ export const sourceNodes = (
           `canonicalUrl`,
           `heroImage`,
           `heroImageAlt`,
+          `isNSFW`,
           `tags`,
           `date`,
         ].includes(key)
@@ -557,6 +558,7 @@ const createMarkdownPageNode = (
     canonicalUrl: node.frontmatter.canonicalUrl,
     heroImage: node.frontmatter.heroImage,
     heroImageAlt: node.frontmatter.heroImageAlt,
+    isNSFW: node.frontmatter.isNSFW,
   };
 
   const fieldData = {
@@ -564,6 +566,7 @@ const createMarkdownPageNode = (
       canonicalUrl: ``,
       heroImage: ``,
       heroImageAlt: ``,
+      isNSFW: false,
       slug,
       title,
     },
@@ -618,6 +621,7 @@ const createMarkdownPostNode = (
     date: node.frontmatter.date,
     heroImage: node.frontmatter.heroImage,
     heroImageAlt: node.frontmatter.heroImageAlt,
+    isNSFW: node.frontmatter.isNSFW,
     tags: node.frontmatter.tags?.map((tag) => ({
       name: tag,
       slug: kebabCase(tag),
@@ -630,6 +634,7 @@ const createMarkdownPostNode = (
       date: maxPostDateISO,
       heroImage: ``,
       heroImageAlt: ``,
+      isNSFW: false,
       slug,
       tags: [],
       title,
