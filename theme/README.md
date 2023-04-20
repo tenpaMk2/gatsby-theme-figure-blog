@@ -305,6 +305,7 @@ All keys of frontmatter are optional.
 | `canonicalUrl` |      O       |      O       | Canonical URL (absolute URL). If omitted, it is determined by `slug` .    |
 | `heroImage`    |      O       |      O       | Relative path to hero image. If omitted, default no-image image is used.  |
 | `heroImageAlt` |      O       |      O       | Alt text for hero image.                                                  |
+| `isNSFW`       |      O       |      O       | If it's `true` , the post is rated as adult content for Google.           |
 | `tags`         |      O       |      -       | **Array** of tags.                                                        |
 | `date`         |      O       |      -       | Date. YAML date format is recommended such as `2023-04-01 23:30:00+9` .   |
 
