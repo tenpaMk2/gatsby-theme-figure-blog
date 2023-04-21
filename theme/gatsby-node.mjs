@@ -570,7 +570,7 @@ const createMarkdownPageNode = (
       slug,
       title,
     },
-    ...overwrite,
+    ...removeUndefined(overwrite),
   };
 
   const id = createNodeId(`${node.id} >>> MarkdownPage`);
