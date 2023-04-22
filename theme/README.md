@@ -5,7 +5,7 @@
 [日本語READMEはこちら。](https://github.com/tenpaMk2/gatsby-theme-figure-blog/tree/main/theme)
 
 The blogging theme that is suitable for Bishoujo Figure photographs.
-You can start your own bishojo figure review blog right now❗
+You can start your own bishoujo figure review blog right now❗
 
 ## Demo
 
