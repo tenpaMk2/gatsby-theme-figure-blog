@@ -2,6 +2,8 @@
 
 ![example-1](https://raw.githubusercontent.com/tenpaMk2/gatsby-theme-figure-blog/main/theme/images/example-1.png)
 
+[English README is here.](https://github.com/tenpaMk2/gatsby-theme-figure-blog/tree/main/theme)
+
 美少女フィギュア写真に最適なブログテーマです。
 美少女フィギュアレビューブログをすぐにでも始めれます❗
 

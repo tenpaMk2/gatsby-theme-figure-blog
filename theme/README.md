@@ -2,6 +2,8 @@
 
 ![example-1](https://raw.githubusercontent.com/tenpaMk2/gatsby-theme-figure-blog/main/theme/images/example-1.png)
 
+[日本語READMEはこちら。](https://github.com/tenpaMk2/gatsby-theme-figure-blog/tree/main/theme)
+
 The blogging theme that is suitable for Bishoujo Figure photographs.
 You can start your own bishojo figure review blog right now❗
 
