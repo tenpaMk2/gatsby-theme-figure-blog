@@ -2,28 +2,33 @@
 
 ![example-1](https://raw.githubusercontent.com/tenpaMk2/gatsby-theme-figure-blog/main/theme/images/example-1.png)
 
-The simple blogging theme that is suitable for figure photographs.
+The blogging theme that is suitable for Bishoujo Figure photographs.
+You can start your own bishojo figure review blog right now❗
 
 ## Demo
 
 [View demo!!](https://gatsby-starter-figure-blog.netlify.app/)
 
+## My blog
+
+[tenpaMk2's blog](https://tenpamk2-blog.netlify.app/)
+
 ## Features
 
 - Make your photos look as large as possible.
 - Responsive
-- Hero image support
-  - If it's portrait, focus (crop) on the top side because the figure's face is usually there❗
-- Generate post title from filename.
+- Hero image
+  - If it's portrait, focus (crop) on the top side. Since the figure's face is often there❗
+- Generate post title from filename
 - Pure Markdown not MDX
 - [Special hooks](#special-hooks)
-- Code highlighting by [prism.js](https://prismjs.com/)
-- Dark Mode only
-- Tags, archives page support
+- Code highlighting by [Prism.js](https://prismjs.com/)
+- Dark mode only
+- Tags, archives pages
 - Cards layout support in tags and archives page
-- pagination
-- Debug page support
-- Tailwind CSS support
+- Pagination
+- Debug page
+- Tailwind CSS
 - Partial locale support by `Intl`
 
 ## Installation
@@ -230,19 +235,19 @@ This hook works under the following conditions.
 
 ### `siteMetadata`
 
-| Key                | example                               | Description                                     |
-| :----------------- | :------------------------------------ | :---------------------------------------------- |
-| `title`            | `'My Blog'`                           | Title of your blog.                             |
-| `description`      | `'The blog about japanese figure!!'`  | Description of your blog.                       |
-| `siteUrl`          | `'https://your-blog.com'`             | Origin of your blog. Do not end with `/` .      |
-| `author.name`      | `'your name'`                         | Author name. This is shown in bio sidebar.      |
-| `author.summary`   | `'I'm a software engineer in Japan.'` | Author summary. This is shown in bio sidebar.   |
-| `social.twitter`   | `'@youraccount'`                      | Twitter acount. Leave it blank if not needed.   |
-| `social.instagram` | `'your_account'`                      | Instagram acount. Leave it blank if not needed. |
-| `social.github`    | `'yourAccount'`                       | GitHub acount. Leave it blank if not needed.    |
-| `menuLinks`        | `[...]`                               | Menu links in nav-bar at top in header.         |
-| `menuLinks[].name` | `'About'`                             | Link text.                                      |
-| `menuLinks[].link` | `'/about/'`                           | Link.                                           |
+| Key                | example                               | Description                                    |
+| :----------------- | :------------------------------------ | :--------------------------------------------- |
+| `title`            | `'My Blog'`                           | Title of your blog.                            |
+| `description`      | `'The blog about japanese figure!!'`  | Description of your blog.                      |
+| `siteUrl`          | `'https://your-blog.com'`             | Origin of your blog. Do not end with `/` .     |
+| `author.name`      | `'your name'`                         | Author name. This is shown in bio sidebar.     |
+| `author.summary`   | `'I'm a software engineer in Japan.'` | Author summary. This is shown in bio sidebar.  |
+| `social.twitter`   | `'@youraccount'`                      | Twitter acount. Leave it `''` if not needed.   |
+| `social.instagram` | `'your_account'`                      | Instagram acount. Leave it `''` if not needed. |
+| `social.github`    | `'yourAccount'`                       | GitHub acount. Leave it `''` if not needed.    |
+| `menuLinks`        | `[...]`                               | Menu links in nav-bar at top in header.        |
+| `menuLinks[].name` | `'About'`                             | Link text.                                     |
+| `menuLinks[].link` | `'/about/'`                           | Link.                                          |
 
 ### Theme options
 
@@ -309,9 +314,10 @@ All keys of frontmatter are optional.
 | `tags`         |      O       |      -       | **Array** of tags.                                                        |
 | `date`         |      O       |      -       | Date. YAML date format is recommended such as `2023-04-01 23:30:00+9` .   |
 
-### Excample usage
+### Example usage
 
-See [gatsby-config.mjs of example](https://github.com/tenpaMk2/gatsby-theme-figure-blog/blob/main/example/gatsby-config.mjs) .
+See [gatsby-config.mjs of example](https://github.com/tenpaMk2/gatsby-theme-figure-blog/blob/main/example/gatsby-config.mjs)
+or Markdowns.
 
 ### Change header image
 
@@ -320,7 +326,9 @@ Place your image at `static/header.webp` .
 ### Change bio image
 
 Place your image at `src/@tenpamk2/gatsby-theme-figure-blog/images/bio.svg` .
-Or, shadow `bio-icon.js` by placing it at `src/@tenpamk2/gatsby-theme-figure-blog/components/bio-icon.js` .
+Or, you can do
+[shadowing](https://www.gatsbyjs.com/docs/how-to/plugins-and-themes/shadowing/)
+by creating a customized `bio-icon.js` and placing it at `src/@tenpamk2/gatsby-theme-figure-blog/components/bio-icon.js` .
 
 ### Change placeholder image(no-image image)
 
@@ -328,7 +336,7 @@ Place your image at `src/@tenpamk2/gatsby-theme-figure-blog/images/no-image.png`
 Resolution should be 800 x 450.
 
 If you want to use other resolution,
-shadow the `seo.js` and change the resolution for OGP.
+shadow the `seo.js` and change the resolution settings for OGP.
 
 ```js
 import noImage from "../images/no-image.png";
@@ -353,7 +361,7 @@ const Seo = ({
 
 ### Change code syntax highlight theme
 
-Import your favorite prismjs theme in `gatsby-browser.js` .
+Import your favorite Prism.js theme in `gatsby-browser.js` .
 
 ```js
 // See [gatsby-remark-prismjs](https://www.gatsbyjs.com/plugins/gatsby-remark-prismjs/) .
@@ -364,7 +372,7 @@ import "prismjs/themes/prism-tomorrow.css";
 
 This theme uses [@tailwindcss/typography](https://tailwindcss.com/docs/typography-plugin) for Markdown styling.
 
-If you wanto change the style, override `typography` option in your `tailwind.config.js` .
+If you want to change the style, override `typography` option in your `tailwind.config.js` .
 See [`tailwind.config.js` of this theme](https://github.com/tenpaMk2/gatsby-theme-figure-blog/blob/main/theme/tailwind.config.js)
 
 ## Credits
