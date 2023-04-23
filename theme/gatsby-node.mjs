@@ -356,7 +356,7 @@ export const createPages = async (
         context: {
           limit: cardsPerPage,
           pagesStartPath,
-          pageTitle: name,
+          pageTitle: `Tag: ${name}`,
           skip: i * cardsPerPage,
           slug,
         },
@@ -420,9 +420,10 @@ export const createPages = async (
           dateLessThan,
           limit: cardsPerPage,
           pagesStartPath,
-          pageTitle: new Intl.DateTimeFormat(locale, intlYear).format(
-            new Date(yearNumber, 0)
-          ),
+          pageTitle: `Archive: ${new Intl.DateTimeFormat(
+            locale,
+            intlYear
+          ).format(new Date(yearNumber, 0))}`,
           skip: i * cardsPerPage,
         },
       });
@@ -469,9 +470,10 @@ export const createPages = async (
           dateLessThan,
           limit: cardsPerPage,
           pagesStartPath,
-          pageTitle: new Intl.DateTimeFormat(locale, intlYearAndMonth).format(
-            new Date(yearNumber, monthNumber)
-          ),
+          pageTitle: `Archive: ${new Intl.DateTimeFormat(
+            locale,
+            intlYearAndMonth
+          ).format(new Date(yearNumber, monthNumber))}`,
           skip: i * cardsPerPage,
         },
       });

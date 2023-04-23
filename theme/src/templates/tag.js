@@ -25,9 +25,10 @@ export default ({
   return <CardsLayout {...props} />;
 };
 
-export const Head = ({ location: { pathname } }) => (
-  <Seo {...{ pathname, title: `Tag` }} />
-);
+export const Head = ({
+  location: { pathname },
+  pageContext: { pageTitle: title },
+}) => <Seo {...{ pathname, title }} />;
 
 export const pageQuery = graphql`
   query ($limit: Int!, $skip: Int!, $slug: String!) {
