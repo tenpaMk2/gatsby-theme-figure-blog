@@ -22,13 +22,13 @@ export const ArchiveList = () => {
   } = useStaticQuery(
     graphql`
       query {
-        allYearInfo(sort: { yearNumber: ASC }) {
+        allYearInfo(sort: { yearNumber: DESC }) {
           nodes {
             count
             yearNumber
           }
         }
-        allYearMonthInfo(sort: { keyForSort: ASC }) {
+        allYearMonthInfo(sort: { keyForSort: DESC }) {
           nodes {
             count
             keyForSort
