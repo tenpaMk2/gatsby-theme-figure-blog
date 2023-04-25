@@ -135,6 +135,9 @@ const Seo = ({
       {/* See [Google doc](https://developers.google.com/search/docs/crawling-indexing/safesearch) . */}
       {tag.rating}
 
+      {/* See [Google doc](https://support.google.com/programmable-search/answer/1626955) */}
+      <meta name="thumbnail" content={seo.imageUrl} />
+
       {tag.canonicalUrl}
 
       {children}
