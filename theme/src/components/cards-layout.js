@@ -30,7 +30,7 @@ export const CardsLayout = ({
       <h1 className="my-4 min-w-0 basis-full overflow-auto text-center text-xl md:text-4xl">
         {pageTitle}
       </h1>
-      <div className="grid min-w-0 basis-full grid-cols-2 gap-4">
+      <div className="grid min-w-0 basis-full grid-cols-1 gap-4 md:grid-cols-2">
         {postCards}
       </div>
       <PagesNav
