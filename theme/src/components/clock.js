@@ -18,7 +18,7 @@ export const Clock = ({ date }) => {
   );
 
   const monthAndDate = isEmptyObject(intlMonthAndDate) ? null : (
-    <span className="text-base md:text-2xl">
+    <span className="text-lg md:text-2xl">
       {new Intl.DateTimeFormat(locale, intlMonthAndDate).format(d)}
     </span>
   );
