@@ -10,6 +10,21 @@ module.exports = {
     ),
   ],
   theme: {
+    fontSize: {
+      xs: [`0.75rem`, { lineHeight: `1rem` }], // default
+      sm: [`0.875rem`, { lineHeight: `1.25rem` }], // default
+      base: [`1rem`, { lineHeight: `1.5rem` }], // default
+      lg: [`1.125rem`, { lineHeight: `1.75rem` }], // default
+      xl: [`1.25rem`, { lineHeight: `1.75rem` }], // default
+      "2xl": [`1.5rem`, { lineHeight: `2rem` }], // default
+      "3xl": [`1.875rem`, { lineHeight: `2.45rem` }],
+      "4xl": [`2.25rem`, { lineHeight: `2.95rem` }],
+      "5xl": [`3rem`, { lineHeight: `3.85rem` }],
+      "6xl": [`3.75rem`, { lineHeight: `4.85rem` }],
+      "7xl": [`4.5rem`, { lineHeight: `5.85rem` }],
+      "8xl": [`6rem`, { lineHeight: `7.85rem` }],
+      "9xl": [`8rem`, { lineHeight: `10.55rem` }],
+    },
     extend: {
       dropShadow: {
         title: [
