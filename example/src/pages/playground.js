@@ -182,6 +182,46 @@ const Playground = () => (
     </div>
 
     <br />
+    <h2 className="text-2xl">Scroll bar test on each font size.</h2>
+    <div className="my-4 overflow-auto bg-yellow-200 text-9xl">
+      タグTag: text-9xl
+    </div>
+    <div className="my-4 overflow-auto bg-yellow-200 text-8xl">
+      タグTag: text-8xl
+    </div>
+    <div className="my-4 overflow-auto bg-yellow-200 text-7xl">
+      タグTag: text-7xl
+    </div>
+    <div className="my-4 overflow-auto bg-yellow-200 text-6xl">
+      タグTag: text-6xl
+    </div>
+    <div className="my-4 overflow-auto bg-yellow-200 text-5xl">
+      タグTag: text-5xl
+    </div>
+    <div className="my-4 overflow-auto bg-yellow-200 text-4xl">
+      タグTag: text-4xl
+    </div>
+    <div className="my-4 overflow-auto bg-yellow-200 text-3xl">
+      タグTag: text-3xl
+    </div>
+    <div className="my-4 overflow-auto bg-yellow-200 text-2xl">
+      タグTag: text-2xl
+    </div>
+    <div className="my-4 overflow-auto bg-yellow-200 text-xl">
+      タグTag: text-xl
+    </div>
+    <div className="my-4 overflow-auto bg-yellow-200 text-lg">
+      タグTag: text-lg
+    </div>
+    <div className="my-4 overflow-auto bg-yellow-200 text-base">
+      タグTag: text-base
+    </div>
+    <div className="my-4 overflow-auto bg-yellow-200 text-sm">
+      タグTag: text-sm
+    </div>
+    <div className="my-4 overflow-auto bg-yellow-200 text-xs">
+      タグTag: text-xs
+    </div>
     <br />
     <br />
     <br />
