@@ -57,6 +57,12 @@ export default (themeOptions) => ({
               },
             },
             `gatsby-remark-responsive-iframe`,
+            {
+              resolve: `gatsby-remark-autolink-headers`,
+              options: {
+                isIconAfterHeader: true,
+              },
+            },
           ],
         },
         ...themeOptions.optionsGatsbyTransformerRemark,
